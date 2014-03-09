@@ -103,7 +103,7 @@ If you want to know more about SASS `maps` please go to [SASS Readme file (stabl
 The naming notation follows couple of principals. 
 
 * `map` name corresponds to the component that it describes and the `core` versions have a `_core` suffix. 
-* `viariable` name contain meaningfull text that is '-' seperated that corresponds to part of the component that describes, then '\_' char for seperation between name and css attribute name, if it describe state of the element it contain additional block od text seperated by '\_'
+* `viariable` name contain meaningfull text that is "-" ( *dash* ) seperated that corresponds to part of the component that describes, then "\_" ( *underscore* ) char for seperation between name and css attribute name, if it describe state of the element it contain additional block od text seperated by "\_" ( *underscore* )
 
 This way of storing data will allow us to use some functions to extract css attribute name from the variable name so we can by DRY.
 
@@ -224,7 +224,7 @@ In previous example it can be easy deducted that `item` is a fist child in DOM s
 		<div class="item">
 			<span class="title">Title</span>
 			...
-		</div
+		</div>
 	</li>
 	...
 </ul>
@@ -238,7 +238,7 @@ The `nth-child` selector will not work for inner `<span class="title">` because 
 }
 ```
 
-It will inject an `li` css selector between `.title` class selector and any parent css selectors ( take note that `li` is prefixed with " " to inject it in between and not to appedn to ). Last parameter: `1` describes how many parent has to be treversed before `li` will be injected.
+It will inject an `li` css selector between `.title` class selector and any parent css selectors ( take note that `li` is prefixed with " " ( *space* ) to inject it in between and not to appedn to ). Last parameter: `1` describes how many parent has to be treversed before `li` will be injected.
 If we have a situation when there will be multiple parent selectors in sass file we need to define no. of them, it folowing example it will be `2`:
 
 ```sass
@@ -259,7 +259,7 @@ li {
 }
 ```
 
-It will automatically generate code for each value that key is prefixed with `item_`, ends with proper css selector that will be prefixed by '\_' char and do not contains anything between, so `item_is-hovered_color` will be skipped.
+It will automatically generate code for each value that key is prefixed with `item_`, ends with proper css selector that will be prefixed by "\_" ( *underscore* ) char and do not contains anything between, so `item_is-hovered_color` will be skipped.
 
 ### MVS declaring default values
 
