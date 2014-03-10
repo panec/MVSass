@@ -261,22 +261,267 @@ li {
 
 It will automatically generate code for each value that key is prefixed with `item_`, ends with proper css selector that will be prefixed by "\_" ( *underscore* ) char and do not contains anything between, so `item_is-hovered_color` will be skipped.
 
-### MVS declaring default values
+### MVS default values
 
-(...)
+Default value that are used as a reference point should be created in `core/model` folder. Example map that will be describing the `_list.scss` can look like this:
+
+```sass
+$core-model-list: (
+	//container
+	container_background-color             : null,
+	container_border-color                 : null,
+	container_border-style                 : null,
+	container_border-width                 : null,
+	container_color                        : null,
+	container_margin                       : null,
+	container_padding                      : null,
+	
+	//item 
+	item_clear                             : null,
+	item_float                             : null,
+	item_width                             : null,
+	
+	//item-link
+	item-link_background-color             : null,
+	item-link_border-color                 : null,
+	item-link_border-style                 : null,
+	item-link_border-width                 : null,
+	item-link_color                        : null,
+	item-link_margin                       : null,
+	item-link_padding                      : null,
+	//item-link hover state
+	item-link_is-hover_text-decoration     : null,
+	
+	//item-headline
+	item-headline_color                    : null,
+	item-headline_font-family              : null,
+	item-headline_font-size                : null,
+	item-headline_font-style               : null,
+	item-headline_font-weight              : null,
+	item-headline_line-height              : null,
+	item-headline_letter-spacing           : null,
+	item-headline_margin                   : null,
+	//item-headline hover state
+	item-headline_is-hover_text-decoration : null,
+```
+
+All defined values are `null` because we want to facilitate another function of SASS that skips generating css attributes when they are null, and in case of any checking `@if null` is `false` is sass that is handy when we are adding logic to our values.
+
+### MVS custom values
+
+Within folder `theme/model` should contain a set/sets of values that will be used for generating our custom styled components. Example map that will describe the `_list.scss` can look like this ( it will define border for container with some padding and colour for a link inside )  :
+
+```sass
+$theme-model-list: (
+	//container
+	container_border-color                 : #000,
+	container_border-style                 : solid,
+	container_border-width                 : 1px,
+	container_color                        : #000,
+	container_padding                      : 10px,
+	
+	//item-link
+	item-link_color                        : lighten(#000, 20%),
+```
+
+We can use any of the values defined in `core/model` folder. This set will be a base for all of custom versions of component within one `theme` folder.
 
 ### MVS extending custom values
 
-(...)
+Within the same file `theme/model/_list.scss` contain different set of values that will define different styles for specific version of component. It should contain only differences between this version and values defined in `$theme-model-list` map but it is not required. The library will resolve the differences and will produce only required css code, but keeping this file small and tidy will increase readability. Example map that will update default theme version will be presented in 2 columns for first three breakpoints and 3 columns for the rest ( and will change border and link colour ):
+
+```sass
+$theme-model-list-ver_1: (
+	//container
+	container_border-color                 : #F00,
+	container_border-style                 : dotted,
+	
+	//item 
+	item_clear                             : ( null, ( ":nth-child(3n+4)", null, null, null, left ), ( ":nth-child(2n+3)", left, left, left, null ) ),
+	item_float                             : left,
+	item_width                             : ( 50%,	( 50%, 50%, 50%, 33.3% ) ),
+
+	//item-link
+	item-link_color                        : lighten( #F00, 20% ),
+```
 
 ### MVS component mixins
 
-(...)
+To facilitate all that data we need to create a `mixin` per each component in `core/view` that will contain reference to corresponding `core/model` file with simple sass `@import`. It should contain two optional parameters `$model-list` that is a container for `map` with data, and `$is-initial` that will indicate that mixin creates initial structure of styles for component that are static and will not be parametrized.
+
+```sass
+@mixin list( $model-list: $core-model-list, $is-initial: false ) {
+	@if $is-initial {
+		$model-list: mvs-merge( $core-model-list, $model-list );
+		$core-model-list: $model-list !global;
+	}
+	@else {
+		$model-list: mvs-merge-unique( $core-model-list, $model-list );
+	}
+
+	ul {
+		@include mvs-respond( background-color, map-get ( $model-list, container_background-color ) );
+		@include mvs-respond( border-color, map-get ( $model-list, container_border-color ) );
+		@include mvs-respond( border-style, map-get ( $model-list, container_border-style ) );
+		@include mvs-respond( border-width, map-get ( $model-list, container_border-width ) );
+		@include mvs-respond( color, map-get ( $model-list, container_color ) );
+		@include mvs-respond( margin, map-get ( $model-list, container_margin ) );
+		@include mvs-respond( padding, map-get ( $model-list, container_padding ) );
+	}
+
+	li {
+		@if $isInitial {
+			display: block
+		}
+
+		@include mvs-respond-map( "item_", $model-list );
+
+		a {
+			@include mvs-respond-map( "item-link_", $model-list, " li", 1 );
+		}
+	}
+}
+```
+
+### MVS component mixin values resolving
+
+```sass
+@if $is-initial {
+	$model-list: mvs-merge( $core-model-list, $model-list );
+	$core-model-list: $model-list !global;
+}
+@else {
+	$model-list: mvs-merge-unique( $core-model-list, $model-list );
+}
+```
+
+This creates a map with values that will be used within body of the component mixin.
+* `$model-list: mvs-merge( $core-model-list, $model-list );` is a wrapper for sass `map-merge`, it works exactly the same but outputs warnings on console when `$model-list` adds values for keys that do not exist in `$core-model-list`.
+* `$core-model-list: $model-list !global;` stores default theme values for next instances of the component within theme, the `!global` suffix is required by Sass 3.3.
+* `$model-list: mvs-merge-unique( $core-model-list, $model-list );` merges two list but outputs only the values that ware defined in `$model-list` and have different value that corresponding keys in `$core-model-list` and also produces warning on console.
 
 ### MVS initial component values
 
-(...)
+```sass
+li {
+	@if $isInitial {
+		display: block
+	}
+}
+```
+
+This creates css attribute with value that will be exact the same for all version of component and will not be a part of any of the map parameters, by decorating it with the condition block it will be added only once to output file.
+
+### MVS respond
+
+```sass
+ul {
+	@include mvs-respond( background-color, map-get ( $model-list, container_background-color ) );
+	@include mvs-respond( border-color, map-get ( $model-list, container_border-color ) );
+	@include mvs-respond( border-style, map-get ( $model-list, container_border-style ) );
+	@include mvs-respond( border-width, map-get ( $model-list, container_border-width ) );
+	@include mvs-respond( color, map-get ( $model-list, container_color ) );
+	@include mvs-respond( margin, map-get ( $model-list, container_margin ) );
+	@include mvs-respond( padding, map-get ( $model-list, container_padding ) );
+}
+```
+
+Generates code for each of the values defined in `$model-list` for keys `container_(...)`. This code is correct but it is not easy to maintain, it requires adding a `@import mvs-respond` every time we add new key to default map. This function is ideal when we want to create values in-line or when we will compute something and result relies on values defined in map:
+
+```sass
+ul {
+	@include mvs-respond( width, ( $column-width * 12 - $gutter-width, ( $column-width * 12 - $gutter-width, $column-width * 10 - $gutter-width, $column-width * 8 - $gutter-width ) ) );
+}
+```
+
+### MVS respond map
+
+Instead of calling `mvs-respond` multiple times we can use `mvs-respond-map` that will use the key naming convention and it will create all the css attributes for us. The example for 'ul' could be written as follows, and it will generate the same code:
+
+```sass
+ul {
+	@include mvs-respond-map( "container_", $model-list );
+}
+```
+
+### MVC parent injecting
+
+When we want to support `:nth-child` notation we need to pass additional optional parameters to `mvs-respond` and `mvs-respond-map` mixins. String with css selector to be appended/injected, and number of parents to traverse. For the following code:
+
+```sass
+li {
+	a {
+		@include mvs-respond-map( "item-link_", $model-list, "", 1 );
+	}
+}
+```
+
+the value will be appended to parent that is `1` level up - in this case `li` and will work properly because it is nth child of `ul`.
+The same can be achieved without nesting `a` within `li` selector by writing un-nested code:
+
+```sass
+a {
+	@include mvs-respond-map( "item-link_", $model-list, " li", 1 );
+}
+```
+
+In this case the `" li"` string with proper selector will be injected between parent selector that is `1` level up and nth syntax will be added to that newly created selector - `li:nth-child(2n) a`
 
 ### MVS value computation
 
-(...)
+Sometimes there is a need to compute some values, like `height` or `top` for absolute elements that needs to calculate based on map values. To do it we can use a `mvs-process-map` function. It calls defined function against each item within mvs syntax notation, all combinations are supported ( **currently nth syntax is not supported** ).
+
+```sass
+@function some-function($element) {
+    @return $element * 2;
+}
+
+$item_width: 50%, ( 50%, 50%, 50%, 33.3% );
+
+$item_width_multiplied: mvs-process-map( $item_width, some-function );
+```
+
+This will create new variable `$item_width_multiplied` that value will be `100%, ( 100%, 100%, 100%, 66.6% )`. Default sass, `compass` or any other functions that gets one parameter are allowed. 
+
+### MVS matrix sum
+
+When there is a need to compute multiple values at once for example we need to sum `border-width`, `padding` and `line-height` to know how much space component will take we have function to sum all values within all variables. To do it we can use 
+
+```sass
+$border-width : 1px 2px 1px 2px, ( 5px 6px 5px 6px , 9px 10px 9px 10px );
+$padding      : 3px 4px 3px 4px, ( 7px 8px 7px 8px, 11px 12px 11px 12px );
+
+$matrix_1     : mvs-matrix-sum( 4, $border-width, $padding );
+```
+
+`mvs-matrix-sum` support all possible combination of supplied parameters, it does not matter if one value contains one shorthand value like `$border-width : 1px` or all four, or like this case the mvs syntax for two breakpoints, it will generate values for all supported breakpoints. Also the `mvs-matrix-sum` requires two parameters. First defines how many numbers should be processed per value, in case of `border-width`, `padding` it can be four ( probably it will be updated to detect this internally ). Second is list of comma separated list of mvs syntaxes and should be longer then one.
+Value of `$matrix_1` will be: `4px 6px 4px 6px, (12px 14px 12px 14px, 20px 22px 20px 22px, 20px 22px 20px 22px, 20px 22px 20px 22px )`.
+
+To be able to compute height across different breakpoints we will have to transform `4px 6px 4px 6px` into single value ( sum top and bottom values ) - `8px` and call `mvs-matrix-sum` again with `line-height` values.
+
+### MVS creating custom version
+
+Within `theme/view` we create files that refer corresponding files from `theme/model` and `core/view` with `@import`. It should contain all the main css classes that are use to indicate our components. For each of the version we create different css class. Example call can look like:
+
+```sass
+.list {
+
+	@include list( $theme-model-list, $is-initial: true );
+
+	&.red-columns {
+		@include component-list-of-entities( $theme-model-list-ver_1 );
+	}
+```
+
+We can extend this even further and we can create a specific version by merging in-line values with maps that are already defined. Imagine that we have a `list` component on home page that should have no border and it should extend version of `.list.red-columns`. We can do it be calling following code:
+
+```sass
+.page-home {
+	.list.red-columns
+ 	{
+		@include component-list-of-entities( ( container_border-color: transparent, container_border-width: 0 ) );
+	}
+}
+```
+
+It will automatically set proper values, checks if they are different from default and if they are they will be added to output css.
