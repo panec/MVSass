@@ -1,0 +1,32 @@
+/**
+ * Additional functions to handle String object in SASS.
+ */
+
+/**
+ * Returns last index of string within a string
+ * Params
+ * 	$string (Sass::Script::Value::String)
+ * 	$substring (Sass::Script::Value::String)
+ * Returns
+ * 	(Sass::Script::Value::Number, Sass::Script::Value::Null)
+ * Example
+ * 	str-index-last('abcdefghijk', 'gh') => 7
+ */
+@function str-index-last($string, $substring){
+	$index: 0;
+	$subIndex: 0;
+
+	@while $subIndex {
+		$subIndex: str-index($string, $substring);
+		@if $subIndex and $subIndex > 0 {
+			$index: $index + $subIndex;
+			$string: str-slice($string, $subIndex + 1);
+		}
+		//NOT NEEDED IN 3.3.0 RC.3 +
+		@else {
+			$subIndex: false;
+		}
+	}
+
+	@return if( $index > 0, $index, false);
+}

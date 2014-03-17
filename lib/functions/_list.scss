@@ -1,0 +1,140 @@
+/**
+ * Additional functions to handle List object in SASS.
+ * Some of the function are borrowed from Hugo Giraudel and his technical blog 
+ * http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+ */
+
+/**
+ * by Hugo Giraudel
+ * Inserts value within List object on specific position
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * 	$index (Sass::Script::Value::Number)
+ * 	$value (Sass::Script::Value::Base) 
+ * Returns
+ * 	(Sass::Script::Value::List) 
+ * Example
+ * insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
+ */
+@function insert-nth($list, $index, $value) {
+	$result: null;
+
+	@if type-of($index) != number {
+		@warn "$index: #{quote($index)} is not a number for `insert-nth`.";
+	}
+
+	@else if $index < 1 {
+		@warn "List index 0 must be a non-zero integer for `insert-nth`";
+	}
+
+	@else if $index > length($list) {
+		@warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
+	}
+
+	@else {
+		$result: ();
+
+		@for $i from 1 through length($list) {
+			@if $i == $index {
+				$result: append($result, $value);
+			}
+
+			$result: append($result, nth($list, $i));
+		}
+	}
+
+	@return $result;
+}
+
+/* Hugo Giraudel */
+@function slice($list, $start: 1, $end: length($list)) {
+	$result: null;
+
+	@if type-of($start) != number or type-of($end) != number {
+		@warn "Either $start or $end are not a number for `slice`.";
+	}
+
+	@else if $start > $end {
+		@warn "The start index has to be lesser than or equals to the end index for `slice`.";
+	}
+
+	@else if $start < 1 or $end < 1 {
+		@warn "List indexes must be non-zero integers for `slice`.";
+	}
+
+	@else if $start > length($list) {
+		@warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
+	}
+
+	@else if $end > length($list) {
+		@warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
+	}
+
+	@else {
+		$result: ();
+
+		@for $i from $start through $end {
+			$result: append($result, nth($list, $i));
+		}
+	}
+
+	@return $result;
+}
+
+/**
+ * Checks if all values on List are Number
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * Returns
+ * 	(Sass::Script::Value::Bool)
+ * Example
+ * 	list-contain-numbers(1 10px 1rem 20px) => true
+ * 	list-contain-numbers(1 #FFF 1rem 20px) => false
+ */
+@function list-contain-numbers($list) {
+	$isNumeric: true;
+	$length: length($list);
+
+	@for $i from 1 through $length {
+		$value: nth($list, $i);
+		$isNumeric: $isNumeric and type-of($value) == "number";
+	}
+
+	@return $isNumeric;
+}
+
+/**
+ * Within List object converts Numbers with various unit values to Numbers with "rem" unit
+ * Supported units "", "px", "rem", "" is treated as "rem"
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * 	$font-size-base (Sass::Script::Value::Number)
+ * Returns
+ * 	(Sass::Script::Value::Base)
+ * Example
+ * 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem
+ */
+@function list-convert-rem($list, $font-size-base: 16px) {
+	$length: length($list);
+	$remValues: ();
+
+	@if unit( $font-size-base ) != "px" {
+		@warn "$font-size-base:" $font-size-base "has to be px value";
+		@return $list;
+	}
+
+	@if list-contain-numbers( $list ) {
+		@warn "$list:" $list "contains non numeric values";
+		@return $list;
+	}
+
+	@for $i from 1 through $length {
+		$remValues: append( $remValues, unit-convert-rem( nth( $list, $i ), $font-size-base ) );
+	}
+
+	@if $length == 1 {
+		@return nth($remValues, 1);
+	}
+
+	@return $remValues;
+}
