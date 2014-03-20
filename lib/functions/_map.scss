@@ -1,0 +1,57 @@
+/**
+ * Additional functions to handle Map object in SASS.
+ */
+
+/**
+ * Overwrite keys from $map1 with keys from map $map2
+ * Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+ * Params
+ * 	$map1 (Sass::Script::Value::Base)
+ * 	$map2 (Sass::Script::Value::Base)
+ * 	$showWarnings (Sass::Script::Value::Bool) 
+ * Returns
+ * 	(Sass::Script::Value::Base) 
+ * Example
+ * 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
+ */
+@function map-overwrite($map1, $map2, $showWarnings: true) {
+	$result: ();
+
+	@each $key, $value in $map2 {
+		@if ( map-has-key( $map1, $key ) ) {
+			$result: map-merge( $result, ( $key: $value ) );
+		}
+		@else if ( $showWarnings ) {
+			@warn $key "does not exist in first map";
+		}
+	}
+
+	@return map-merge( $map1, $result );
+}
+
+/**
+ * Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+ * Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+ * Params
+ * 	$map1 (Sass::Script::Value::Base)
+ * 	$map2 (Sass::Script::Value::Base)
+ * 	$showWarnings (Sass::Script::Value::Bool) 
+ * Returns
+ * 	(Sass::Script::Value::Base) 
+ * Example
+ * 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
+ */
+@function map-unique($map1, $map2, $showWarnings: true) {
+	$result: ();
+
+	@each $key, $value in $map2 {
+		@if ( map-has-key($map1, $key) ) {
+			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
+		}
+		@else if ( $showWarnings ){
+			@warn $key "does not exist in first map";
+		}
+	}
+
+	@return $result;
+}

@@ -352,11 +352,11 @@ To facilitate all that data we need to create a `mixin` per each component in `c
 ```sass
 @mixin list( $model-list: $core-model-list, $is-initial: false ) {
 	@if $is-initial {
-		$model-list: mvs-merge( $core-model-list, $model-list );
+		$model-list: map-overwrite( $core-model-list, $model-list );
 		$core-model-list: $model-list !global;
 	}
 	@else {
-		$model-list: mvs-merge-unique( $core-model-list, $model-list );
+		$model-list: map-unique( $core-model-list, $model-list );
 	}
 
 	ul {
@@ -387,18 +387,18 @@ To facilitate all that data we need to create a `mixin` per each component in `c
 
 ```sass
 @if $is-initial {
-	$model-list: mvs-merge( $core-model-list, $model-list );
+	$model-list: map-overwrite( $core-model-list, $model-list );
 	$core-model-list: $model-list !global;
 }
 @else {
-	$model-list: mvs-merge-unique( $core-model-list, $model-list );
+	$model-list: map-unique( $core-model-list, $model-list );
 }
 ```
 
 This creates a map with values that will be used within body of the component mixin.
-* `$model-list: mvs-merge( $core-model-list, $model-list );` is a wrapper for sass `map-merge`, it works exactly the same but outputs warnings on console when `$model-list` adds values for keys that do not exist in `$core-model-list`.
+* `$model-list: map-overwrite( $core-model-list, $model-list );` is a wrapper for sass `map-merge`, it works exactly the same but outputs warnings on console when `$model-list` adds values for keys that do not exist in `$core-model-list`.
 * `$core-model-list: $model-list !global;` stores default theme values for next instances of the component within theme, the `!global` suffix is required by Sass 3.3.
-* `$model-list: mvs-merge-unique( $core-model-list, $model-list );` merges two list but outputs only the values that ware defined in `$model-list` and have different value that corresponding keys in `$core-model-list` and also produces warning on console.
+* `$model-list: map-unique( $core-model-list, $model-list );` merges two list but outputs only the values that ware defined in `$model-list` and have different value that corresponding keys in `$core-model-list` and also produces warning on console.
 
 ### MVS initial component values
 
@@ -469,7 +469,7 @@ In this case the `" li"` string with proper selector will be injected between pa
 
 ### MVS value computation
 
-Sometimes there is a need to compute some values, like `height` or `top` for absolute elements that needs to calculate based on map values. To do it we can use a `mvs-process-map` function. It calls defined function against each item within mvs syntax notation, all combinations are supported ( **currently nth syntax is not supported** ).
+Sometimes there is a need to compute some values, like `height` or `top` for absolute elements that needs to calculate based on map values. To do it we can use a `mvs-call` function. It calls defined function against each item within mvs syntax notation, all combinations are supported ( **currently nth syntax is not supported** ).
 
 ```sass
 @function some-function($element) {
@@ -478,7 +478,7 @@ Sometimes there is a need to compute some values, like `height` or `top` for abs
 
 $item_width: 50%, ( 50%, 50%, 50%, 33.3% );
 
-$item_width_multiplied: mvs-process-map( $item_width, some-function );
+$item_width_multiplied: mvs-call( $item_width, some-function );
 ```
 
 This will create new variable `$item_width_multiplied` that value will be `100%, ( 100%, 100%, 100%, 66.6% )`. Default sass, `compass` or any other functions that gets one parameter are allowed. 

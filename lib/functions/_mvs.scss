@@ -1,0 +1,132 @@
+/**
+ * Additional functions to handle MVS syntax in SASS.
+ */
+
+/**
+ * Gets value on $n position from MVS syntax
+ * If value on $n position not exists, last value is returned
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * Returns
+ * 	(Sass::Script::Value::Base)
+ * Example
+ * 	mvs-get-nth( ( 1.1, 2.2, 3.3, 4.4, 5.5 ), 4 ) => 4.4
+ * 	mvs-get-nth( ( 1.1, 2.2 ), 4 ) => 2.2
+ */
+@function mvs-get-nth( $list, $n ) {
+	$length: length( $list );
+
+	@if $length == 0 {
+		@warn "mvs-get-nth is for $list" $list " containing at least 1 element, list contains 0 elements";
+		@return null
+	}
+	@else if ( $n <= $length ) {
+		@return nth( $list, $n );
+	}
+	@else {
+		@return nth( $list, $length );
+	}
+}
+
+/**
+ * Gets value on $n position from CSS shorthand syntax
+ * If value on $n position not exists, corresponding value is returned
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * Returns
+ * 	(Sass::Script::Value::Base)
+ * Example
+ * 	get-nth-shorthand( 1px 2px 3px 4px ), 3 ) => 3px
+ * 	get-nth-shorthand( 1px 2px , 3 ) => 1px
+ */
+@function get-nth-shorthand( $list, $n ) {
+	$length: length( $list );
+
+	@if $length == 0 {
+		@warn "get-nth-shorthand is for $list" $list " containing 1, 2, or 4 elements, list contains 0 elements";
+	}
+	@else if $length == 1 {
+		@return nth( $list, 1 );
+	}
+	@else if $length == 2 or $length == 3 {
+		@if $n == 1 {
+			@return nth( $list, 1 );
+		}
+		@else if $n == 2 {
+			@return nth( $list, 2 );
+		}
+		@else if $n == 3 {
+			@return nth( $list, 1 );
+		}
+		@else if $n == 4 {
+			@return nth( $list, 2 );
+		}
+	}
+	@else if $length == 4 {
+		@return nth( $list, $n );
+	}
+	@else {
+		@warn "get-nth-shorthand is for $list containing less then 5 elements";
+		@return null;
+	}
+}
+
+/**
+ * Checks if MVS value contains CSS "nth" values
+ * Supported CSS values: "nth-child", "nth-of-type", "first-child", "last-child"
+ * Params
+ * 	$values (Sass::Script::Value::Base)
+ * Returns
+ * 	(Sass::Script::Value::Bool)
+ * Example
+ * 	mvs-is-nth( ( 1.1, 2.2, 3.3, 4.4, 5.5 ) ) => false
+ * 	mvs-is-nth( ( ":nth-child(2n)", 1.1, 2.2, 3.3, 4.4, 5.5 ) ) => true
+ */
+@function mvs-is-nth( $values ) {
+	$subValue: nth( $values, 1 );
+
+	@if type-of( $subValue ) != "string" {
+		@return false;
+	}
+	@else {
+		$index: 0;
+		$nthStrings: "nth-child" "nth-of-type" "first-child" "last-child";
+
+		@each $subString in $nthStrings {
+			$index: $index + if( str-index( $subValue, $subString ), str-index( $subValue, $subString ), 0 );
+		}
+
+		@return $index > 0;
+	}
+}
+
+/**
+ * Calls custom function against each set of values from MVS syntax
+ * Params
+ * 	$list (Sass::Script::Value::Base)
+ * 	$name (Sass::Script::Value::String)
+ * Returns
+ * 	(Sass::Script::Value::Base)
+ * Example
+ * 	mvs-call( ( 1.1, ( 1.1, 2.2, 3.3, 4.4, 5.5 ) ), ceil ) => 1, ( 1, 2, 3, 4, 5 )
+ */
+@function mvs-call( $list, $name ){
+	$result: ();
+
+	$result: append( $result, call( $name, nth( $list, 1 ) ), comma );
+
+	@for $i from 2 through length( $list ) {
+		$subResult: ();
+		@if mvs-is-nth( nth( $list, $i ) ) == true {
+			@warn "nth notation is not currently supported";
+		}
+		@else {
+			@each $subValue in nth( $list, $i ) {
+				$subResult: append( $subResult, call( $name, $subValue ) , comma );
+			}
+			$result: append( $result, $subResult );
+		}
+	}
+
+	@return $result;
+}
