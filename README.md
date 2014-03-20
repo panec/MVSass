@@ -509,7 +509,7 @@ Within `theme/view` we create files that refer corresponding files from `theme/m
 	@include list( $theme-model-list, $is-initial: true );
 
 	&.red-columns {
-		@include component-list-of-entities( $theme-model-list-ver_1 );
+		@include list( $theme-model-list-ver_1 );
 	}
 ```
 
@@ -519,7 +519,7 @@ We can extend this even further and we can create a specific version by merging 
 .page-home {
 	.list.red-columns
  	{
-		@include component-list-of-entities( ( container_border-color: transparent, container_border-width: 0 ) );
+		@include list( ( container_border-color: transparent, container_border-width: 0 ) );
 	}
 }
 ```
