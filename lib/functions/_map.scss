@@ -55,3 +55,47 @@
 
 	@return $result;
 }
+
+
+/**
+ * Returns $value on $n key in $map if found, null if not found
+ * Params
+ * 	$map (Sass::Script::Value::Base)
+ * 	$n (Sass::Script::Value::Number)
+ * Returns
+ * 	(Sass::Script::Value::Base) 
+ * Example
+ * 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
+ */
+@function map-nth( $map, $n ) {
+	$index: 1;
+
+	@if $n > length( $map ) {
+		@return null;
+	}
+
+	@each $key, $value in $map {
+		@if $n == $index {
+			@return $value;
+		}
+	}
+
+	@return null;
+}
+
+
+/**
+ * Returns the index of the $key in $map
+ * Params
+ * 	$map (Sass::Script::Value::Base)
+ * 	$key (Sass::Script::Value::String)
+ * Returns
+ * 	(Sass::Script::Value::Number) 
+ * Example
+ * 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
+ */
+@function map-index( $map, $key ) {
+	$keys: map-keys( $map );
+
+	@return index( $keys, $key );
+}
