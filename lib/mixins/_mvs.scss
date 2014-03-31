@@ -1,78 +1,71 @@
-/**
- * MVS mixins
- */
+//**
+// MVS mixins
 
-/**
- * Private mixin for handling rendering css properties with values
- * Params
- * 	$property (Sass::Script::Value::String)
- * 	$value (Sass::Script::Value::Base)
- */
+//**
+// Private mixin for handling rendering css properties with values
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
 @mixin -mvs-respond( $property, $value ) {
-	// @if is-array-numeric($value) {
-	// 	@include rem-fallback($property, $value);
+	//https://github.com/nex3/sass/issues/626#issuecomment-39012395 Feature under consideration SASS 3.4
+	// @if mixin-exists( $property ) {
+	// 	@include #{ $property }( $value );
 	// }
-	@if mixin-exists( $property ) {
-		@include #{ $property }( $value );
+
+	//TODO: Add full list of Compass mixins
+	@if $property == background and mixin-exists( $property ){
+		@include background( $value );
 	}
 	@else {
 		#{$property}: $value;
 	}
 }
 
-
-
-
-/**
- * Generates styles for property in MVS syntax
- * $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
- * $depth defines how many parent selectors skip to inject $selector
- * Params
- * 	$property (Sass::Script::Value::String)
- * 	$values (Sass::Script::Value::Base)
- * 	$selector (Sass::Script::Value::String)
- * 	$depth (Sass::Script::Value::Number)
- * Example
- * 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ) );
- * 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li" );
- * 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li", 1 );
- * 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), "", 1 );
- */
+//**
+// Generates styles for property in MVS syntax
+// $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
+// $depth defines how many parent selectors skip to inject $selector
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$values (Sass::Script::Value::Base)
+// 	$selector (Sass::Script::Value::String)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ) );
+// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li" );
+// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li", 1 );
+// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), "", 1 );
 @mixin mvs-respond( $property, $values, $selector: null, $depth: 0 ) {
-	//TODO Figure out proper syntax for this
+	
 	@if $property == "font-family" or $property == "font" {
-		#{$property}: $values;
+		@warn "MVS syntax does not support font& font-family property";
+		@include -mvs-respond( $property, $values );
 	}
 	@else {
-		//wrap "1px 1px 1px" syntax within comma seperated list to make it consistent
-		$values       : if( list-separator($values) == "space", ( $values, ), $values );
-		$length       : length($values);
-		$defaultValue : nth($values, 1);
+		$values                  : if( list-separator($values) == "space", ( $values, ), $values );
+		$length                  : length($values);
+		$defaultValue            : nth($values, 1);
+		$screen-breakpoints-keys : map-keys( $screen-breakpoints );
 
-		@include -mvs-respond($property, $defaultValue);
+		@include -mvs-respond( $property, $defaultValue );
 
 		@if $length > 1 {
 			@for $i from 2 through $length {
-				$lastValue: $defaultValue;
-
-				//can contain a list of viewport values as well as nth selectors with viewport values
-				$subValues: nth($values, $i);
-				$subLenght: length($subValues);
-
-				//list of string values that are allowed in setting and will not trigger n-th selector
-				// $nthStrings: "nth-child" "nth-of-type" "first-child" "last-child";
-				// $isNthSyntax: if( type-of(nth($subValues, 1)) == "string", str-index-list(nth($subValues, 1), $nthStrings), false);
-				$isNthSyntax: mvs-is-nth($subValues);
-				$nthSelector: if( $isNthSyntax, nth( $subValues, 1 ), null );
+				$lastValue   : $defaultValue;
+				
+				$subValues   : nth($values, $i);
+				$subLenght   : length($subValues);
+				
+				$isNthSyntax : mvs-is-nth($subValues);
+				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
 
 				@if $isNthSyntax {
-					$subValues: slice( $subValues, 2 );
-					//This is for a mvs-get-nth syntax when it is nth syntax because all the values have to be called specifically
-					$subLenght: length($screen-breakpoints-names);
+					$subValues : slice( $subValues, 2 );
+					$subLenght : length( $screen-breakpoints-keys );
 				}
 
 				@if $isNthSyntax == false and $defaultValue != nth( $subValues, 1 ){
-					@warn "Default value" $defaultValue "is not equal to the first break point value" nth($subValues, 1);
+					@warn "Default value" $defaultValue "is not equal to the first break point value" nth( $subValues, 1 );
 				}
 
 				@for $j from 1 through $subLenght {
@@ -81,28 +74,29 @@
 					// @if $isNthSyntax == false and $lastValue != $currentValue { //DOES NOT WORK, WHY????
 					@if $isNthSyntax == false {
 						@if $lastValue != $currentValue {
-							$lastValue: $currentValue;
-							@include respond-to( nth( $screen-breakpoints-names, $j ) ) {
-								@include -mvs-respond($property, $lastValue);
+							$lastValue : $currentValue;
+
+							@include respond-to( nth( $screen-breakpoints-keys, $j ) ) {
+								@include -mvs-respond( $property, $lastValue );
 							}
 						}
 					}
 					@else {
-						@include respond-to-specific( nth( $screen-breakpoints-names, $j ) ){
-							@if ( type-of($selector) == "string" or type-of($selector) == "null" ) and $nthSelector != "" and $depth >= 0 {
+						@include respond-to( nth( $screen-breakpoints-keys, $j ), $is-specific: true ){
+							@if ( type-of( $selector ) == "string" or type-of( $selector ) == "null" ) and $nthSelector != "" and $depth >= 0 {
 								@if $selector == null or $selector == "" {
-									@include append-parent("#{$selector}#{$nthSelector}", $depth) {
+									@include mvs-parent( "#{$selector}#{$nthSelector}", false, $depth ) {
 										@include -mvs-respond($property, $currentValue);
 									}
 								}
 								@else {
-									@include inject-parent("#{$selector}#{$nthSelector}", $depth) {
-										@include -mvs-respond($property, $currentValue);
+									@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
+										@include -mvs-respond( $property, $currentValue );
 									}
 								}
 							}
 							@else {
-								@include -mvs-respond($property, $currentValue);
+								@include -mvs-respond( $property, $currentValue );
 							}
 						}
 					}
@@ -112,22 +106,20 @@
 	}
 }
 
-
-/**
- * Calls mvs-respond mixin against all keys in $map that contain only $prefix and css property
- * Params
- * 	$prefix (Sass::Script::Value::String)
- * 	$map (Sass::Script::Value::Base)
- * 	$selector (Sass::Script::Value::Bool)
- * 	$depth (Sass::Script::Value::Number)
- * Example
- * 	mvs-respond-map( "list-item", $map );
- */
+//**
+// Calls mvs-respond mixin against all keys in $map that contain only $prefix and css property
+// Params
+// 	$prefix (Sass::Script::Value::String)
+// 	$map (Sass::Script::Value::Base)
+// 	$selector (Sass::Script::Value::Bool)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	mvs-respond-map( "list-item", $map );
 @mixin mvs-respond-map( $prefix, $map, $selector: null, $depth: 0 ) {
 	$prefixLength: str-length( $prefix );
 
 	@each $key, $value in $map {
-		@if str-index($key, $prefix) != null {
+		@if str-index( $key, $prefix ) != null {
 			$property: str-slice( $key, $prefixLength + 1 );
 
 			@if ( str-index-last( $property, "_" ) == false ){
@@ -137,20 +129,18 @@
 	}
 }
 
-/**
- * Generates styles for screen size bigger then defined breakpoint,
- * If $isSpecific is true then generates styles only for the defined breakpoint
- * Params
- * 	$breakpoint (Sass::Script::Value::String)
- * 	$screen-breakpoints (Sass::Script::Value::Base)
- * 	$isSpecific (Sass::Script::Value::Bool)
- * Example
- * 	respond-to( xs ) { color: #FFF; } => @media only screen and ( min-width: 480px ) { color: #FFF; }
- * 	respond-to( xs, $isSpecific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
- */
-@mixin respond-to( $breakpoint, $screen-breakpoints: ( xxs : 0px, xs : 480px, sm : 768px, md : 992px, lg : 1200px ), $isSpecific: false) {
-	@if $isSpecific {
-		$index: map-index( $screen-breakpoints, $breakpoint )
+//**
+// Generates styles for screen size bigger then defined breakpoint,
+// If $is-specific is true then generates styles only for the defined breakpoint
+// Params
+// 	$breakpoint (Sass::Script::Value::String)
+// 	$is-specific (Sass::Script::Value::Bool)
+// Example
+// 	respond-to( xs ) { color: #FFF; } => @media only screen and ( min-width: 480px ) { color: #FFF; }
+// 	respond-to( xs, $is-specific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
+@mixin respond-to( $breakpoint, $is-specific: false) {
+	@if $is-specific {
+		$index: map-index( $screen-breakpoints, $breakpoint );
 		
 		@if $index < length( $screen-breakpoints ) {
 			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: map-nth( $screen-breakpoints, $index + 1 ) - 1 ) { @content; }
@@ -161,5 +151,34 @@
 	}
 	@else {
 		@media only screen and ( max-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+	}
+}
+
+//Based on http://sassmeister.com/gist/7786284
+//http://www.youtube.com/watch?feature=player_detailpage&v=-ZJeOJGazgE#t=1846
+@mixin mvs-parent( $selector, $inject: true, $depth: 0 ) {
+	@if $depth > 0 {
+		@at-root {
+
+			$path: "";
+			
+			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
+			@if function-exists( parentSelector ) {
+				$path: nth( parentSelector(), 1 ); 
+			}
+			@else {
+				@warn "Function 'parentSelector' does not exist. Check if your project uses custom Ruby script provided";
+			}
+
+			@if $inject {
+				#{insert-nth( $path, length( $path ) - $depth + 1, unquote( $selector ) )} { @content; }
+			}
+			@else {
+				#{replace-nth( $path, length( $path ) - $depth, nth( $path, length( $path ) - $depth ) + unquote( $selector ) )} { @content; }
+			}
+		}
+	}
+	@else {
+		&#{$selector} { @content; }
 	}
 }

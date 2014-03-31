@@ -1,0 +1,36 @@
+.list ul {
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  color: black;
+  padding: 10px; }
+.list li {
+  display: block; }
+  .list li a {
+    color: #333333; }
+.list.red-columns ul {
+  border-color: red;
+  border-style: dotted; }
+.list.red-columns li {
+  float: left;
+  width: 50%; }
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .list.red-columns li:nth-child(3n+4) {
+      clear: left; } }
+  @media only screen and (min-width: 1200px) {
+    .list.red-columns li:nth-child(3n+4) {
+      clear: left; } }
+  @media only screen and (min-width: 0px) and (max-width: 479px) {
+    .list.red-columns li:nth-child(2n+3) {
+      clear: left; } }
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
+    .list.red-columns li:nth-child(2n+3) {
+      clear: left; } }
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .list.red-columns li:nth-child(2n+3) {
+      clear: left; } }
+  @media only screen and (max-width: 992px) {
+    .list.red-columns li {
+      width: 33.3%; } }
+  .list.red-columns li a {
+    color: #ff6666; }

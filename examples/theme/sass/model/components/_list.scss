@@ -1,0 +1,22 @@
+$theme-model-list: (
+	//container
+	container_border-color : #000,
+	container_border-style : solid,
+	container_border-width : 1px,
+	container_color        : #000,
+	container_padding      : 10px,
+	//item-link
+	item-link_color        : lighten(#000, 20%),
+);
+
+$theme-model-list-ver_1: (
+	//container
+	container_border-color : #F00,
+	container_border-style : dotted,
+	//item 
+	item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left ), ( ":nth-child(2n+3)", left, left, left, null ) ),
+	item_float             : left,
+	item_width             : ( 50%, ( 50%, 50%, 50%, 33.3% ) ),
+	//item-link
+	item-link_color        : lighten( #F00, 20% ),
+);

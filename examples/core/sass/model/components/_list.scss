@@ -1,0 +1,38 @@
+$core-model-list: (
+	//container
+	container_background-color             : null,
+	container_border-color                 : null,
+	container_border-style                 : null,
+	container_border-width                 : null,
+	container_color                        : null,
+	container_margin                       : null,
+	container_padding                      : null,
+	
+	//item 
+	item_clear                             : null,
+	item_float                             : null,
+	item_width                             : null,
+	
+	//item-link
+	item-link_background-color             : null,
+	item-link_border-color                 : null,
+	item-link_border-style                 : null,
+	item-link_border-width                 : null,
+	item-link_color                        : null,
+	item-link_margin                       : null,
+	item-link_padding                      : null,
+	//item-link hover state
+	item-link_is-hover_text-decoration     : null,
+	
+	//item-headline
+	item-headline_color                    : null,
+	item-headline_font-family              : null,
+	item-headline_font-size                : null,
+	item-headline_font-style               : null,
+	item-headline_font-weight              : null,
+	item-headline_line-height              : null,
+	item-headline_letter-spacing           : null,
+	item-headline_margin                   : null,
+	//item-headline hover state
+	item-headline_is-hover_text-decoration : null,
+);

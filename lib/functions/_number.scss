@@ -1,33 +1,30 @@
-/**
- * Additional functions to handle Number object in SASS.
- */
+//**
+// Additional functions to handle Number object in SASS.
 
-/**
- * Returns value without unit
- * Params
- * 	$number (Sass::Script::Value::Number)
- * Returns
- * 	(Sass::Script::Value::Number)
- * Example
- * 	unit-remove(100px) => 100
- */
+//**
+// Returns value without unit
+// Params
+// 	$number (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Number)
+// Example
+// 	unit-remove(100px) => 100
 @function unit-remove($number) {
-	@return $number / ($number * 0 + 1);
+	@return $number / ( $number/ 0 + 1 );
 }
 
-/**
- * Converts Number with various unit to Number with "rem" unit
- * Supported units "", "px", "rem", "" is treated as "rem"
- * Params
- * 	$number (Sass::Script::Value::Number)
- * 	$font-size-base (Sass::Script::Value::Number)
- * Returns
- * 	(Sass::Script::Value::Number)
- * Example
- * 	unit-convert-rem(1, 10px) => 1rem
- * 	unit-convert-rem(10px, 10px) => 1rem
- * 	unit-convert-rem(1rem, 10px) => 1rem
- */
+//**
+// Converts Number with various unit to Number with "rem" unit
+// Supported units "", "px", "rem", "" is treated as "rem"
+// Params
+// 	$number (Sass::Script::Value::Number)
+// 	$font-size-base (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Number)
+// Example
+// 	unit-convert-rem(1, 10px) => 1rem
+// 	unit-convert-rem(10px, 10px) => 1rem
+// 	unit-convert-rem(1rem, 10px) => 1rem
 @function unit-convert-rem($number, $font-size-base: 16px) {
 	@if unit( $font-size-base ) != "px" {
 		@warn "$font-size-base:" $font-size-base "has to be px value";
@@ -49,7 +46,7 @@
 		@return $numberUnitless + 0rem;
 	}
 	@else if $numberUnit == "px" {
-		@return $numberUnitless / strip-unit($font-size-base)) + 0rem;
+		@return $numberUnitless / strip-unit( $font-size-base ) + 0rem;
 	}
 	@else {
 		@warn "$number:" $number "cannot be converted to px";

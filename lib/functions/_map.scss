@@ -1,19 +1,17 @@
-/**
- * Additional functions to handle Map object in SASS.
- */
+//**
+// Additional functions to handle Map object in SASS.
 
-/**
- * Overwrite keys from $map1 with keys from map $map2
- * Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
- * Params
- * 	$map1 (Sass::Script::Value::Base)
- * 	$map2 (Sass::Script::Value::Base)
- * 	$showWarnings (Sass::Script::Value::Bool) 
- * Returns
- * 	(Sass::Script::Value::Base) 
- * Example
- * 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
- */
+//**
+// Overwrite keys from $map1 with keys from map $map2
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// Params
+// 	$map1 (Sass::Script::Value::Base)
+// 	$map2 (Sass::Script::Value::Base)
+// 	$showWarnings (Sass::Script::Value::Bool) 
+// Returns
+// 	(Sass::Script::Value::Base) 
+// Example
+// 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
 @function map-overwrite($map1, $map2, $showWarnings: true) {
 	$result: ();
 
@@ -29,18 +27,17 @@
 	@return map-merge( $map1, $result );
 }
 
-/**
- * Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
- * Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
- * Params
- * 	$map1 (Sass::Script::Value::Base)
- * 	$map2 (Sass::Script::Value::Base)
- * 	$showWarnings (Sass::Script::Value::Bool) 
- * Returns
- * 	(Sass::Script::Value::Base) 
- * Example
- * 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
- */
+//**
+// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// Params
+// 	$map1 (Sass::Script::Value::Base)
+// 	$map2 (Sass::Script::Value::Base)
+// 	$showWarnings (Sass::Script::Value::Bool) 
+// Returns
+// 	(Sass::Script::Value::Base) 
+// Example
+// 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
 @function map-unique($map1, $map2, $showWarnings: true) {
 	$result: ();
 
@@ -56,17 +53,15 @@
 	@return $result;
 }
 
-
-/**
- * Returns $value on $n key in $map if found, null if not found
- * Params
- * 	$map (Sass::Script::Value::Base)
- * 	$n (Sass::Script::Value::Number)
- * Returns
- * 	(Sass::Script::Value::Base) 
- * Example
- * 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
- */
+//**
+// Returns $value on $n key in $map if found, null if not found
+// Params
+// 	$map (Sass::Script::Value::Base)
+// 	$n (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Base) 
+// Example
+// 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
 @function map-nth( $map, $n ) {
 	$index: 1;
 
@@ -78,22 +73,21 @@
 		@if $n == $index {
 			@return $value;
 		}
+		$index: $index + 1;
 	}
 
 	@return null;
 }
 
-
-/**
- * Returns the index of the $key in $map
- * Params
- * 	$map (Sass::Script::Value::Base)
- * 	$key (Sass::Script::Value::String)
- * Returns
- * 	(Sass::Script::Value::Number) 
- * Example
- * 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
- */
+//**
+// Returns the index of the $key in $map
+// Params
+// 	$map (Sass::Script::Value::Base)
+// 	$key (Sass::Script::Value::String)
+// Returns
+// 	(Sass::Script::Value::Number) 
+// Example
+// 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
 @function map-index( $map, $key ) {
 	$keys: map-keys( $map );
 

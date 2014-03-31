@@ -13,40 +13,46 @@ Before you will dig into details please note that this pattern and set of tools 
 It will be hard to create fully working version of MVC pattern in SASS, in the end it generates static .css files but some of the principals can be achieved. First start with initial file structure of our project, it will contain our data *model* as well as a *view* that will be stored in `core` folder and our SASS *controller* in `theme` folder. To make this more readable we will be creating css files for two components: *list*, *navigation* and one page *home*. 
 
 	|- core
-	    |   |- model
-	    |       |- components
-	    |       	|- _list.scss
-	    |       	|- _navigation.scss
-	    |       |- pages
-    	|       	|- _home.scss
-	    |	|- view
-	    |       |- components
-	    |       	|- _list.scss
-	    |       	|- _navigation.scss
-	    |       |- pages
-    	|       	|- _home.scss
-	    |- _functions.scss
-	    |- _mixins.scss
-	    |- _variables.scss
-    |- theme
-     	|   |- model
-	    |      |- components
-	    |       	|- _list.scss
-	    |       	|- _navigation.scss
-	    |       |- pages
-    	|       	|- _home
-	    |	|- view
-	    |		|- components
-	    |       	|- list.scss
-	    |       	|- navigation.scss
-	    |       |- pages
-    	|       	|- home.scss
-	    |- _variables.scss
+		|	|- model
+		|		|- components
+		|			|- _list.scss
+		|			|- _navigation.scss
+		|		|- pages
+		|			|- _home.scss
+		|	|- view
+		|		|- components
+		|			|- _list.scss
+		|			|- _navigation.scss
+		|		|- pages
+		|			|- _home.scss
+		|- _core.scss
+		|- _functions.scss
+		|- _mixins.scss
+		|- _variables.scss
+	|- theme
+		|	|- model
+		|		|- components
+		|			|- _list.scss
+		|			|- _navigation.scss
+		|		|- pages
+		|			|- _home
+		|	|- view
+		|		|- components
+		|			|- list.scss
+		|			|- navigation.scss
+		|		|- pages
+		|			|- home.scss
+		|- _functions.scss
+		|- _mixins.scss
+		|- _variables.scss
+		|- _theme.scss
 
 
 * `core/model` should contain all the definitions that can be used for styling our components, it should consist CSS attributes that are meaningful from look & feel perspective, this will mean different per component, project or specific requirements and should be a mixture of common sense, experience of the developer and level of knowledge of UX, Designers that we will co-operate with. 
 
 * `core/view` should contain mixins that will make a use of values declared in `core/model` files and create required css declarations within proper css selectors. It also should contain all computation of values, transforms or any additional logic that is used when view for specific version of component is computed.
+
+* `core/_core.scss` contains all references to views and models.
 
 * `core/_functions.scss` contains all functions used within project, and should include or extend MVS functions.
 
@@ -57,6 +63,12 @@ It will be hard to create fully working version of MVC pattern in SASS, in the e
 * `theme/model` should contain sets of values used for creating different versions of the component.
 
 * `theme/view` should contain calls of mixins from `core/view` with specific sets of model data from `theme/model` within properly nested css selectors.
+
+* `theme/_theme.scss` contains all references to theme views, models and `core/_core.scss`. Can contain theme placeholder selectors.
+
+* `theme/_functions.scss` contains all functions used within theme, it extends and overwrites functions from  `core/_functions.scss`.
+
+* `theme/_mixins.scss` contains all local variables used within theme, it extends and overwrites mixins from `core/_mixins.scss`.
 
 * `theme/_variables.scss` contains all local variables used within theme, it extends and overwrites settings from `core/_variables.scss`.
 
@@ -303,6 +315,7 @@ $core-model-list: (
 	item-headline_margin                   : null,
 	//item-headline hover state
 	item-headline_is-hover_text-decoration : null,
+);
 ```
 
 All defined values are `null` because we want to facilitate another function of SASS that skips generating css attributes when they are null, and in case of any checking `@if null` is `false` is sass that is handy when we are adding logic to our values.
@@ -322,6 +335,7 @@ $theme-model-list: (
 	
 	//item-link
 	item-link_color                        : lighten(#000, 20%),
+);
 ```
 
 We can use any of the values defined in `core/model` folder. This set will be a base for all of custom versions of component within one `theme` folder.
@@ -343,6 +357,7 @@ $theme-model-list-ver_1: (
 
 	//item-link
 	item-link_color                        : lighten( #F00, 20% ),
+);
 ```
 
 ### MVS component mixins
@@ -360,17 +375,17 @@ To facilitate all that data we need to create a `mixin` per each component in `c
 	}
 
 	ul {
-		@include mvs-respond( background-color, map-get ( $model-list, container_background-color ) );
-		@include mvs-respond( border-color, map-get ( $model-list, container_border-color ) );
-		@include mvs-respond( border-style, map-get ( $model-list, container_border-style ) );
-		@include mvs-respond( border-width, map-get ( $model-list, container_border-width ) );
-		@include mvs-respond( color, map-get ( $model-list, container_color ) );
-		@include mvs-respond( margin, map-get ( $model-list, container_margin ) );
-		@include mvs-respond( padding, map-get ( $model-list, container_padding ) );
+		@include mvs-respond( background-color, map-get( $model-list, container_background-color ) );
+		@include mvs-respond( border-color, map-get( $model-list, container_border-color ) );
+		@include mvs-respond( border-style, map-get( $model-list, container_border-style ) );
+		@include mvs-respond( border-width, map-get( $model-list, container_border-width ) );
+		@include mvs-respond( color, map-get( $model-list, container_color ) );
+		@include mvs-respond( margin, map-get( $model-list, container_margin ) );
+		@include mvs-respond( padding, map-get( $model-list, container_padding ) );
 	}
 
 	li {
-		@if $isInitial {
+		@if $is-initial {
 			display: block
 		}
 
@@ -404,7 +419,7 @@ This creates a map with values that will be used within body of the component mi
 
 ```sass
 li {
-	@if $isInitial {
+	@if $is-initial {
 		display: block
 	}
 }
@@ -416,13 +431,13 @@ This creates css attribute with value that will be exact the same for all versio
 
 ```sass
 ul {
-	@include mvs-respond( background-color, map-get ( $model-list, container_background-color ) );
-	@include mvs-respond( border-color, map-get ( $model-list, container_border-color ) );
-	@include mvs-respond( border-style, map-get ( $model-list, container_border-style ) );
-	@include mvs-respond( border-width, map-get ( $model-list, container_border-width ) );
-	@include mvs-respond( color, map-get ( $model-list, container_color ) );
-	@include mvs-respond( margin, map-get ( $model-list, container_margin ) );
-	@include mvs-respond( padding, map-get ( $model-list, container_padding ) );
+	@include mvs-respond( background-color, map-get( $model-list, container_background-color ) );
+	@include mvs-respond( border-color, map-get( $model-list, container_border-color ) );
+	@include mvs-respond( border-style, map-get( $model-list, container_border-style ) );
+	@include mvs-respond( border-width, map-get( $model-list, container_border-width ) );
+	@include mvs-respond( color, map-get( $model-list, container_color ) );
+	@include mvs-respond( margin, map-get( $model-list, container_margin ) );
+	@include mvs-respond( padding, map-get( $model-list, container_padding ) );
 }
 ```
 
@@ -511,6 +526,7 @@ Within `theme/view` we create files that refer corresponding files from `theme/m
 	&.red-columns {
 		@include list( $theme-model-list-ver_1 );
 	}
+}
 ```
 
 We can extend this even further and we can create a specific version by merging in-line values with maps that are already defined. Imagine that we have a `list` component on home page that should have no border and it should extend version of `.list.red-columns`. We can do it be calling following code:

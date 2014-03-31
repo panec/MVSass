@@ -1,0 +1,11 @@
+@import "../../theme";
+
+@import "../../model/components/list";
+
+.list {
+	@include list( $theme-model-list, $is-initial: true );
+
+	&.red-columns {
+		@include list( $theme-model-list-ver_1 );
+	}
+}

@@ -1,0 +1,33 @@
+@import "../../model/components/list";
+
+@mixin list( $model-list: $core-model-list, $is-initial: false ) {
+    @if $is-initial {
+        $model-list: map-overwrite( $core-model-list, $model-list );
+        $core-model-list: $model-list !global;
+    }
+    @else {
+        $model-list: map-unique( $core-model-list, $model-list );
+    }
+
+    ul {
+        @include mvs-respond( background-color, map-get( $model-list, container_background-color ) );
+        @include mvs-respond( border-color, map-get( $model-list, container_border-color ) );
+        @include mvs-respond( border-style, map-get( $model-list, container_border-style ) );
+        @include mvs-respond( border-width, map-get( $model-list, container_border-width ) );
+        @include mvs-respond( color, map-get( $model-list, container_color ) );
+        @include mvs-respond( margin, map-get( $model-list, container_margin ) );
+        @include mvs-respond( padding, map-get( $model-list, container_padding ) );
+    }
+
+    li {
+        @if $is-initial {
+            display: block
+        }
+
+        @include mvs-respond-map( "item_", $model-list );
+
+        a {
+            @include mvs-respond-map( "item-link_", $model-list, " li", 1 );
+        }
+    }
+}
