@@ -6,6 +6,12 @@
 
 @import "mixins";
 
+@import "model/components/list";
+@import "model/components/navigation";
+
+@import "model/pages/home";
+
 @import "view/components/list";
 @import "view/components/navigation";
+
 @import "view/pages/home";

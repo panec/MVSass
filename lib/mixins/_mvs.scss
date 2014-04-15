@@ -2,11 +2,11 @@
 // MVS mixins
 
 //**
-// Private mixin for handling rendering css properties with values
+// Private mixin for handling rendering css with Compass mixins
 // Params
 // 	$property (Sass::Script::Value::String)
 // 	$value (Sass::Script::Value::Base)
-@mixin -mvs-respond( $property, $value ) {
+@mixin -mvs-respond-compass( $property, $value ) {
 	//https://github.com/nex3/sass/issues/626#issuecomment-39012395 Feature under consideration SASS 3.4
 	// @if mixin-exists( $property ) {
 	// 	@include #{ $property }( $value );
@@ -18,6 +18,30 @@
 	}
 	@else {
 		#{$property}: $value;
+	}
+}
+
+//**
+// Private mixin for handling rendering css properties with values in MVS syntax
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
+// 	$value (Sass::Script::Value::Base)
+// 	$selector (Sass::Script::Value::Base)
+// 	$depth (Sass::Script::Value::Base)
+// 	$nthSelector (Sass::Script::Value::Base)
+@mixin -mvs-respond( $property, $value, $selector: null, $depth: 0, $nthSelector: null ) {
+	@if type-of( $property ) != "null" and type-of( $value ) != "null" {
+		@if type-of( $selector ) == "string" and ( $selector != null or $selector != "" ) {
+			@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
+				@include -mvs-respond-compass( $property, $value );
+			}
+		}
+		@else {
+			@include mvs-parent( "#{$nthSelector}", false, $depth ) {
+				@include -mvs-respond-compass( $property, $value );
+			}
+		}
 	}
 }
 
@@ -38,8 +62,8 @@
 @mixin mvs-respond( $property, $values, $selector: null, $depth: 0 ) {
 	
 	@if $property == "font-family" or $property == "font" {
-		@warn "MVS syntax does not support font& font-family property";
-		@include -mvs-respond( $property, $values );
+		@warn "MVS syntax does not support font & font-family property";
+		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
 	@else {
 		$values                  : if( list-separator($values) == "space", ( $values, ), $values );
@@ -47,7 +71,7 @@
 		$defaultValue            : nth($values, 1);
 		$screen-breakpoints-keys : map-keys( $screen-breakpoints );
 
-		@include -mvs-respond( $property, $defaultValue );
+		@include -mvs-respond( $property, $defaultValue, $selector, $depth );
 
 		@if $length > 1 {
 			@for $i from 2 through $length {
@@ -77,27 +101,13 @@
 							$lastValue : $currentValue;
 
 							@include respond-to( nth( $screen-breakpoints-keys, $j ) ) {
-								@include -mvs-respond( $property, $lastValue );
+								@include -mvs-respond( $property, $lastValue, $selector, $depth );
 							}
 						}
 					}
 					@else {
 						@include respond-to( nth( $screen-breakpoints-keys, $j ), $is-specific: true ){
-							@if ( type-of( $selector ) == "string" or type-of( $selector ) == "null" ) and $nthSelector != "" and $depth >= 0 {
-								@if $selector == null or $selector == "" {
-									@include mvs-parent( "#{$selector}#{$nthSelector}", false, $depth ) {
-										@include -mvs-respond($property, $currentValue);
-									}
-								}
-								@else {
-									@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
-										@include -mvs-respond( $property, $currentValue );
-									}
-								}
-							}
-							@else {
-								@include -mvs-respond( $property, $currentValue );
-							}
+							@include -mvs-respond($property, $currentValue, $selector, $depth, $nthSelector);
 						}
 					}
 				}
@@ -150,12 +160,25 @@
 		}
 	}
 	@else {
-		@media only screen and ( max-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
 	}
 }
 
 //Based on http://sassmeister.com/gist/7786284
 //http://www.youtube.com/watch?feature=player_detailpage&v=-ZJeOJGazgE#t=1846
+
+//**
+// Injects or appends $selector into parent selector on position defined by $depth starting from last
+// Params
+// 	$selector (Sass::Script::Value::String)
+// 	$inject (Sass::Script::Value::Bool)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	.parent .item { mvs-parent( ":hover", true ) } => .parent .item :hover
+// 	.parent .item { mvs-parent( ":hover", false ) } => .parent .item:hover
+// 	.parent .item { mvs-parent( " .test", true ) } => .parent .item .test
+// 	.parent .item { mvs-parent( ":hover", false, 1 ) } => .parent .item:hover
+// 	.parent .item { mvs-parent( " .test", true, 1 ) } => .parent .test .item
 @mixin mvs-parent( $selector, $inject: true, $depth: 0 ) {
 	@if $depth > 0 {
 		@at-root {

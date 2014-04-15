@@ -1,0 +1,20 @@
+@import "../../ref";
+
+.page-home {
+
+	// &:after {
+	// 	@include mvs-respond-map( "body-breakpoints-indicator_", $theme-model-page-home );
+	// }
+
+	// .body-container {
+	// 	@include mvs-respond-map( "body-container_", $theme-model-page-home );
+	// }
+
+	// .list_1,
+	// .list_2 {
+	// 	@include list( (
+	// 		component_float : ( null, ( null, null, null, left, left ) ),
+	// 		component_width : ( null, ( null, null, null, 50%, 50% ) ),
+	// 	) );
+	// }
+}

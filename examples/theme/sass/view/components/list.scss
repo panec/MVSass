@@ -1,11 +1,9 @@
-@import "../../theme";
-
-@import "../../model/components/list";
+@import "../../ref";
 
 .list {
-	@include list( $theme-model-list, $is-initial: true );
+	@include list( $theme-model-list-component, $is-initial: true );
 
-	&.red-columns {
-		@include list( $theme-model-list-ver_1 );
+	&.list_1 {
+		@include list( $theme-model-list-component-ver_1 );
 	}
 }

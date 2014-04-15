@@ -1,0 +1,15 @@
+$theme-model-page-home: (
+	body-breakpoints-indicator_display          : block,
+	body-breakpoints-indicator_position         : fixed,
+	body-breakpoints-indicator_bottom           : 10px,
+	body-breakpoints-indicator_left             : 10px,
+	body-breakpoints-indicator_padding          : 10px,
+	body-breakpoints-indicator_background-color : #DEDEDE,
+	body-breakpoints-indicator_font-size        : 2rem,
+	body-breakpoints-indicator_font-family      : ( Monaco, Consolas, "Lucida Console", monospace ),
+	body-breakpoints-indicator_z-index          : 1000,
+	body-breakpoints-indicator_content          : ( "xxs", ( "xxs", "xs", "sm", "md", "lg" ) ),
+
+	body-container_margin                       : 0 auto,
+	body-container_width                        : ( auto, ( auto, auto, 740px, 960px, 1160px ) ),
+);
