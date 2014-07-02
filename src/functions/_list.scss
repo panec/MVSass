@@ -14,7 +14,7 @@
 // 	(Sass::Script::Value::List) 
 // Example
 // insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
-@function insert-nth($list, $index, $value) {
+@function insert-nth( $list, $index, $value ) {
 	$result: null;
 
 	@if type-of($index) != number {
@@ -46,7 +46,7 @@
 
 //**
 // by Hugo Giraudel
-@function slice($list, $start: 1, $end: length($list)) {
+@function slice( $list, $start: 1, $end: length($list) ) {
 	$result: null;
 
 	@if type-of($start) != number or type-of($end) != number {
@@ -89,13 +89,13 @@
 // Example
 // 	list-contain-numbers(1 10px 1rem 20px) => true
 // 	list-contain-numbers(1 #FFF 1rem 20px) => false
-@function list-contain-numbers($list) {
+@function list-contain-numbers( $list ) {
 	$isNumeric: true;
-	$length: length($list);
+	$length: length( $list );
 
 	@for $i from 1 through $length {
-		$value: nth($list, $i);
-		$isNumeric: $isNumeric and type-of($value) == "number";
+		$value: nth( $list, $i );
+		$isNumeric: $isNumeric and type-of( $value ) == "number";
 	}
 
 	@return $isNumeric;
@@ -110,9 +110,9 @@
 // Returns
 // 	(Sass::Script::Value::Base)
 // Example
-// 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem
-@function list-convert-rem($list, $font-size-base: 16px) {
-	$length: length($list);
+// 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem, 1rem
+@function list-convert-rem( $list, $font-size-base: 16px ) {
+	$length: length( $list );
 	$remValues: ();
 
 	@if unit( $font-size-base ) != "px" {
@@ -130,8 +130,29 @@
 	}
 
 	@if $length == 1 {
-		@return nth($remValues, 1);
+		@return nth( $remValues, 1 );
 	}
 
 	@return $remValues;
+}
+
+//**
+// Checks if parent selector (last item from parents selector) is within List
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Bool)
+// Example
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => true
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb" ) } => false
+// 	.aaa .bbb.ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => false
+@function list-contain-parent-selector( $list ) {
+	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
+
+	@each $selector in $list {
+		@if $parent == $selector {
+			@return true;
+		}
+	}
+	@return false;
 }

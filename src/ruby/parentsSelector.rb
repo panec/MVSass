@@ -1,5 +1,5 @@
 module Sass::Script::Functions
-	def parentSelector()
+	def parentsSelector()
 
 		def opts(value)
 			value.options = options
@@ -14,5 +14,5 @@ module Sass::Script::Functions
 			end, :space)
 		end, :comma))
 	end
-	declare :parentSelector, []
+	declare :parentsSelector, []
 end

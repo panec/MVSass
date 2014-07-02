@@ -60,8 +60,7 @@
 // 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li", 1 );
 // 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), "", 1 );
 @mixin mvs-respond( $property, $values, $selector: null, $depth: 0 ) {
-	
-	@if $property == "font-family" or $property == "font" {
+	@if $property == "font-family" or $property == "font" or $property == "z-index" {
 		@warn "MVS syntax does not support font & font-family property";
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
@@ -186,11 +185,11 @@
 			$path: "";
 			
 			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
-			@if function-exists( parentSelector ) {
-				$path: nth( parentSelector(), 1 ); 
+			@if function-exists( parentsSelector ) {
+				$path: nth( parentsSelector(), 1 ); 
 			}
 			@else {
-				@warn "Function 'parentSelector' does not exist. Check if your project uses custom Ruby script provided";
+				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided";
 			}
 
 			@if $inject {
