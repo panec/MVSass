@@ -10,7 +10,7 @@
         "src",
         ".gitignore",
         "bower.json",
-        "gulp.js",
+        "gulpfile.js",
         "package.json",
         "README.md"
     ],
