@@ -1,0 +1,21 @@
+{
+    "name": "MVSass",
+    "version": "0.0.1",
+    "main": [
+        "dist/mvsass.scss",
+        "dist/parentSelector.rb"
+    ],
+    "ignore": [
+        "examples",
+        "src",
+        ".gitignore",
+        "bower.json",
+        "gulp.js",
+        "package.json",
+        "README.md"
+    ],
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}

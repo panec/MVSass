@@ -4,12 +4,12 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('clean', function () {
-    return gulp.src(['mvsass.scss'], { read: false })
+    return gulp.src(['dist/'], { read: false })
         .pipe($.clean());
 });
 
 gulp.task('default', ['clean'], function () {
-    return gulp.src("src/**/*.scss")
+    gulp.src(["src/**/*.scss"])
       .pipe($.order([
         "_variables.scss",
         "functions/_number.scss",
@@ -20,5 +20,8 @@ gulp.task('default', ['clean'], function () {
         "mixins/_mvs.scss"
       ]))
       .pipe($.concat("mvsass.scss"))
-      .pipe(gulp.dest(""));
+      .pipe(gulp.dest("dist/"));
+
+    gulp.src(["src/ruby/*.rb"])
+      .pipe(gulp.dest("dist/"));
 });
