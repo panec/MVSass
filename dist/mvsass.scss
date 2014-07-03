@@ -107,7 +107,7 @@ $screen-breakpoints: (
 // 	(Sass::Script::Value::List) 
 // Example
 // insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
-@function insert-nth($list, $index, $value) {
+@function insert-nth( $list, $index, $value ) {
 	$result: null;
 
 	@if type-of($index) != number {
@@ -139,7 +139,7 @@ $screen-breakpoints: (
 
 //**
 // by Hugo Giraudel
-@function slice($list, $start: 1, $end: length($list)) {
+@function slice( $list, $start: 1, $end: length($list) ) {
 	$result: null;
 
 	@if type-of($start) != number or type-of($end) != number {
@@ -182,13 +182,13 @@ $screen-breakpoints: (
 // Example
 // 	list-contain-numbers(1 10px 1rem 20px) => true
 // 	list-contain-numbers(1 #FFF 1rem 20px) => false
-@function list-contain-numbers($list) {
+@function list-contain-numbers( $list ) {
 	$isNumeric: true;
-	$length: length($list);
+	$length: length( $list );
 
 	@for $i from 1 through $length {
-		$value: nth($list, $i);
-		$isNumeric: $isNumeric and type-of($value) == "number";
+		$value: nth( $list, $i );
+		$isNumeric: $isNumeric and type-of( $value ) == "number";
 	}
 
 	@return $isNumeric;
@@ -203,9 +203,9 @@ $screen-breakpoints: (
 // Returns
 // 	(Sass::Script::Value::Base)
 // Example
-// 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem
-@function list-convert-rem($list, $font-size-base: 16px) {
-	$length: length($list);
+// 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem, 1rem
+@function list-convert-rem( $list, $font-size-base: 16px ) {
+	$length: length( $list );
 	$remValues: ();
 
 	@if unit( $font-size-base ) != "px" {
@@ -223,10 +223,31 @@ $screen-breakpoints: (
 	}
 
 	@if $length == 1 {
-		@return nth($remValues, 1);
+		@return nth( $remValues, 1 );
 	}
 
 	@return $remValues;
+}
+
+//**
+// Checks if parent selector (last item from parents selector) is within List
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Bool)
+// Example
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => true
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb" ) } => false
+// 	.aaa .bbb.ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => false
+@function list-contain-parent-selector( $list ) {
+	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
+
+	@each $selector in $list {
+		@if $parent == $selector {
+			@return true;
+		}
+	}
+	@return false;
 }
 //**
 // Additional functions to handle Map object in SASS.
@@ -512,8 +533,7 @@ $screen-breakpoints: (
 // 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li", 1 );
 // 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), "", 1 );
 @mixin mvs-respond( $property, $values, $selector: null, $depth: 0 ) {
-	
-	@if $property == "font-family" or $property == "font" {
+	@if $property == "font-family" or $property == "font" or $property == "z-index" {
 		@warn "MVS syntax does not support font & font-family property";
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
@@ -638,11 +658,11 @@ $screen-breakpoints: (
 			$path: "";
 			
 			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
-			@if function-exists( parentSelector ) {
-				$path: nth( parentSelector(), 1 ); 
+			@if function-exists( parentsSelector ) {
+				$path: nth( parentsSelector(), 1 ); 
 			}
 			@else {
-				@warn "Function 'parentSelector' does not exist. Check if your project uses custom Ruby script provided";
+				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided";
 			}
 
 			@if $inject {
@@ -657,7 +677,6 @@ $screen-breakpoints: (
 		&#{$selector} { @content; }
 	}
 }
-
 @import "variables";
 
 @import "functions/number";

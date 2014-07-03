@@ -1,9 +1,9 @@
 {
     "name": "MVSass",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "main": [
         "dist/mvsass.scss",
-        "dist/parentSelector.rb"
+        "dist/parentsSelector.rb"
     ],
     "ignore": [
         "examples",
