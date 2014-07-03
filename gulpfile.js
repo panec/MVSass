@@ -27,15 +27,14 @@ gulp.task('styles', function () {
 });
 
 gulp.task('default', ['clean'], function () {
-    gulp.src(["src/**/*.scss"])
+    gulp.src(["src/**/*.scss", "!src/_mvs.scss"])
       .pipe($.order([
         "_variables.scss",
         "functions/_number.scss",
         "functions/_string.scss",
         "functions/_list.scss",
         "functions/_map.scss",
-        "functions/_mvs.scss",
-        "mixins/_mvs.scss"
+        "functions/_mvs.scss"
       ]))
       .pipe($.concat("mvsass.scss"))
       .pipe(gulp.dest("dist/"))
