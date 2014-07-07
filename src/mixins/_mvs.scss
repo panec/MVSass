@@ -152,7 +152,10 @@
 		$index: map-index( $screen-breakpoints, $breakpoint );
 		
 		@if $index < length( $screen-breakpoints ) {
-			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: map-nth( $screen-breakpoints, $index + 1 ) - 1 ) { @content; }
+			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
+			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
+			@media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+			// @media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: map-nth( $screen-breakpoints, $index + 1 ) - 1 ) { @content; }
 		}
 		@else {
 			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
