@@ -8,7 +8,10 @@
     "gulp-size": "^0.3.0",
     "gulp-order": "~1.1.1",
     "gulp-compass": "~1.1.9",
-    "gulp-concat": "~2.2.0"
+    "gulp-concat": "~2.2.0",
+    "gulp-combine-media-queries": "~0.1.0",
+    "gulp-csso": "~0.2.9",
+    "gulp-rename": "~1.2.0"
   },
   "repository": {
     "type": "git",

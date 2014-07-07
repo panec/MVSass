@@ -22,8 +22,15 @@ gulp.task('styles', function () {
         sass        : 'examples/theme/sass',
         require     : './src/ruby/parentsSelector.rb'
       }))
-      .pipe(gulp.dest('examples/theme/css'))
-      .pipe($.size());
+      .pipe($.size({ title: 'Example css before optimization' }))
+      .pipe($.rename(function (path) {
+        path.basename += ".opt";
+      }))
+      .pipe($.combineMediaQueries())
+      .pipe($.csso())
+      .pipe($.size({ title: 'Example css after optimization' }))
+      .pipe(gulp.dest('examples/theme/css'));
+
 });
 
 gulp.task('default', ['clean'], function () {
@@ -38,7 +45,7 @@ gulp.task('default', ['clean'], function () {
       ]))
       .pipe($.concat("mvsass.scss"))
       .pipe(gulp.dest("dist/"))
-      .pipe($.size());
+      .pipe($.size({ title: 'Combined mvsass.scss' }));
 
     gulp.src(["src/ruby/*.rb"])
       .pipe(gulp.dest("dist/"))
