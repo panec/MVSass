@@ -29,7 +29,7 @@
         @if $is-initial {
             display: block
         }
-        
+
         @include mvs-respond-map( "item-link_", $model-list, " .list-item", 1 );
         @include mvs-respond-map( "item-link_is-hover_", $model-list, " .list-item:hover", 1 );
     }
@@ -42,7 +42,7 @@
         @include mvs-respond-map( "item-img-container_", $model-list, " .list-item", 1 );
     }
 
-    .list-img { 
+    .list-img {
         @if $is-initial {
             display: block;
             width: 100%;

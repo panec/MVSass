@@ -1,9 +1,17 @@
 @import "../../ref";
 
+// .list {
+// 	@include list( $theme-model-list-component, $is-initial: true );
+
+// 	&.list_1 {
+// 		@include list( $theme-model-list-component-ver_1 );
+// 	}
+// }
+
 .list {
-	@include list( $theme-model-list-component, $is-initial: true );
+	@include list( $theme-model-list-component_syntax, $is-initial: true );
 
 	&.list_1 {
-		@include list( $theme-model-list-component-ver_1 );
+		@include list( $theme-model-list-component_syntax-ver_1 );
 	}
 }

@@ -55,11 +55,11 @@
 // 	$selector (Sass::Script::Value::String)
 // 	$depth (Sass::Script::Value::Number)
 // Example
-// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ) );
-// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li" );
-// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), " li", 1 );
-// 	mvs-respond( "border-width", 1px, ( 1px, 1px, 2px ), "", 1 );
-@mixin mvs-respond( $property, $values, $selector: null, $depth: 0 ) {
+// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ) );
+// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li" );
+// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li", 1 );
+// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), "", 1 );
+@mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
 	@if $property == "font-family" or $property == "font" or $property == "z-index" {
 		@warn "MVS syntax does not support font & font-family property";
 		@include -mvs-respond( $property, $values, $selector, $depth );
@@ -75,10 +75,10 @@
 		@if $length > 1 {
 			@for $i from 2 through $length {
 				$lastValue   : $defaultValue;
-				
+
 				$subValues   : nth($values, $i);
 				$subLenght   : length($subValues);
-				
+
 				$isNthSyntax : mvs-is-nth($subValues);
 				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
 
@@ -115,8 +115,27 @@
 	}
 }
 
+//TODO REFACTOR THIS CODE
+@mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
+	@each $property, $value in $map {
+
+		@if ( type-of( $value ) == "null" ) {
+			//skip
+		}
+		@else if ( type-of( $value ) == "list" ) {
+			@warn "This syntax is not supported, should be value or a map with key & values";
+		}
+		@else if ( type-of( $value ) == "map" ) {
+			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
+		}
+		@else {
+			@include -mvs-respond( $property, $value, $selector, $depth );
+		}
+	}
+}
+
 //**
-// Calls mvs-respond mixin against all keys in $map that contain only $prefix and css property
+// Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
 // Params
 // 	$prefix (Sass::Script::Value::String)
 // 	$map (Sass::Script::Value::Base)
@@ -131,8 +150,16 @@
 		@if str-index( $key, $prefix ) != null {
 			$property: str-slice( $key, $prefixLength + 1 );
 
-			@if ( str-index-last( $property, "_" ) == false ){
-				@include mvs-respond( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+			@if ( str-index-last( $property, "_" ) == false ) {
+				@if ( type-of( $value ) == "null" ) {
+					//skip
+				}
+				@else if ( type-of( $value ) == "map" ) {
+					@include mvs-respond-property-map( $value, $selector, $depth );
+				}
+				@else {
+					@include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+				}
 			}
 		}
 	}
@@ -150,7 +177,7 @@
 @mixin respond-to( $breakpoint, $is-specific: false) {
 	@if $is-specific {
 		$index: map-index( $screen-breakpoints, $breakpoint );
-		
+
 		@if $index < length( $screen-breakpoints ) {
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
 			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
@@ -186,10 +213,10 @@
 		@at-root {
 
 			$path: "";
-			
+
 			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
 			@if function-exists( parentsSelector ) {
-				$path: nth( parentsSelector(), 1 ); 
+				$path: nth( parentsSelector(), 1 );
 			}
 			@else {
 				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided";

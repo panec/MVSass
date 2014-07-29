@@ -93,7 +93,7 @@ $screen-breakpoints: (
 
 //**
 // Additional functions to handle List object in SASS.
-// Some of the function are borrowed from Hugo Giraudel and his technical blog 
+// Some of the function are borrowed from Hugo Giraudel and his technical blog
 // http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
 
 //**
@@ -102,9 +102,9 @@ $screen-breakpoints: (
 // Params
 // 	$list (Sass::Script::Value::Base)
 // 	$index (Sass::Script::Value::Number)
-// 	$value (Sass::Script::Value::Base) 
+// 	$value (Sass::Script::Value::Base)
 // Returns
-// 	(Sass::Script::Value::List) 
+// 	(Sass::Script::Value::List)
 // Example
 // insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
 @function insert-nth( $list, $index, $value ) {
@@ -258,9 +258,9 @@ $screen-breakpoints: (
 // Params
 // 	$map1 (Sass::Script::Value::Base)
 // 	$map2 (Sass::Script::Value::Base)
-// 	$showWarnings (Sass::Script::Value::Bool) 
+// 	$showWarnings (Sass::Script::Value::Bool)
 // Returns
-// 	(Sass::Script::Value::Base) 
+// 	(Sass::Script::Value::Base)
 // Example
 // 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
 @function map-overwrite($map1, $map2, $showWarnings: true) {
@@ -284,9 +284,9 @@ $screen-breakpoints: (
 // Params
 // 	$map1 (Sass::Script::Value::Base)
 // 	$map2 (Sass::Script::Value::Base)
-// 	$showWarnings (Sass::Script::Value::Bool) 
+// 	$showWarnings (Sass::Script::Value::Bool)
 // Returns
-// 	(Sass::Script::Value::Base) 
+// 	(Sass::Script::Value::Base)
 // Example
 // 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
 @function map-unique($map1, $map2, $showWarnings: true) {
@@ -310,7 +310,7 @@ $screen-breakpoints: (
 // 	$map (Sass::Script::Value::Base)
 // 	$n (Sass::Script::Value::Number)
 // Returns
-// 	(Sass::Script::Value::Base) 
+// 	(Sass::Script::Value::Base)
 // Example
 // 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
 @function map-nth( $map, $n ) {
@@ -336,7 +336,7 @@ $screen-breakpoints: (
 // 	$map (Sass::Script::Value::Base)
 // 	$key (Sass::Script::Value::String)
 // Returns
-// 	(Sass::Script::Value::Number) 
+// 	(Sass::Script::Value::Number)
 // Example
 // 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
 @function map-index( $map, $key ) {
@@ -548,10 +548,10 @@ $screen-breakpoints: (
 		@if $length > 1 {
 			@for $i from 2 through $length {
 				$lastValue   : $defaultValue;
-				
+
 				$subValues   : nth($values, $i);
 				$subLenght   : length($subValues);
-				
+
 				$isNthSyntax : mvs-is-nth($subValues);
 				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
 
@@ -623,7 +623,7 @@ $screen-breakpoints: (
 @mixin respond-to( $breakpoint, $is-specific: false) {
 	@if $is-specific {
 		$index: map-index( $screen-breakpoints, $breakpoint );
-		
+
 		@if $index < length( $screen-breakpoints ) {
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
 			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
@@ -659,10 +659,10 @@ $screen-breakpoints: (
 		@at-root {
 
 			$path: "";
-			
+
 			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
 			@if function-exists( parentsSelector ) {
-				$path: nth( parentsSelector(), 1 ); 
+				$path: nth( parentsSelector(), 1 );
 			}
 			@else {
 				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided";

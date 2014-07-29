@@ -1,78 +1,110 @@
 //http://colllor.com/244316
 
 $theme-model-list-component: (
-list-body_padding         : 0px,
-list-body_margin         : 0px,
+	list-body_padding        : 0px,
+	list-body_margin         : 0px,
 
-item-link_color: #000,
-item-link_text-decoration: none,
-item-link_padding: 5px,
+	item-link_color: #000,
+	item-link_text-decoration: none,
+	item-link_padding: 5px,
 
-item-link_border-color               : (
-	#000,
-	( ":nth-child(1)", rgba( #F00, 1) ),
-	( ":nth-child(2)", rgba( #0F0, 1) ),
-	( ":nth-child(3)", rgba( #00F, 1) ),
-	( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
-),
-item-link_border-style               : solid,
-item-link_border-width               : 1px,
+	item-link_border-color               : (
+		#000,
+		( ":nth-child(1)", rgba( #F00, 1) ),
+		( ":nth-child(2)", rgba( #0F0, 1) ),
+		( ":nth-child(3)", rgba( #00F, 1) ),
+		( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
+		),
+	item-link_border-style               : solid,
+	item-link_border-width               : 1px,
 
-item-header_color    : (
-	#000,
-	( ":nth-child(1)", rgba( #F00, 1) ),
-	( ":nth-child(2)", rgba( #0F0, 1) ),
-	( ":nth-child(3)", rgba( #00F, 1) ),
-	( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
-),
-item-header_is-hover_text-decoration : underline,
-	// //item-link
-	// item-link_color           : lighten(#000, 20%),
-	// item-link_text-decoration : none,
-	// item-link_padding: ( 20px, ( 20px, 20px, 15px, 10px ) ),
-
-
-
-
-
-
+	item-header_color    : (
+		#000,
+		( ":nth-child(1)", rgba( #F00, 1) ),
+		( ":nth-child(2)", rgba( #0F0, 1) ),
+		( ":nth-child(3)", rgba( #00F, 1) ),
+		( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
+		),
+	item-header_is-hover_text-decoration : underline,
 );
 
 $theme-model-list-component-ver_1: (
-
-
-item_background-color               : (
-	#FFF,
-	( ":nth-child(1)", invert( rgba( #F00, 1) ) ),
-	( ":nth-child(2)", invert( rgba( #0F0, 1) ) ),
-	( ":nth-child(3)", invert( rgba( #00F, 1) ) ),
-	( ":nth-child(n+4):nth-child(-n+7)", invert( rgba( #F0F, 1) ) ),
-),
-
-
-	// list-body_box-shadow: ( 0px 0px 20px #244316, ( 0px 0px 20px #244316, 0px 0px 20px #244316, 0px 0px 20px #3A6C23, 0px 0px 20px #539A32, 0px 0px 20px #6EC346 ) ),
-
-
-	// item-img-container_box-shadow: ( 0px 0px 20px #244316 inset, ( 0px 0px 20px #244316 inset, 0px 0px 20px #244316 inset, 0px 0px 20px #3A6C23 inset, 0px 0px 20px #539A32 inset, 0px 0px 20px #6EC346 inset) ),
-	// //item 
-item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left, null ), ( ":nth-child(2n+3)", left, left, left, null, left ) ),
-item_float             : left,
-item_width             : ( 50%, ( 50%, 33.3%, 25%, 20% ) ),
-	// //item-link
-	// item-link_color        : lighten( #F00, 20% ),
-
-	// item-img_position                       : relative,
-	// item-img_z-index                       : -1,
-	// item-img-container_border-radius: ( 0, ( 0, 0, 5px, 10px, 20px ) ),
+	item_background-color               : (
+		#FFF,
+		( ":nth-child(1)", invert( rgba( #F00, 1) ) ),
+		( ":nth-child(2)", invert( rgba( #0F0, 1) ) ),
+		( ":nth-child(3)", invert( rgba( #00F, 1) ) ),
+		( ":nth-child(n+4):nth-child(-n+7)", invert( rgba( #F0F, 1) ) ),
+		),
+	item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left, null ), ( ":nth-child(2n+3)", left, left, left, null, left ) ),
+	item_float             : left,
+	item_width             : ( 50%, ( 50%, 33.3%, 25%, 20% ) ),
 );
 
-$theme-model-list-component-ver_2: (
-	// list-body_border-color : #F00,
-	// list-body_border-style : dotted,
-	// //item 
-	// item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left ), ( ":nth-child(2n+3)", left, left, left, null ) ),
-	// item_float             : left,
-	// item_width             : ( 50%, ( 50%, 50%, 50%, 33.3% ) ),
-	// //item-link
-	// item-link_color        : lighten( #F00, 20% ),
+$theme-model-list-component_syntax: (
+	list-body_ : (
+		padding : 0px,
+		margin  : 0px,
+	),
+
+	item-link_ : (
+		color           : #000,
+		text-decoration : none,
+		padding         : 5px,
+		border-color    : (
+			default                           : #000,
+			":nth-child(1)"                   : rgba( #F00, 1 ),
+			":nth-child(2)"                   : rgba( #0F0, 1 ),
+			":nth-child(3)"                   : rgba( #00F, 1 ),
+			":nth-child(n+4):nth-child(-n+7)" : rgba( #F0F, 1 ),
+		),
+		border-style    : solid,
+		border-width    : 1px,
+	),
+
+	item-header_ : (
+		color : (
+			default                           : #000,
+			":nth-child(1)"                   : rgba( #F00, 1 ),
+			":nth-child(2)"                   : rgba( #0F0, 1 ),
+			":nth-child(3)"                   : rgba( #00F, 1 ),
+			":nth-child(n+4):nth-child(-n+7)" : rgba( #F0F, 1 ),
+		),
+	),
+
+	item-header_is-hover_: (
+		text-decoration : underline,
+	),
+);
+
+$theme-model-list-component_syntax-ver_1: (
+	item_: (
+		background-color : (
+			default                           : #FFF,
+			":nth-child(1)"                   : invert( rgba( #F00, 1 ) ),
+			":nth-child(2)"                   : invert( rgba( #0F0, 1 ) ),
+			":nth-child(3)"                   : invert( rgba( #00F, 1 ) ),
+			":nth-child(n+4):nth-child(-n+7)" : invert( rgba( #F0F, 1 ) ),
+		),
+
+		clear : (
+			default            : null, //should be optional
+			":nth-child(3n+4)" : (
+				default : null,
+				md      : left,
+			),
+			":nth-child(2n+3)": (
+				default : left,
+				md      : null, //will not work because will not overload default value, BUT nth syntah should not have default or we should pregenerate full list without default value!!!
+			),
+		),
+		float : left,
+		width : (
+			default : 20%,
+			xxs     : 50%,
+			xs      : 33.3%,
+			sm      : 25%,
+			md      : 20%, //obsolete add check if == default
+		)
+	)
 );

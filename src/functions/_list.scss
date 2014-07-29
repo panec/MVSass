@@ -1,6 +1,6 @@
 //**
 // Additional functions to handle List object in SASS.
-// Some of the function are borrowed from Hugo Giraudel and his technical blog 
+// Some of the function are borrowed from Hugo Giraudel and his technical blog
 // http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
 
 //**
@@ -9,9 +9,9 @@
 // Params
 // 	$list (Sass::Script::Value::Base)
 // 	$index (Sass::Script::Value::Number)
-// 	$value (Sass::Script::Value::Base) 
+// 	$value (Sass::Script::Value::Base)
 // Returns
-// 	(Sass::Script::Value::List) 
+// 	(Sass::Script::Value::List)
 // Example
 // insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
 @function insert-nth( $list, $index, $value ) {
@@ -74,6 +74,42 @@
 
 		@for $i from $start through $end {
 			$result: append($result, nth($list, $i));
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// by Hugo Giraudel
+@function replace-nth($list, $index, $value) {
+	$result: null;
+	$listSeparator: list-separator( $list );
+
+	@if type-of($index) != number {
+		@warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+	}
+
+	@else if $index == 0 {
+		@warn "List index 0 must be a non-zero integer for `replace-nth`.";
+	}
+
+	@else if abs($index) > length($list) {
+		@warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+	}
+
+	@else {
+		$result: ();
+		$index: if($index < 0, length($list) + $index + 1, $index);
+
+		@for $i from 1 through length($list) {
+			@if $i == $index {
+				$result: append($result, $value, $listSeparator);
+			}
+
+			@else {
+				$result: append($result, nth($list, $i), $listSeparator);
+			}
 		}
 	}
 

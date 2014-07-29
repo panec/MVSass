@@ -125,3 +125,52 @@
 
 	@return $result;
 }
+
+
+
+// default            : null, //should be optional
+// ":nth-child(3n+4)" : (
+// 	default : null,
+// 	md      : left,
+// ),
+//TODO This is not a perfect method because some of the information is lost, or wrongly generated
+//$skipDefault  returns only list of the mapped values againsta brakepoints
+@function mvs-map-to-list( $map, $skipDefault: false ){
+	$result: ();
+	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+	$screenBreakpointsKeysLenght : length( $screenBreakpointsKeys );
+
+	//Get default value
+	$default: map_get( $map, "default" );
+
+	//Append default value
+	$result: append( $result, $default, comma );
+
+	//Create "empty" list with default values
+	$subResult: ();
+	@for $index from 1 through $screenBreakpointsKeysLenght {
+		$subResult: append( $subResult, $default, comma );
+	}
+
+	//Update values of that list with valued set in map
+	@for $index from 1 through $screenBreakpointsKeysLenght {
+		@if map-has-key( $map, nth( $screenBreakpointsKeys, $index ) ){
+			$subResult: replace-nth( $subResult, $index, map_get( $map, nth( $screenBreakpointsKeys, $index ) ) );
+		}
+	}
+	$result: append( $result, $subResult, comma );
+
+	//Get nth values
+	@each $key, $value in $map {
+		@if mvs-is-nth( $key ) {
+			@if type-of( $value ) == "map" {
+				$result: append( $result, join( $key, mvs-map-to-list( $value, $skipDefault: true ), comma ), comma );
+			}
+			@else {
+				$result: append( $result, join( $key, $value, comma ), comma );
+			}
+		}
+	}
+
+	@return if( $skipDefault, $subResult, $result );
+}
