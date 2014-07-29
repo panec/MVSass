@@ -146,10 +146,13 @@
 	//Append default value
 	$result: append( $result, $default, comma );
 
-	//Create "empty" list with default values
+	//TODO Add settings to include support for syntax when they receive default setting or previous value
+
+	//Create null list with default values
 	$subResult: ();
 	@for $index from 1 through $screenBreakpointsKeysLenght {
-		$subResult: append( $subResult, $default, comma );
+		// $subResult: append( $subResult, $default, comma );
+		$subResult: append( $subResult, null, comma );
 	}
 
 	//Update values of that list with valued set in map
@@ -158,6 +161,21 @@
 			$subResult: replace-nth( $subResult, $index, map_get( $map, nth( $screenBreakpointsKeys, $index ) ) );
 		}
 	}
+
+
+	//Update null on the list to have previous value
+	@for $index from 1 through $screenBreakpointsKeysLenght {
+		@if nth( $subResult, $index ) == null {
+			@if $index == 1 {
+				$subResult: replace-nth( $subResult, $index, $default );
+			}
+			@else {
+				$subResult: replace-nth( $subResult, $index, nth( $subResult, $index - 1 ) );
+			}
+		}
+	}
+
+	//Append them to the result
 	$result: append( $result, $subResult, comma );
 
 	//Get nth values

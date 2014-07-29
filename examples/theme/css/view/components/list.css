@@ -217,6 +217,9 @@
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .list.list_1 .list-item:nth-child(3n+4) {
     clear: left; } }
+@media only screen and (min-width: 1200px) {
+  .list.list_1 .list-item:nth-child(3n+4) {
+    clear: left; } }
 @media only screen and (min-width: 0px) and (max-width: 479px) {
   .list.list_1 .list-item:nth-child(2n+3) {
     clear: left; } }
@@ -226,16 +229,16 @@
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .list.list_1 .list-item:nth-child(2n+3) {
     clear: left; } }
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .list.list_1 .list-item:nth-child(2n+3) {
+    clear: left; } }
 @media only screen and (min-width: 1200px) {
   .list.list_1 .list-item:nth-child(2n+3) {
     clear: left; } }
 .list.list_1 .list-item {
   float: left; }
 .list.list_1 .list-item {
-  width: 20%; }
-@media only screen and (min-width: 0px) {
-  .list.list_1 .list-item {
-    width: 50%; } }
+  width: 50%; }
 @media only screen and (min-width: 480px) {
   .list.list_1 .list-item {
     width: 33.3%; } }

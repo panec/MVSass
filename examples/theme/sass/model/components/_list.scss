@@ -36,7 +36,7 @@ $theme-model-list-component-ver_1: (
 		( ":nth-child(3)", invert( rgba( #00F, 1) ) ),
 		( ":nth-child(n+4):nth-child(-n+7)", invert( rgba( #F0F, 1) ) ),
 		),
-	item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left, null ), ( ":nth-child(2n+3)", left, left, left, null, left ) ),
+	item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left, left ), ( ":nth-child(2n+3)", left, left, left, null, left ) ),
 	item_float             : left,
 	item_width             : ( 50%, ( 50%, 33.3%, 25%, 20% ) ),
 );
@@ -96,15 +96,16 @@ $theme-model-list-component_syntax-ver_1: (
 			":nth-child(2n+3)": (
 				default : left,
 				md      : null, //will not work because will not overload default value, BUT nth syntah should not have default or we should pregenerate full list without default value!!!
+				lg      : left
 			),
 		),
 		float : left,
 		width : (
-			default : 20%,
+			default : 50%,
 			xxs     : 50%,
 			xs      : 33.3%,
 			sm      : 25%,
-			md      : 20%, //obsolete add check if == default
+			md      : 20%,
 		)
 	)
 );

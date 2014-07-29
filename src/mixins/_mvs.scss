@@ -126,6 +126,7 @@
 			@warn "This syntax is not supported, should be value or a map with key & values";
 		}
 		@else if ( type-of( $value ) == "map" ) {
+			@debug "$property" $property "map-to-list" mvs-map-to-list( $value );
 			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
 		}
 		@else {
