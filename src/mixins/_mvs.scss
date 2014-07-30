@@ -46,7 +46,7 @@
 }
 
 //**
-// Generates styles for property in MVS syntax
+// Generates styles for property in MVS list syntax
 // $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
 // $depth defines how many parent selectors skip to inject $selector
 // Params
@@ -115,22 +115,26 @@
 	}
 }
 
-//TODO REFACTOR THIS CODE
+//**
+// Generates styles for property in MVS map syntax
+// $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
+// $depth defines how many parent selectors skip to inject $selector
+// Params
+// 	$map (Sass::Script::Value::String)
+// 	$selector (Sass::Script::Value::String)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ) );
+// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li" );
+// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li", 1 );
+// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), "", 1 );
 @mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
 	@each $property, $value in $map {
-
-		@if ( type-of( $value ) == "null" ) {
-			//skip
-		}
-		@else if ( type-of( $value ) == "list" ) {
-			@warn "This syntax is not supported, should be value or a map with key & values";
-		}
-		@else if ( type-of( $value ) == "map" ) {
-			@debug "$property" $property "map-to-list" mvs-map-to-list( $value );
+		@if ( type-of( $value ) == "map" ) {
 			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
 		}
 		@else {
-			@include -mvs-respond( $property, $value, $selector, $depth );
+			@include mvs-respond-property-list( $property, $value, $selector, $depth );
 		}
 	}
 }
@@ -140,7 +144,7 @@
 // Params
 // 	$prefix (Sass::Script::Value::String)
 // 	$map (Sass::Script::Value::Base)
-// 	$selector (Sass::Script::Value::Bool)
+// 	$selector (Sass::Script::Value::String)
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );

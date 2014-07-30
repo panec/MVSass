@@ -126,15 +126,16 @@
 	@return $result;
 }
 
-
-
-// default            : null, //should be optional
-// ":nth-child(3n+4)" : (
-// 	default : null,
-// 	md      : left,
-// ),
-//TODO This is not a perfect method because some of the information is lost, or wrongly generated
-//$skipDefault  returns only list of the mapped values againsta brakepoints
+//**
+// Transponds MVS map syntax to list syntax, allows for nesting MVS map syntax for nth selector
+// Params
+// 	$map (Sass::Script::Value::Base)
+// 	$skipDefault (Sass::Script::Value::Bool)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	mvs-map-to-list( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ) => 50%, ( 50%, 33.3%, 25%, 20% )
+// 	mvs-map-to-list( default: null,	":nth-child(3n+4)": ( default: null, md: left ) ) => null, ( ":nth-child(3n+4)", null, null, null, left, left )
 @function mvs-map-to-list( $map, $skipDefault: false ){
 	$result: ();
 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
@@ -152,7 +153,7 @@
 	$subResult: ();
 	@for $index from 1 through $screenBreakpointsKeysLenght {
 		// $subResult: append( $subResult, $default, comma );
-		$subResult: append( $subResult, null, comma );
+		$subResult: append( $subResult, #{''}, comma ); //There is no real empty value
 	}
 
 	//Update values of that list with valued set in map
@@ -162,10 +163,9 @@
 		}
 	}
 
-
 	//Update null on the list to have previous value
 	@for $index from 1 through $screenBreakpointsKeysLenght {
-		@if nth( $subResult, $index ) == null {
+		@if nth( $subResult, $index ) == '' {
 			@if $index == 1 {
 				$subResult: replace-nth( $subResult, $index, $default );
 			}
@@ -178,7 +178,7 @@
 	//Append them to the result
 	$result: append( $result, $subResult, comma );
 
-	//Get nth values
+	//Get nth syntax values
 	@each $key, $value in $map {
 		@if mvs-is-nth( $key ) {
 			@if type-of( $value ) == "map" {

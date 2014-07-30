@@ -4,19 +4,13 @@
 .list .list-body:after {
   clear: both; }
 .list .list-body {
-  padding: 0px; }
-.list .list-body {
   margin: 0px; }
+.list .list-body {
+  padding: 0px; }
 .list .list-item {
   display: block; }
 .list .list-item-link {
   display: block; }
-  .list .list-item .list-item-link {
-    color: black; }
-  .list .list-item .list-item-link {
-    text-decoration: none; }
-  .list .list-item .list-item-link {
-    padding: 5px; }
   .list .list-item .list-item-link {
     border-color: black; }
   @media only screen and (min-width: 0px) and (max-width: 479px) {
@@ -83,6 +77,12 @@
     border-style: solid; }
   .list .list-item .list-item-link {
     border-width: 1px; }
+  .list .list-item .list-item-link {
+    color: black; }
+  .list .list-item .list-item-link {
+    padding: 5px; }
+  .list .list-item .list-item-link {
+    text-decoration: none; }
 .list .list-img-container {
   display: block; }
 .list .list-img {
@@ -227,9 +227,6 @@
   .list.list_1 .list-item:nth-child(2n+3) {
     clear: left; } }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  .list.list_1 .list-item:nth-child(2n+3) {
-    clear: left; } }
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
   .list.list_1 .list-item:nth-child(2n+3) {
     clear: left; } }
 @media only screen and (min-width: 1200px) {
