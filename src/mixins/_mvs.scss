@@ -60,8 +60,11 @@
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li", 1 );
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), "", 1 );
 @mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
-	@if $property == "font-family" or $property == "font" or $property == "z-index" {
-		@warn "MVS syntax does not support font & font-family property";
+	@if $values == null {
+		//skip
+	}
+	@else if $property == "font-family" or $property == "font" or $property == "z-index" {
+		@warn "MVS syntax does not support #{$property} property";
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
 	@else {
@@ -156,10 +159,7 @@
 			$property: str-slice( $key, $prefixLength + 1 );
 
 			@if ( str-index-last( $property, "_" ) == false ) {
-				@if ( type-of( $value ) == "null" ) {
-					//skip
-				}
-				@else if ( type-of( $value ) == "map" ) {
+				@if ( type-of( $value ) == "map" ) {
 					@include mvs-respond-property-map( $value, $selector, $depth );
 				}
 				@else {

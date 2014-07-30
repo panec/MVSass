@@ -52,7 +52,7 @@ $theme-model-list-component_syntax: (
 		text-decoration : none,
 		padding         : 5px,
 		border-color    : (
-			default                           : #000,
+			initial                           : #000,
 			":nth-child(1)"                   : rgba( #F00, 1 ),
 			":nth-child(2)"                   : rgba( #0F0, 1 ),
 			":nth-child(3)"                   : rgba( #00F, 1 ),
@@ -64,7 +64,7 @@ $theme-model-list-component_syntax: (
 
 	item-header_ : (
 		color : (
-			default                           : #000,
+			initial                           : #000,
 			":nth-child(1)"                   : rgba( #F00, 1 ),
 			":nth-child(2)"                   : rgba( #0F0, 1 ),
 			":nth-child(3)"                   : rgba( #00F, 1 ),
@@ -80,7 +80,7 @@ $theme-model-list-component_syntax: (
 $theme-model-list-component_syntax-ver_1: (
 	item_: (
 		background-color : (
-			default                           : #FFF,
+			initial                           : #FFF,
 			":nth-child(1)"                   : invert( rgba( #F00, 1 ) ),
 			":nth-child(2)"                   : invert( rgba( #0F0, 1 ) ),
 			":nth-child(3)"                   : invert( rgba( #00F, 1 ) ),
@@ -88,20 +88,20 @@ $theme-model-list-component_syntax-ver_1: (
 		),
 
 		clear : (
-			default            : null, //should be optional
+			initial            : null, //should be optional
 			":nth-child(3n+4)" : (
-				default : null,
+				initial : null,
 				md      : left,
 			),
 			":nth-child(2n+3)": (
-				default : left,
-				md      : null, //will not work because will not overload default value, BUT nth syntah should not have default or we should pregenerate full list without default value!!!
+				initial : left,
+				md      : null, //will not work because will not overload initial value, BUT nth syntah should not have initial or we should pregenerate full list without initial value!!!
 				lg      : left
 			),
 		),
 		float : left,
 		width : (
-			default : 50%,
+			initial : 50%,
 			xxs     : 50%,
 			xs      : 33.3%,
 			sm      : 25%,

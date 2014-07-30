@@ -8,10 +8,12 @@
 	}
 }
 
-// .list {
-// 	@include list( $theme-model-list-component_syntax, $is-initial: true );
+.list {
+	@include list( $theme-model-list-component_syntax, $is-initial: true );
 
-// 	&.list_1 {
-// 		@include list( $theme-model-list-component_syntax-ver_1 );
-// 	}
-// }
+	&.list_1 {
+		@include list( $theme-model-list-component_syntax-ver_1 );
+	}
+}
+
+@debug "sddssdsd" mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ), $onlyResponsiveList: true );
