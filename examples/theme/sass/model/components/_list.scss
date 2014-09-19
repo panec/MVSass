@@ -1,6 +1,10 @@
 //http://colllor.com/244316
 
 $theme-model-list-component: (
+	list-body_item: (
+		_color: red,
+	),
+
 	list-body_ellipsis       : ( true, ( true, true, false ) ),
 	list-body_padding        : 0px,
 	list-body_margin         : 0px,

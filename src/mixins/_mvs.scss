@@ -43,7 +43,7 @@
 // Params
 // 	$property (Sass::Script::Value::String)
 // 	$value (Sass::Script::Value::Base)
-@mixin -mvs-respond-custom( $property, $value ) {
+// @mixin -mvs-respond-custom( $property, $value ) {
 	// $mvsRespondMixinsGenerated: true !global;
 
 	// @if $property == custom and mixin-exists( $property ){
@@ -52,7 +52,7 @@
 	// @else {
 	// 	$mvsRespondMixinsGenerated: false !global;
 	// }
-}
+// }
 
 //**
 // Private mixin for iterating thru all custom mixin libraries
@@ -62,8 +62,8 @@
 @mixin -mvs-respond-mixins( $property, $value ) {
 	$mvsRespondMixinsGenerated: false !global;
 
-	@if $mvsRespondMixinsGenerated == false {
-		@include -mvs-respond-custom( $property, $value );
+	@if $mvsRespondMixinsGenerated == false and mixin-exists( "mvs-respond-custom" ) {
+		@include mvs-respond-custom( $property, $value );
 	}
 
 	@if $mvsRespondMixinsGenerated == false {
@@ -117,6 +117,8 @@
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li", 1 );
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), "", 1 );
 @mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
+	// @debug mvs-respond-property-list $property $values type-of( $values );
+
 	@if $values == null {
 		//skip
 	}
@@ -125,6 +127,7 @@
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
 	@else if type-of( $values ) == "map" {
+
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
 	@else {
@@ -192,6 +195,7 @@
 // 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li", 1 );
 // 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), "", 1 );
 @mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
+	// @debug mvs-respond-property-map $map;
 	@each $property, $value in $map {
 		@if ( type-of( $value ) == "map" ) {
 			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
@@ -217,19 +221,16 @@
 	@each $key, $value in $map {
 		@if str-index( $key, $prefix ) != null {
 			$property: str-slice( $key, $prefixLength + 1 );
-
-
-
 			@if ( str-index-last( $property, "_" ) == false ) {
-
-
-
-				@if ( type-of( $value ) == "map" ) {
-					// @debug test $value;
+				//TODO Add logic to recognize custom mixin map from extended nth syntax map
+				@if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
+					@debug $property this is a supported mixin that has a map values ;
+					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+				}
+				@else if ( type-of( $value ) == "map" ) {
 					@include mvs-respond-property-map( $value, $selector, $depth );
 				}
 				@else {
-					// @debug test2 str-slice( $key, $prefixLength + 1 );
 					@include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
 				}
 			}

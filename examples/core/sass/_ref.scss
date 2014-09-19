@@ -6,10 +6,15 @@
 
 @import "mixins";
 
+@import "model/modules/item";
+
 @import "model/components/list";
 @import "model/components/navigation";
 
 @import "model/pages/home";
+
+
+@import "view/modules/item";
 
 @import "view/components/list";
 @import "view/components/navigation";

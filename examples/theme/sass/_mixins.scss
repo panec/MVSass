@@ -1,0 +1,16 @@
+@mixin mvs-respond-custom( $property, $value ) {
+	$mvsRespondMixinsGenerated: true !global;
+
+	@if $property == "item" {
+		@debug custom mixin check $property mixin-exists( $property );
+	}
+
+
+	@if $property == "item" and mixin-exists( $property ){
+
+		@include item( $value );
+	}
+	@else {
+		$mvsRespondMixinsGenerated: false !global;
+	}
+}
