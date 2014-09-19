@@ -1,12 +1,12 @@
 @import "../../ref";
 
-.list {
-	@include list( $theme-model-list-component, $is-initial: true );
+// .list {
+// 	@include list( $theme-model-list-component, $is-initial: true );
 
-	&.list_1 {
-		@include list( $theme-model-list-component-ver_1 );
-	}
-}
+// 	&.list_1 {
+// 		@include list( $theme-model-list-component-ver_1 );
+// 	}
+// }
 
 .list {
 	@include list( $theme-model-list-component_syntax, $is-initial: true );
@@ -16,4 +16,8 @@
 	}
 }
 
-@debug "sddssdsd" mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ), $onlyResponsiveList: true );
+// @debug "sddssdsd" mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ), $onlyResponsiveList: true );
+
+.test {
+	@include list( $theme-model-list-component, $is-initial: true );
+}

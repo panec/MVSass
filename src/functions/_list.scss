@@ -117,6 +117,12 @@
 }
 
 //**
+// by Hugo Giraudel
+@function is($value, $values) {
+	@return not not index($values, $value);
+}
+
+//**
 // Checks if all values on List are Number
 // Params
 // 	$list (Sass::Script::Value::Base)

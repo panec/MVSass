@@ -1,66 +1,66 @@
 @mixin list( $model-list: $core-model-list, $is-initial: false ) {
-    @if $is-initial {
-        $model-list: map-overwrite( $core-model-list, $model-list );
-        $core-model-list: $model-list !global;
-    }
-    @else {
-        $model-list: map-unique( $core-model-list, $model-list );
-    }
+	@if $is-initial {
+		$model-list: map-overwrite( $core-model-list, $model-list );
+		$core-model-list: $model-list !global;
+	}
+	@else {
+		$model-list: map-unique( $core-model-list, $model-list );
+	}
 
-    @include mvs-respond-map( "component_", $model-list );
+	@include mvs-respond-map( "component_", $model-list );
 
-    .list-body {
-        @if $is-initial {
-            @include clearfix;
-        }
+	.list-body {
+		@if $is-initial {
+			@include clearfix;
+		}
 
-        @include mvs-respond-map( "list-body_", $model-list );
-    }
+		@include mvs-respond-map( "list-body_", $model-list );
+	}
 
-    .list-item {
-        @if $is-initial {
-            display: block
-        }
+	.list-item {
+		@if $is-initial {
+			display: block
+		}
 
-        @include mvs-respond-map( "item_", $model-list );
-    }
+		@include mvs-respond-map( "item_", $model-list );
+	}
 
-    .list-item-link {
-        @if $is-initial {
-            display: block
-        }
+	.list-item-link {
+		@if $is-initial {
+			display: block
+		}
 
-        @include mvs-respond-map( "item-link_", $model-list, " .list-item", 1 );
-        @include mvs-respond-map( "item-link_is-hover_", $model-list, " .list-item:hover", 1 );
-    }
+		@include mvs-respond-map( "item-link_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-link_is-hover_", $model-list, " .list-item:hover", 1 );
+	}
 
-    .list-img-container {
-        @if $is-initial {
-            display: block
-        }
+	.list-img-container {
+		@if $is-initial {
+			display: block
+		}
 
-        @include mvs-respond-map( "item-img-container_", $model-list, " .list-item", 1 );
-    }
+		@include mvs-respond-map( "item-img-container_", $model-list, " .list-item", 1 );
+	}
 
-    .list-img {
-        @if $is-initial {
-            display: block;
-            width: 100%;
-        }
+	.list-img {
+		@if $is-initial {
+			display: block;
+			width: 100%;
+		}
 
-        @include mvs-respond-map( "item-img_", $model-list, " .list-item", 1 );
-    }
+		@include mvs-respond-map( "item-img_", $model-list, " .list-item", 1 );
+	}
 
-    .list-item-body {
-        @include mvs-respond-map( "item-body_", $model-list, " .list-item", 1 );
-    }
+	.list-item-body {
+		@include mvs-respond-map( "item-body_", $model-list, " .list-item", 1 );
+	}
 
-    .list-item-header {
-        @include mvs-respond-map( "item-header_", $model-list, " .list-item", 1 );
-        @include mvs-respond-map( "item-header_is-hover_", $model-list, " .list-item:hover", 1 );
-    }
+	.list-item-header {
+		@include mvs-respond-map( "item-header_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-header_is-hover_", $model-list, " .list-item:hover", 1 );
+	}
 
-    .list-item-desc {
-        @include mvs-respond-map( "item-desc_", $model-list, " .list-item", 1 );
-    }
+	.list-item-desc {
+		@include mvs-respond-map( "item-desc_", $model-list, " .list-item", 1 );
+	}
 }
