@@ -1,6 +1,8 @@
 //**
 // MVS mixins
 
+
+
 //**
 // Private mixin for handling rendering css with Compass mixins
 // Params
@@ -17,6 +19,39 @@
 		@include background( $value );
 	}
 	@else {
+		$mvsRespondMixinsGenerated: true !global;
+	}
+}
+
+//**
+// Private mixin for handling rendering css with custom mixins created for specific project
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
+@mixin -mvs-respond-custom( $property, $value ) {
+	// @if $property == custom and mixin-exists( $property ){
+	// 	@include custom( $value );
+	// }
+	// @else {
+	// 	$mvsRespondMixinsGenerated: true !global;
+	// }
+}
+
+//**
+// Private mixin for iterating thru all custom mixin libraries
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
+@mixin -mvs-respond-mixins( $property, $value ) {
+	$mvsRespondMixinsGenerated: false !global;
+
+	@if $mvsRespondMixinsGenerated == false {
+		@include -mvs-respond-custom( $property, $value );
+	}
+	@if $mvsRespondMixinsGenerated == false {
+		@include -mvs-respond-compass( $property, $value );
+	}
+	@if $mvsRespondMixinsGenerated == false {
 		#{$property}: $value;
 	}
 }
@@ -34,12 +69,12 @@
 	@if type-of( $property ) != "null" and type-of( $value ) != "null" {
 		@if type-of( $selector ) == "string" and ( $selector != null or $selector != "" ) {
 			@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
-				@include -mvs-respond-compass( $property, $value );
+				@include -mvs-respond-mixins( $property, $value );
 			}
 		}
 		@else {
 			@include mvs-parent( "#{$nthSelector}", false, $depth ) {
-				@include -mvs-respond-compass( $property, $value );
+				@include -mvs-respond-mixins( $property, $value );
 			}
 		}
 	}
