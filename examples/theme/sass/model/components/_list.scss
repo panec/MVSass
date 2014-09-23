@@ -7,7 +7,8 @@ $theme-model-list-component_syntax_simple: (
 
 $theme-model-list-component_syntax_modernizr_1: (
 	"flex": (
-		list-body_color   : #00F,
+		// list-body_color   : ( initial: #00F, xxs: #0FF ),
+		list-body_color   : ( #00F, #0FF ),
 
 		item-link_color   : #000,
 		item-link_padding : 5px,
@@ -22,12 +23,13 @@ $theme-model-list-component_syntax_modernizr_1: (
 
 $theme-model-list-component_syntax_modernizr_2: (
 		list-body_color   : (
-			( "flex", #00F ),
+			( "flex", #00F, #0FF ),
 			( "no-flex", #00F )
 		),
 
 		item-link_color   : (
 			( "flex", #000 ),
+			( "flex", "nth-child(1n)", #000 ),
 			( "no-flex", #000 )
 		),
 		item-link_padding : (
@@ -39,8 +41,14 @@ $theme-model-list-component_syntax_modernizr_2: (
 
 $theme-model-list-component_syntax_modernizr_3: (
 		list-body_ : (
+			// "flex": (
+			// 	color: #00F,
+			// ),
+			// "flex": (
+			// 	color: ( #00F, #0FF ),
+			// ),
 			"flex": (
-				color: #00F,
+				color: ( initial: #00F, xxs: #0FF ),
 			),
 			"no-flex": (
 				color: #00F
@@ -49,6 +57,9 @@ $theme-model-list-component_syntax_modernizr_3: (
 
 		item-link_ : (
 			"flex": (
+				"nth-child(1n)": (
+					color: #0F0,
+				)
 				color: #000,
 				padding: 5px,
 			),
@@ -78,6 +89,7 @@ $theme-model-list-component_syntax_css-ua_1: (
 
 //VERY HARD TO TARGET HOVER ELEMENT, EACH OF THEM IN SYNTAX 1? 2 & 3 POSSIBLE
 $theme-model-list-component_syntax_pseudo_1: (
+	_mod    : ( "mod_key_1": "mod_value_1" ),
 	":hover": (
 		list-body_color   : #00F,
 
@@ -89,6 +101,39 @@ $theme-model-list-component_syntax_pseudo_1: (
 
 		item-link_color   : #000,
 		item-link_padding : 5px,
+	)
+
+	//OR
+
+	(
+		_mod    : ( "mod_key_1": "mod_value_1" ),
+		":hover": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		),
+		":active": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		)
+	),
+	(
+		_mod    : ( "mod_key_2": "mod_value_2" ),
+		":hover": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		),
+		":active": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		)
 	)
 );
 
@@ -112,71 +157,105 @@ $theme-model-list-component_syntax_nth_1: (
 // $theme-model-list-component_syntax_mod_1
 
 //Should we allow only tpo set mod's on root level of mixin and not per value basis?
-$theme-model-list-component_syntax_mod_2: (
-	list-body_color   : (
-		//values for mod 1 => "mod_key_1": "mod_value_1",
-		( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
-		//values for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
-		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
-	),
+// $theme-model-list-component_syntax_mod_2: (
+// 	list-body_color   : (
+// 		//values for mod 1 => "mod_key_1": "mod_value_1",
+// 		( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
+// 		//values for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
+// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
+// 	),
 
-	item-link_color   : (
-		//values for mod 1 => "mod_key_1": "mod_value_1",
-		( "mod", ( "mod_key_1": "mod_value_1" ), #000 ),
-		//values for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_2": "mod_value_2" ), #000 ),
-		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #000 ),
-	),
-	item-link_padding : (
-		//values for mod 1 => "mod_key_1": "mod_value_1",
-		( "mod", ( "mod_key_1": "mod_value_1" ), 5px ),
-		//values for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_2": "mod_value_2" ), 5px ),
-		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), 5px ),
-	),
-);
+// 	item-link_color   : (
+// 		//values for mod 1 => "mod_key_1": "mod_value_1",
+// 		( "mod", ( "mod_key_1": "mod_value_1" ), #000 ),
+// 		//values for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_2": "mod_value_2" ), #000 ),
+// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #000 ),
+// 	),
+// 	item-link_padding : (
+// 		//values for mod 1 => "mod_key_1": "mod_value_1",
+// 		( "mod", ( "mod_key_1": "mod_value_1" ), 5px ),
+// 		//values for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_2": "mod_value_2" ), 5px ),
+// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
+// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), 5px ),
+// 	),
+// );
 
-$theme-model-list-component_syntax_mod_3: (
-	list-body_color   : (
-		//values for mod 1 => "mod_key_1": "mod_value_1",
-		( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
-		( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
-		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
-	),
+// $theme-model-list-component_syntax_mod_3: (
+// 	// list-body_color   : (
+// 	// 	//values for mod 1 => "mod_key_1": "mod_value_1",
+// 	// 	( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
+// 	// 	( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
+// 	// 	( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
+// 	// ),
 
-	list-body_ : (
-		"mod": (
-			color: #00F,
-		),
-		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
-		"mod": (
-			color: #00F
-		),
-	),
+// 	list-body_ : (
+// 		"mod": (
+// 			color: #00F,
+// 		),
+// 		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
+// 		"mod": (
+// 			color: #00F
+// 		),
+// 	),
 
-	item-link_ : (
-		"mod": (
-			color: #000,
-			padding: 5px,
-		),
-		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
-		"mod": (
-			color: #000
-			padding: 5px,
-		),
-	),
-);
+// 	item-link_ : (
+// 		"mod": (
+// 			color: #000,
+// 			padding: 5px,
+// 		),
+// 		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
+// 		"mod": (
+// 			color: #000
+// 			padding: 5px,
+// 		),
+// 	),
+// );
 
-$theme-model-list-component_syntax_mixin_1: (
+$theme-model-list-component_syntax_mixin_X: (
 	list-body_mixin-name: (
-		_color: #F00,
+		(
+			_mod    : ( "mod_key_1": "mod_value_1" ),
+			_color  : #F0F,
+			_margin : 10px,
+			"flex"  : (
+				"nth-child(1n)": (
+					":hover": (
+						_mod    : ( "mod_key_2": "mod_value_2" ),
+						_color  : ( initial: #00F, xxs: #0FF ),
+						_margin : 5px,
+					)
+				)
+			)
+		),
+		(
+			_mod   : ( "mod_key_2": "mod_value_2" ),
+			_color : #F00,
+		)
+	)
+
+	//OR IF SINGLE MAP IS ENOUGH
+
+	list-body_mixin-name: (
+		_mod    : ( "mod_key_1": "mod_value_1" ),
+		_color  : #F0F,
+		_margin : 10px,
+		"flex"  : (
+			"nth-child(1n)": (
+				":hover": (
+					_mod    : ( "mod_key_2": "mod_value_2" ),
+					_color  : #F00,
+					_margin : 5px,
+				)
+			)
+		)
 	),
 
-	item-link_mixin-name: (
-		_color: #F00,
-	),
+	// item-link_mixin-name: (
+	// 	_color: #F00,
+	// ),
 );
