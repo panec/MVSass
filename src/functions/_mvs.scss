@@ -96,6 +96,36 @@
 	}
 }
 
+@function mvs-value-position( $value ) {
+	$atBody: "flex" "no-flex"; //TODO Fill modernizr & cssua values
+	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
+	$atListElement: "nth-child" "nth-of-type" "first-child" "last-child";
+	// $at-block: // This can be for mods
+
+	@if type-of( $value ) != "string" {
+		@return "at-value"; //false;
+	}
+	@else {
+		@each $string in $atBody {
+			@if str-index( $value, $string ) {
+				@return "at-body";
+			}
+		}
+		@each $string in $atElement {
+			@if str-index( $value, $string ) {
+				@return "at-element";
+			}
+		}
+		@each $string in $atListElement {
+			@if str-index( $value, $string ) {
+				@return "at-list-element";
+			}
+		}
+
+		@return "at-value"; //false;
+	}
+}
+
 //**
 // Calls custom function against each set of values from MVS syntax
 // Params

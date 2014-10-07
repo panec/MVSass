@@ -1,0 +1,368 @@
+//http://colllor.com/244316
+
+$theme-model-list-component: (
+	list-body_item: (
+		_color: red,
+	),
+
+	list-body_ellipsis       : ( true, ( true, true, false ) ),
+	list-body_padding        : 0px,
+	list-body_margin         : 0px,
+
+	item-link_color: #000,
+	item-link_text-decoration: none,
+	item-link_padding: 5px,
+
+	item-link_border-color               : (
+		#000,
+		( ":nth-child(1)", rgba( #F00, 1) ),
+		( ":nth-child(2)", rgba( #0F0, 1) ),
+		( ":nth-child(3)", rgba( #00F, 1) ),
+		( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
+		),
+	item-link_border-style               : solid,
+	item-link_border-width               : 1px,
+
+	item-header_color    : (
+		#000,
+		( ":nth-child(1)", rgba( #F00, 1) ),
+		( ":nth-child(2)", rgba( #0F0, 1) ),
+		( ":nth-child(3)", rgba( #00F, 1) ),
+		( ":nth-child(n+4):nth-child(-n+7)", rgba( #F0F, 1) ),
+		),
+	item-header_is-hover_text-decoration : underline,
+);
+
+$theme-model-list-component-ver_1: (
+	item_background-color               : (
+		#FFF,
+		( ":nth-child(1)", invert( rgba( #F00, 1) ) ),
+		( ":nth-child(2)", invert( rgba( #0F0, 1) ) ),
+		( ":nth-child(3)", invert( rgba( #00F, 1) ) ),
+		( ":nth-child(n+4):nth-child(-n+7)", invert( rgba( #F0F, 1) ) ),
+		),
+	item_clear             : ( null, ( ":nth-child(3n+4)", null, null, null, left, left ), ( ":nth-child(2n+3)", left, left, left, null, left ) ),
+	item_float             : left,
+	item_width             : ( 50%, ( 50%, 33.3%, 25%, 20% ) ),
+);
+
+$theme-model-list-component_syntax: (
+	list-body_ : (
+		padding : 0px,
+		margin  : 0px,
+	),
+
+	item-link_ : (
+		color           : #000,
+		text-decoration : none,
+		padding         : 5px,
+		border-color    : (
+			initial                           : #000,
+			":nth-child(1)"                   : rgba( #F00, 1 ),
+			":nth-child(2)"                   : rgba( #0F0, 1 ),
+			":nth-child(3)"                   : rgba( #00F, 1 ),
+			":nth-child(n+4):nth-child(-n+7)" : rgba( #F0F, 1 ),
+		),
+		border-style    : solid,
+		border-width    : 1px,
+	),
+
+	item-header_ : (
+		color : (
+			initial                           : #000,
+			":nth-child(1)"                   : rgba( #F00, 1 ),
+			":nth-child(2)"                   : rgba( #0F0, 1 ),
+			":nth-child(3)"                   : rgba( #00F, 1 ),
+			":nth-child(n+4):nth-child(-n+7)" : rgba( #F0F, 1 ),
+		),
+	),
+
+	item-header_is-hover_: (
+		text-decoration : underline,
+	),
+);
+
+$theme-model-list-component_syntax-ver_1: (
+	item_: (
+		background-color : (
+			initial                           : #FFF,
+			":nth-child(1)"                   : invert( rgba( #F00, 1 ) ),
+			":nth-child(2)"                   : invert( rgba( #0F0, 1 ) ),
+			":nth-child(3)"                   : invert( rgba( #00F, 1 ) ),
+			":nth-child(n+4):nth-child(-n+7)" : invert( rgba( #F0F, 1 ) ),
+		),
+
+		clear : (
+			initial            : null, //should be optional
+			":nth-child(3n+4)" : (
+				initial : null,
+				md      : left,
+			),
+			":nth-child(2n+3)": (
+				initial : left,
+				md      : null, //will not work because will not overload initial value, BUT nth syntah should not have initial or we should pregenerate full list without initial value!!!
+				lg      : left
+			),
+		),
+		float : left,
+		width : (
+			initial : 50%,
+			xxs     : 50%,
+			xs      : 33.3%,
+			sm      : 25%,
+			md      : 20%,
+		)
+	)
+);
+
+
+
+$theme-model-list-component_syntax_simple: (
+	list-body_color   : #00F,
+
+	item-link_color   : #000,
+	item-link_padding : 5px,
+);
+
+$theme-model-list-component_syntax_modernizr_1: (
+	"flex": (
+		// list-body_color   : ( initial: #00F, xxs: #0FF ),
+		list-body_color   : ( #00F, #0FF ),
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	),
+	"no-flex": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	)
+);
+
+$theme-model-list-component_syntax_modernizr_2: (
+		list-body_color   : (
+			( "flex", #00F, #0FF ),
+			( "no-flex", #00F )
+		),
+
+		item-link_color   : (
+			( "flex", #000 ),
+			( "flex", "nth-child(1n)", #000 ),
+			( "no-flex", #000 )
+		),
+		item-link_padding : (
+			( "flex", 5px ),
+			( "no-flex", 5px )
+		),
+	)
+);
+
+$theme-model-list-component_syntax_modernizr_3: (
+		list-body_ : (
+			// "flex": (
+			// 	color: #00F,
+			// ),
+			// "flex": (
+			// 	color: ( #00F, #0FF ),
+			// ),
+			"flex": (
+				color: ( initial: #00F, xxs: #0FF ),
+			),
+			"no-flex": (
+				color: #00F
+			),
+		),
+
+		item-link_ : (
+			"flex": (
+				"nth-child(1n)": (
+					color: #0F0,
+				)
+				color: #000,
+				padding: 5px,
+			),
+			"no-flex": (
+				color: #000
+				padding: 5px,
+			),
+		),
+	)
+);
+
+//SYNTAX 1, 2 & 3 IS POSSIBLE
+$theme-model-list-component_syntax_css-ua_1: (
+	"firefox": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	),
+	"ie8": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	)
+);
+
+//VERY HARD TO TARGET HOVER ELEMENT, EACH OF THEM IN SYNTAX 1? 2 & 3 POSSIBLE
+$theme-model-list-component_syntax_pseudo_1: (
+	_mod    : ( "mod_key_1": "mod_value_1" ),
+	":hover": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	),
+	":active": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	)
+
+	//OR
+
+	(
+		_mod    : ( "mod_key_1": "mod_value_1" ),
+		":hover": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		),
+		":active": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		)
+	),
+	(
+		_mod    : ( "mod_key_2": "mod_value_2" ),
+		":hover": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		),
+		":active": (
+			list-body_color   : #00F,
+
+			item-link_color   : #000,
+			item-link_padding : 5px,
+		)
+	)
+);
+
+//VERY HARD TO TARGET NTH ELEMENT, EACH SUPPORTED IN SYNTAX 1? 2 & 3 POSSIBLE
+$theme-model-list-component_syntax_nth_1: (
+	":nth-child(n+1)": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	),
+	":last-child": (
+		list-body_color   : #00F,
+
+		item-link_color   : #000,
+		item-link_padding : 5px,
+	)
+);
+
+$theme-model-list-component_syntax_mixin_1: (
+	list-body_mixin-name: (
+		(
+			_mod    : ( "mod_key_1": "mod_value_1" ),
+			_color  : #F0F,
+			_margin : 10px,
+			"flex"  : (
+				"nth-child(1n)": (
+					":hover": (
+						_mod    : ( "mod_key_2": "mod_value_2" ),
+						_color  : ( initial: #00F, xxs: #0FF ),
+						_margin : 5px,
+					)
+				)
+			)
+		),
+		(
+			_mod   : ( "mod_key_2": "mod_value_2" ),
+			_color : #F00,
+		)
+	)
+
+	//OR IF SINGLE MAP IS ENOUGH
+
+	list-body_mixin-name: (
+		_mod    : ( "mod_key_1": "mod_value_1" ),
+		_color  : #F0F,
+		_margin : 10px,
+		"flex"  : (
+			"nth-child(1n)": (
+				":hover": (
+					_mod    : ( "mod_key_2": "mod_value_2" ),
+					_color  : #F00,
+					_margin : 5px,
+				)
+			)
+		)
+	),
+
+	// item-link_mixin-name: (
+	// 	_color: #F00,
+	// ),
+);
+
+// $theme-model-list-component_syntax_mixin_2: (
+// 		list-body_color   : (
+// 			( "flex", #00F, #0FF ),
+// 			( "no-flex", #00F )
+// 		),
+
+// 		item-link_color   : (
+// 			( "flex", #000 ),
+// 			( "flex", "nth-child(1n)", #000 ),
+// 			( "no-flex", #000 )
+// 		),
+// 		item-link_padding : (
+// 			( "flex", 5px ),
+// 			( "no-flex", 5px )
+// 		),
+// 	)
+// );
+
+// $theme-model-list-component_syntax_mixin_3: (
+// 		list-body_ : (
+// 			// "flex": (
+// 			// 	color: #00F,
+// 			// ),
+// 			// "flex": (
+// 			// 	color: ( #00F, #0FF ),
+// 			// ),
+// 			"flex": (
+// 				color: ( initial: #00F, xxs: #0FF ),
+// 			),
+// 			"no-flex": (
+// 				color: #00F
+// 			),
+// 		),
+
+// 		item-link_ : (
+// 			"flex": (
+// 				"nth-child(1n)": (
+// 					color: #0F0,
+// 				)
+// 				color: #000,
+// 				padding: 5px,
+// 			),
+// 			"no-flex": (
+// 				color: #000
+// 				padding: 5px,
+// 			),
+// 		),
+// 	)
+// );
+

@@ -1,261 +1,486 @@
-$theme-model-list-component_syntax_simple: (
-	list-body_color   : #00F,
-
-	item-link_color   : #000,
-	item-link_padding : 5px,
+$theme-model-list-component_syntax_base: (
+	item_border-color : #000000,
+	item_border-style : solid,
+	item_border-width : 1px 1px 1px 1px,
 );
 
-$theme-model-list-component_syntax_modernizr_1: (
-	"flex": (
-		// list-body_color   : ( initial: #00F, xxs: #0FF ),
-		list-body_color   : ( #00F, #0FF ),
+$theme-model-list-component_syntax_base_list: (
+	item_border-color : ( #000000, #000001, #000002 ),
+	item_border-style : ( solid, double ),
+	item_border-width : ( 1px 1px 1px 1px, 2px 2px 2px 2px ),
+);
 
-		item-link_color   : #000,
-		item-link_padding : 5px,
+$theme-model-list-component_syntax_base_map: (
+	item_border-color : (
+		initial : #000000,
+		md      : #000001,
+		lg      : #000002
 	),
-	"no-flex": (
-		list-body_color   : #00F,
-
-		item-link_color   : #000,
-		item-link_padding : 5px,
-	)
-);
-
-$theme-model-list-component_syntax_modernizr_2: (
-		list-body_color   : (
-			( "flex", #00F, #0FF ),
-			( "no-flex", #00F )
-		),
-
-		item-link_color   : (
-			( "flex", #000 ),
-			( "flex", "nth-child(1n)", #000 ),
-			( "no-flex", #000 )
-		),
-		item-link_padding : (
-			( "flex", 5px ),
-			( "no-flex", 5px )
-		),
-	)
-);
-
-$theme-model-list-component_syntax_modernizr_3: (
-		list-body_ : (
-			// "flex": (
-			// 	color: #00F,
-			// ),
-			// "flex": (
-			// 	color: ( #00F, #0FF ),
-			// ),
-			"flex": (
-				color: ( initial: #00F, xxs: #0FF ),
-			),
-			"no-flex": (
-				color: #00F
-			),
-		),
-
-		item-link_ : (
-			"flex": (
-				"nth-child(1n)": (
-					color: #0F0,
-				)
-				color: #000,
-				padding: 5px,
-			),
-			"no-flex": (
-				color: #000
-				padding: 5px,
-			),
-		),
-	)
-);
-
-//SYNTAX 1, 2 & 3 IS POSSIBLE
-$theme-model-list-component_syntax_css-ua_1: (
-	"firefox": (
-		list-body_color   : #00F,
-
-		item-link_color   : #000,
-		item-link_padding : 5px,
+	item_border-style : (
+		initial : solid,
+		md      : double
 	),
-	"ie8": (
-		list-body_color   : #00F,
-
-		item-link_color   : #000,
-		item-link_padding : 5px,
-	)
+	item_border-width : (
+		initial : 1px 1px 1px 1px,
+		md      : 2px 2px 2px 2px
+	),
 );
 
-//VERY HARD TO TARGET HOVER ELEMENT, EACH OF THEM IN SYNTAX 1? 2 & 3 POSSIBLE
-$theme-model-list-component_syntax_pseudo_1: (
-	_mod    : ( "mod_key_1": "mod_value_1" ),
-	":hover": (
-		list-body_color   : #00F,
+/* -------- */
 
-		item-link_color   : #000,
-		item-link_padding : 5px,
+$theme-model-list-component_syntax_base_modernizr: (
+	item_border-color : (
+		#000000,
+		( "flex", #000010 ),
+		( "no-flex", #000020 )
 	),
-	":active": (
-		list-body_color   : #00F,
+	item_border-style : (
+		solid,
+		( "flex", dotted ),
+		( "no-flex", dotted )
+	),
+	item_border-width : (
+		1px 1px 1px 1px,
+		( "flex", 10px 10px 10px 10px ),
+		( "no-flex", 10px 10px 10px 10px )
+	),
+);
 
-		item-link_color   : #000,
-		item-link_padding : 5px,
-	)
+$theme-model-list-component_syntax_base_list_modernizr: (
+	item_border-color : (
+		( #000000, #000001, #000002, ),
+		( "flex", #000010, #000020, #000030 ),
+		( "no-flex", #000010, #000020, #000030 )
+	),
+	item_border-style : (
+		( solid, double, ),
+		( "flex", dotted, none ),
+		( "no-flex", dotted, none )
+	),
+	item_border-width : (
+		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
+		( "flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( "no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+);
 
-	//OR
-
-	(
-		_mod    : ( "mod_key_1": "mod_value_1" ),
-		":hover": (
-			list-body_color   : #00F,
-
-			item-link_color   : #000,
-			item-link_padding : 5px,
+$theme-model-list-component_syntax_base_map_modernizr: (
+	item_border-color : (
+		(
+			initial : #000000,
+			md      : #000001,
+			lg      : #000002
 		),
-		":active": (
-			list-body_color   : #00F,
-
-			item-link_color   : #000,
-			item-link_padding : 5px,
-		)
+		( "flex", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) ),
+		( "no-flex", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) )
 	),
-	(
-		_mod    : ( "mod_key_2": "mod_value_2" ),
-		":hover": (
-			list-body_color   : #00F,
-
-			item-link_color   : #000,
-			item-link_padding : 5px,
+	item_border-style : (
+		(
+			initial: solid,
+			md: double
 		),
-		":active": (
-			list-body_color   : #00F,
-
-			item-link_color   : #000,
-			item-link_padding : 5px,
-		)
-	)
-);
-
-//VERY HARD TO TARGET NTH ELEMENT, EACH SUPPORTED IN SYNTAX 1? 2 & 3 POSSIBLE
-$theme-model-list-component_syntax_nth_1: (
-	":nth-child(n+1)": (
-		list-body_color   : #00F,
-
-		item-link_color   : #000,
-		item-link_padding : 5px,
+		( "flex", (
+			initial: dotted,
+			md: none
+		) ),
+		( "no-flex", (
+			initial: dotted,
+			md: none
+		) ),
 	),
-	":last-child": (
-		list-body_color   : #00F,
-
-		item-link_color   : #000,
-		item-link_padding : 5px,
-	)
+	item_border-width : (
+		(
+			initial : 1px 1px 1px 1px,
+			md      : 2px 2px 2px 2px
+		),
+		( "flex", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+		( "no-flex", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+	),
 );
 
-//VERY HARD TO WRITE SYNTAX
-// $theme-model-list-component_syntax_mod_1
+/* -------- */
 
-//Should we allow only tpo set mod's on root level of mixin and not per value basis?
-// $theme-model-list-component_syntax_mod_2: (
-// 	list-body_color   : (
-// 		//values for mod 1 => "mod_key_1": "mod_value_1",
-// 		( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
-// 		//values for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
-// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
+$theme-model-list-component_syntax_base_modernizr_nth: (
+	item_border-color : (
+		#000000,
+		( "flex", "nth-child(n)", #000010 ),
+		( "no-flex", "nth-child(n)", #000020 )
+	),
+	item_border-style : (
+		solid,
+		( "flex", "nth-child(n)", dotted ),
+		( "no-flex", "nth-child(n)", dotted )
+	),
+	item_border-width : (
+		1px 1px 1px 1px,
+		( "flex", "nth-child(n)", 10px 10px 10px 10px ),
+		( "no-flex", "nth-child(n)", 10px 10px 10px 10px )
+	),
+);
+
+$theme-model-list-component_syntax_base_list_modernizr_nth: (
+	item_border-color : (
+		#000000, #000001, #000002,
+		( "flex", "nth-child(n)", #000010, #000020, #000030 ),
+		( "no-flex", "nth-child(n)", #000010, #000020, #000030 )
+	),
+	item_border-style : (
+		solid, double,
+		( "flex", "nth-child(n)", dotted, none ),
+		( "no-flex", "nth-child(n)", dotted, none )
+	),
+	item_border-width : (
+		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( "flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( "no-flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+);
+
+$theme-model-list-component_syntax_base_map_modernizr_nth: (
+	item_border-color : (
+		(
+			initial : #000000,
+			md      : #000001,
+			lg      : #000002
+		),
+		( "flex", "nth-child(n)", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) ),
+		( "no-flex", "nth-child(n)", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) )
+	),
+	item_border-style : (
+		(
+			initial : solid,
+			md      : double
+		),
+		( "flex", "nth-child(n)", (
+			initial : dotted,
+			md      : none
+		) ),
+		( "no-flex", "nth-child(n)", (
+			initial : dotted,
+			md      : none
+		) ),
+	),
+	item_border-width : (
+		(
+			initial : 1px 1px 1px 1px,
+			md      : 2px 2px 2px 2px
+		),
+		( "flex", "nth-child(n)", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+		( "no-flex", "nth-child(n)", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+	),
+);
+
+/* -------- */
+
+$theme-model-list-component_syntax_base_modernizr_nth_multi: (
+	item_border-color : (
+		#000000,
+		( "flex", "nth-child(n)", #000010 ),
+		( "flex", "nth-child(2n)", #000110 ),
+		( "no-flex", "nth-child(n)", #000020 )
+	),
+	item_border-style : (
+		solid,
+		( "flex", "nth-child(n)", dotted ),
+		( "flex", "nth-child(2n)", none ),
+		( "no-flex", "nth-child(n)", dotted )
+	),
+	item_border-width : (
+		1px 1px 1px 1px,
+		( "flex", "nth-child(n)", 10px 10px 10px 10px ),
+		( "flex", "nth-child(2n)", 110px 110px 110px 110px ),
+		( "no-flex", "nth-child(n)", 10px 10px 10px 10px )
+	),
+);
+
+$theme-model-list-component_syntax_base_list_modernizr_nth_multi: (
+	item_border-color : (
+		( #000000, #000001, #000002 ),
+		( "flex", "nth-child(n)", #000010, #000020, #000030 ),
+		( "flex", "nth-child(2n)", #000110, #000120, #000130 ),
+		( "no-flex", "nth-child(n)", #000010, #000020, #000030 )
+	),
+	item_border-style : (
+		( solid, double ),
+		( "flex", "nth-child(n)", dotted, none ),
+		( "flex", "nth-child(2n)", none, none ),
+		( "no-flex", "nth-child(n)", dotted, none )
+	),
+	item_border-width : (
+		( 1px 1px 1px 1px, 2px 2px 2px 2px ),
+		( "flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( "flex", "nth-child(2n)", 110px 110px 110px 110px, 120px 120px 120px 120px ),
+		( "no-flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+);
+
+//(...)
+
+/* -------- */
+// Hard nut to crack :| but I kinda like this approach. It is "list nesting"
+
+// $theme-model-list-component_syntax_base_modernizr_nth_multi_list-nesting: (
+// 	item_border-color : (
+// 		#000000,
+// 		( "flex", (
+// 			// #000010,
+// 			( "nth-child(n)", #000010 ),
+// 			( "nth-child(2n)", #000110 ),
+// 		) ),
+// 		( "no-flex", "nth-child(n)", #000020 )
 // 	),
-
-// 	item-link_color   : (
-// 		//values for mod 1 => "mod_key_1": "mod_value_1",
-// 		( "mod", ( "mod_key_1": "mod_value_1" ), #000 ),
-// 		//values for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_2": "mod_value_2" ), #000 ),
-// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #000 ),
+// 	item_border-style : (
+// 		solid,
+// 		( "flex", (
+// 			( "nth-child(n)", dotted ),
+// 			( "nth-child(2n)", none ),
+// 		) ),
+// 		( "no-flex", "nth-child(n)", dotted )
 // 	),
-// 	item-link_padding : (
-// 		//values for mod 1 => "mod_key_1": "mod_value_1",
-// 		( "mod", ( "mod_key_1": "mod_value_1" ), 5px ),
-// 		//values for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_2": "mod_value_2" ), 5px ),
-// 		//values for mod 1 => "mod_key_1": "mod_value_1" & for mod 2 => "mod_key_2": "mod_value_2",
-// 		( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), 5px ),
+// 	item_border-width : (
+// 		1px 1px 1px 1px,
+// 		( "flex", "nth-child(n)", 10px 10px 10px 10px ),
+// 		( "flex", "nth-child(2n)", 110px 110px 110px 110px ),
+// 		( "no-flex", "nth-child(n)", 10px 10px 10px 10px )
 // 	),
 // );
 
-// $theme-model-list-component_syntax_mod_3: (
-// 	// list-body_color   : (
-// 	// 	//values for mod 1 => "mod_key_1": "mod_value_1",
-// 	// 	( "mod", ( "mod_key_1": "mod_value_1" ), #00F ),
-// 	// 	( "mod", ( "mod_key_2": "mod_value_2" ), #00F ),
-// 	// 	( "mod", ( "mod_key_1": "mod_value_1", "mod_key_2": "mod_value_2" ), #00F ),
-// 	// ),
-
-// 	list-body_ : (
-// 		"mod": (
-// 			color: #00F,
-// 		),
-// 		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
-// 		"mod": (
-// 			color: #00F
-// 		),
+// $theme-model-list-component_syntax_base_list_modernizr_nth_multi_list-nesting: (
+// 	item_border-color : (
+// 		#000000, #000001, #000002,
+// 		( "flex",
+// 			( "nth-child(n)", #000010, #000020, #000030 ),
+// 			( "nth-child(2n)", #000110, #000120, #000130 ),
+// 		) ),
+// 		( "no-flex", "nth-child(n)", #000010, #000020, #000030 )
 // 	),
-
-// 	item-link_ : (
-// 		"mod": (
-// 			color: #000,
-// 			padding: 5px,
-// 		),
-// 		// THIS WILL NOT COMPILE, ONLY ONE KEY STRING PER MAP
-// 		"mod": (
-// 			color: #000
-// 			padding: 5px,
-// 		),
+// 	item_border-style : (
+// 		solid, double,
+// 		( "flex",
+// 			( "nth-child(n)", dotted, none ),
+// 			( "nth-child(2n)", none, none ),
+// 		) ),
+// 		( "no-flex", "nth-child(n)", dotted, none )
 // 	),
+// 	item_border-width : (
+// 		1px 1px 1px 1px, 2px 2px 2px 2px,
+// 		( "flex", (
+// 			( "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+// 			( "nth-child(2n)", 110px 110px 110px 110px, 120px 120px 120px 120px ),
+// 		) ),
+// 		( "no-flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 // );
 
-$theme-model-list-component_syntax_mixin_X: (
-	list-body_mixin-name: (
-		(
-			_mod    : ( "mod_key_1": "mod_value_1" ),
-			_color  : #F0F,
-			_margin : 10px,
-			"flex"  : (
-				"nth-child(1n)": (
-					":hover": (
-						_mod    : ( "mod_key_2": "mod_value_2" ),
-						_color  : ( initial: #00F, xxs: #0FF ),
-						_margin : 5px,
-					)
-				)
-			)
-		),
-		(
-			_mod   : ( "mod_key_2": "mod_value_2" ),
-			_color : #F00,
-		)
-	)
+//(...)
 
-	//OR IF SINGLE MAP IS ENOUGH
+/* -------- */
+// This does not allow to indicate what is hovered. What if I need nesting, example item-container is hovered item are restyled
 
-	list-body_mixin-name: (
-		_mod    : ( "mod_key_1": "mod_value_1" ),
-		_color  : #F0F,
-		_margin : 10px,
-		"flex"  : (
-			"nth-child(1n)": (
-				":hover": (
-					_mod    : ( "mod_key_2": "mod_value_2" ),
-					_color  : #F00,
-					_margin : 5px,
-				)
-			)
-		)
+$theme-model-list-component_syntax_base_modernizr_nth_pseudo: (
+	item_border-color : (
+		#000000,
+		( "flex", "nth-child(n)", ":hover", #000010 ),
+		( "no-flex", "nth-child(n)", ":hover", #000020 )
 	),
-
-	// item-link_mixin-name: (
-	// 	_color: #F00,
-	// ),
+	item_border-style : (
+		solid,
+		( "flex", "nth-child(n)", ":hover", dotted ),
+		( "no-flex", "nth-child(n)", ":hover", dotted )
+	),
+	item_border-width : (
+		1px 1px 1px 1px,
+		( "flex", "nth-child(n)", ":hover", 10px 10px 10px 10px ),
+		( "no-flex", "nth-child(n)", ":hover", 10px 10px 10px 10px )
+	),
 );
+
+$theme-model-list-component_syntax_base_list_modernizr_nth_pseudo: (
+	item_border-color : (
+		#000000, #000001, #000002,
+		( "flex", "nth-child(n)", ":hover", #000010, #000020, #000030 ),
+		( "no-flex", "nth-child(n)", ":hover", #000010, #000020, #000030 )
+	),
+	item_border-style : (
+		solid, double,
+		( "flex", "nth-child(n)", ":hover", dotted, none ),
+		( "no-flex", "nth-child(n)", ":hover", dotted, none )
+	),
+	item_border-width : (
+		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( "flex", "nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( "no-flex", "nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+);
+
+$theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
+	item_border-color : (
+		(
+			initial : #000000,
+			md      : #000001,
+			lg      : #000002
+		),
+		( "flex", "nth-child(n)", ":hover", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) )
+	),
+	item_border-style : (
+		(
+			initial : solid,
+			md      : double
+		),
+		( "flex", "nth-child(n)", ":hover", (
+			initial : dotted,
+			md      : none
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", (
+			initial : dotted,
+			md      : none
+		) ),
+	),
+	item_border-width : (
+		(
+			initial : 1px 1px 1px 1px,
+			md      : 2px 2px 2px 2px
+		),
+		( "flex", "nth-child(n)", ":hover", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+	),
+);
+
+
+/* -------- */
+// This creates a small problem with resolving what is a mod map and what is a value map
+
+$theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod: (
+	item_border-color : (
+		#000000,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010 ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000020 )
+	),
+	item_border-style : (
+		solid,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted )
+	),
+	item_border-width : (
+		1px 1px 1px 1px,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px )
+	),
+);
+
+$theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod: (
+	item_border-color : (
+		#000000, #000001, #000002,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 )
+	),
+	item_border-style : (
+		solid, double,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none )
+	),
+	item_border-width : (
+		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+);
+
+$theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
+	item_border-color : (
+		(
+			initial : #000000,
+			md      : #000001,
+			lg      : #000002
+		),
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : #000010,
+			md      : #000020,
+			lg      : #000030
+		) )
+	),
+	item_border-style : (
+		(
+			initial : solid,
+			md      : double
+		),
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : dotted,
+			md      : none
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : dotted,
+			md      : none
+		) ),
+	),
+	item_border-width : (
+		(
+			initial : 1px 1px 1px 1px,
+			md      : 2px 2px 2px 2px
+		),
+		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+			initial : 10px 10px 10px 10px,
+			md      : 20px 20px 20px 20px
+		) ),
+	),
+);
+
+/* ---------------------------------------------------- */
+
+// @each $property, $value in $theme-model-list-component_syntax_modernizr_2 {
+// 	@debug "value" $value type-of( $value ) list-separator( $value );
+// 	@if type-of( $value ) == "map" {
+
+// 	}
+// 	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
+// 		@each $subValue in $value {
+// 			@debug  "subValue" $subValue mvs-value-position( $subValue );
+// 		}
+// 	}
+// }

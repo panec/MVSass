@@ -1,23 +1,188 @@
 @import "../../ref";
 
-.list {
-	@include list( $theme-model-list-component, $is-initial: true );
+//Params to be extended
+@mixin mvs-respond-map( $prefix, $map, $selector: null, $depth: 0 ) {
+	$prefixLength: str-length( $prefix );
 
-	&.list_1 {
-		@include list( $theme-model-list-component-ver_1 );
+	@each $key, $value in $map {
+		@if str-index( $key, $prefix ) != null {
+			$property: str-slice( $key, $prefixLength + 1 );
+			@if ( str-index-last( $property, "_" ) == false ) {
+				//TODO Add logic to recognize custom mixin map from extended nth syntax map
+				@if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
+					@debug $property this is a supported mixin that has a map values ;
+					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+				}
+				@else {
+					@include normalize-mixin( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+				}
+			}
+		}
 	}
 }
 
-.list {
-	@include list( $theme-model-list-component_syntax, $is-initial: true );
 
-	&.list_1 {
-		@include list( $theme-model-list-component_syntax-ver_1 );
+@function normalize-value( $value ) {
+	$result: ();
+	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+	$screenBreakpointsKeysLenght : length( $screenBreakpointsKeys );
+
+	// Assuming that $value is single css value
+	@if type-of( $value ) != "list" and type-of( $value ) != "map" {
+		// @debug "single css value" $value;
+		$result: append( $result, ( "initial": $value ), comma );
+	}
+	// Assuming that $value is list css value
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
+		// @debug "list css value" $value;
+		$result: append( $result, ( "initial": $value ), comma );
+	}
+	// Assuming that $value is mvsass suntaxed value as list
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
+		$isSimpleList: is-list-simple( $value );
+		$listLenght: length( $value );
+		$screenBreakpointsKeysIndex: 1;
+		$map: ();
+
+		@each $subValue in $value {
+			@if $isSimpleList {
+
+				@if mvs-value-position( $subValue ) == "at-value" {
+					@if $screenBreakpointsKeysIndex == 1 {
+						$map: map-merge( $map, ( "initial": $subValue ) );
+					}
+					@else {
+						$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+					}
+					$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+				}
+				@else if mvs-value-position( $subValue ) == "at-body" {
+					$subMap: map-get( $map, "at-body" );
+					$map: map-merge( $map, ( "at-body": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				}
+				@else if mvs-value-position( $subValue ) == "at-element" {
+					$subMap: map-get( $map, "at-element" );
+					$map: map-merge( $map, ( "at-element": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				}
+				@else if mvs-value-position( $subValue ) == "at-list-element" {
+					$subMap: map-get( $map, "at-list-element" );
+					$map: map-merge( $map, ( "at-list-element": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				}
+			}
+			@else {
+				$result: append( $result, normalize-value( $subValue ) );
+			}
+		}
+
+		$result: append( $result, $map, comma );
+
+		// @debug is-list-simple is-list-simple( $value );
+
+		// @if is-list-simple( $value ){
+		// 	$map: map-merge( (), ( "initial": nth( $value, 1 ) ) );
+
+		// 	@for $i from 2 through $listLenght {
+		// 		$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $i ): nth( $value, $i ) ) );
+		// 	}
+
+		// 	$result: append( $result, $map, comma );
+		// }
+		// @else {
+		// 	@for $i from 1 through $listLenght {
+		// 		$result: append( $result, normalize-value( nth( $value, $i ) ) );
+		// 	}
+		// }
+
+		// @debug "mvsass list syntax value" $value;
+	}
+	// Assuming that $value is mvsass suntaxed value as map
+	@else if type-of( $value ) == "map" {
+		// @debug "mvsass map syntax value" $value;
+	}
+
+	// @debug "result" $result;
+	@return $result;
+}
+
+@function is-list-simple( $list ) {
+	@each $value in $list {
+		@if ( type-of( $value ) == "list" and list-separator( $value ) == "comma" ) or ( type-of( $value ) == "map" ) {
+			@return false;
+		}
+	}
+	@return true;
+}
+
+@function mvs-value-position( $value ) {
+	$atBody: "flex" "no-flex"; //TODO Fill modernizr & cssua values
+	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
+	$atListElement: "nth-child" "nth-of-type" "first-child" "last-child";
+	// $at-block: // This can be for mods
+
+	@if type-of( $value ) != "string" {
+		@return "at-value"; //false;
+	}
+	@else {
+		@each $string in $atBody {
+			@if str-index( $value, $string ) {
+				@return "at-body";
+			}
+		}
+		@each $string in $atElement {
+			@if str-index( $value, $string ) {
+				@return "at-element";
+			}
+		}
+		@each $string in $atListElement {
+			@if str-index( $value, $string ) {
+				@return "at-list-element";
+			}
+		}
+
+		@return "at-value"; //false;
 	}
 }
 
-// .test {
-// 	@include item( ( _color: blue, item_color: red ) );
+@mixin normalize-mixin( $property, $value, $selector: null, $depth: 0 ) {
+	$test: normalize-value( $value );
+	@debug $test;
+}
+
+@mixin list( $model-list: $core-model-list, $is-initial: false ) {
+	.list-item {
+		@include mvs-respond-map( "item_", $model-list );
+	}
+}
+
+// .theme-model-list-component_syntax_base {
+// 	@include list( $theme-model-list-component_syntax_base );
 // }
 
-// @debug "sddssdsd" mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ), $onlyResponsiveList: true );
+// .theme-model-list-component_syntax_base_list {
+// 	@include list( $theme-model-list-component_syntax_base_list );
+// }
+
+// .theme-model-list-component_syntax_base_map {
+// 	@include list( $theme-model-list-component_syntax_base_map );
+// }
+
+// .theme-model-list-component_syntax_base_modernizr {
+// 	@include list( $theme-model-list-component_syntax_base_modernizr );
+// }
+
+// .theme-model-list-component_syntax_base_list_modernizr {
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+// }
+
+// .theme-model-list-component_syntax_base_map_modernizr {
+// 	@include list( $theme-model-list-component_syntax_base_map_modernizr );
+// }
+
+// .theme-model-list-component_syntax_base_modernizr_nth {
+// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth );
+// }
+
+.theme-model-list-component_syntax_base_list_modernizr_nth_multi {
+	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
+}
+
