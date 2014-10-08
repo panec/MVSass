@@ -133,17 +133,17 @@ $theme-model-list-component_syntax_base_modernizr_nth: (
 
 $theme-model-list-component_syntax_base_list_modernizr_nth: (
 	item_border-color : (
-		#000000, #000001, #000002,
+		( #000000, #000001, #000002, ),
 		( "flex", "nth-child(n)", #000010, #000020, #000030 ),
 		( "no-flex", "nth-child(n)", #000010, #000020, #000030 )
 	),
 	item_border-style : (
-		solid, double,
+		( solid, double, ),
 		( "flex", "nth-child(n)", dotted, none ),
 		( "no-flex", "nth-child(n)", dotted, none )
 	),
 	item_border-width : (
-		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
 		( "flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
 		( "no-flex", "nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
@@ -321,17 +321,17 @@ $theme-model-list-component_syntax_base_modernizr_nth_pseudo: (
 
 $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo: (
 	item_border-color : (
-		#000000, #000001, #000002,
+		( #000000, #000001, #000002, ),
 		( "flex", "nth-child(n)", ":hover", #000010, #000020, #000030 ),
 		( "no-flex", "nth-child(n)", ":hover", #000010, #000020, #000030 )
 	),
 	item_border-style : (
-		solid, double,
+		( solid, double, ),
 		( "flex", "nth-child(n)", ":hover", dotted, none ),
 		( "no-flex", "nth-child(n)", ":hover", dotted, none )
 	),
 	item_border-width : (
-		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
 		( "flex", "nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ),
 		( "no-flex", "nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
@@ -408,17 +408,17 @@ $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod: (
 
 $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod: (
 	item_border-color : (
-		#000000, #000001, #000002,
+		( #000000, #000001, #000002, ),
 		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 ),
 		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 )
 	),
 	item_border-style : (
-		solid, double,
+		( solid, double, ),
 		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none ),
 		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none )
 	),
 	item_border-width : (
-		1px 1px 1px 1px, 2px 2px 2px 2px,
+		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
 		( "flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ),
 		( "no-flex", "nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
