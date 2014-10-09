@@ -14,6 +14,7 @@
 					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
 				}
 				@else {
+					property: $property;
 					@include normalize-mixin( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
 				}
 			}
@@ -23,30 +24,30 @@
 
 
 @function normalize-value( $value ) {
-	$result: ();
+	$resultList: (); //list
 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
 	$screenBreakpointsKeysLenght : length( $screenBreakpointsKeys );
 
 	// Assuming that $value is single css value
 	@if type-of( $value ) != "list" and type-of( $value ) != "map" {
 		// @debug "single css value" $value;
-		$result: append( $result, ( "initial": $value ), comma );
+		$resultList: append( $resultList, ( "initial": $value ) );
 	}
 	// Assuming that $value is list css value
 	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
 		// @debug "list css value" $value;
-		$result: append( $result, ( "initial": $value ), comma );
+		$resultList: append( $resultList, ( "initial": $value ) );
 	}
 	// Assuming that $value is mvsass suntaxed value as list
 	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
-		$isSimpleList: is-list-simple( $value );
+		$listType: check-list-type( $value );
 		$listLenght: length( $value );
 		$screenBreakpointsKeysIndex: 1;
-		$map: ();
 
-		@each $subValue in $value {
-			@if $isSimpleList {
+		@if $listType == 0 {
+			$map: ();
 
+			@each $subValue in $value {
 				@if mvs-value-position( $subValue ) == "at-value" {
 					@if $screenBreakpointsKeysIndex == 1 {
 						$map: map-merge( $map, ( "initial": $subValue ) );
@@ -69,38 +70,133 @@
 					$map: map-merge( $map, ( "at-list-element": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
 				}
 			}
-			@else {
-				$result: append( $result, normalize-value( $subValue ) );
+
+			@if length( $map ) > 0 {
+				$resultList: append( $resultList, $map );
+			}
+		}
+		@else if $listType == 1 {
+			@each $subValue in $value {
+				$resultList: append( $resultList, normalize-value( $subValue ) );
+			}
+		}
+		@else if $listType == 2 {
+			$map: ();
+
+			@each $subValue in $value {
+				@if type-of( $subValue ) == "list" and list-separator( $value ) == "comma" {
+
+					// @debug AAAAA $subValue;
+					//get the map with values
+					$map: nth( $subValue, -1 ); //big assumption that map with values will be last on the list
+
+					// @debug BBBBBB $map;
+					//remove map vith value from the list
+					$subValue: slice( $subValue, 1, length( $subValue ) - 1 );
+
+					// @debug BBBBBB $subValue;
+
+					//TODO Make this as a function so we can run this multiple times in loop
+					@each $subSubValue in $subValue {
+						@if mvs-value-position( $subSubValue ) == "at-value" {
+							@if $screenBreakpointsKeysIndex == 1 {
+								$map: map-merge( $map, ( "initial": $subSubValue ) );
+							}
+							@else {
+								$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subSubValue ) );
+							}
+							$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+						}
+						@if mvs-value-position( $subSubValue ) == "at-body" {
+							$subMap: map-get( $map, "at-body" );
+							$map: map-merge( $map, ( "at-body": if( $subMap == null, $subSubValue, append( $subMap, $subSubValue, space ) ) ) );
+						}
+						@else if mvs-value-position( $subSubValue ) == "at-element" {
+							$subMap: map-get( $map, "at-element" );
+							$map: map-merge( $map, ( "at-element": if( $subMap == null, $subSubValue, append( $subMap, $subSubValue, space ) ) ) );
+						}
+						@else if mvs-value-position( $subSubValue ) == "at-list-element" {
+							$subMap: map-get( $map, "at-list-element" );
+							$map: map-merge( $map, ( "at-list-element": if( $subMap == null, $subSubValue, append( $subMap, $subSubValue, space ) ) ) );
+						}
+					}
+
+					// @debug map $map;
+				}
+				@else if type-of( $subValue ) == "map" {
+					$resultList: append( $resultList, $subValue );
+				}
+				@else {
+					@debug "This should noty happend";
+				}
+
+				@if length( $map ) > 0 {
+					$resultList: append( $resultList, $map );
+				}
 			}
 		}
 
-		$result: append( $result, $map, comma );
+		// @debug $isSimpleList value $value;
 
-		// @debug is-list-simple is-list-simple( $value );
-
-		// @if is-list-simple( $value ){
-		// 	$map: map-merge( (), ( "initial": nth( $value, 1 ) ) );
-
-		// 	@for $i from 2 through $listLenght {
-		// 		$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $i ): nth( $value, $i ) ) );
+		// @each $subValue in $value {
+		// 	@if $isSimpleList {
+		// 		@if mvs-value-position( $subValue ) == "at-value" {
+		// 			@if $screenBreakpointsKeysIndex == 1 {
+		// 				$map: map-merge( $map, ( "initial": $subValue ) );
+		// 			}
+		// 			@else {
+		// 				$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+		// 			}
+		// 			$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+		// 		}
+		// 		@else if mvs-value-position( $subValue ) == "at-body" {
+		// 			$subMap: map-get( $map, "at-body" );
+		// 			$map: map-merge( $map, ( "at-body": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+		// 		}
+		// 		@else if mvs-value-position( $subValue ) == "at-element" {
+		// 			$subMap: map-get( $map, "at-element" );
+		// 			$map: map-merge( $map, ( "at-element": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+		// 		}
+		// 		@else if mvs-value-position( $subValue ) == "at-list-element" {
+		// 			$subMap: map-get( $map, "at-list-element" );
+		// 			$map: map-merge( $map, ( "at-list-element": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+		// 		}
 		// 	}
-
-		// 	$result: append( $result, $map, comma );
-		// }
-		// @else {
-		// 	@for $i from 1 through $listLenght {
-		// 		$result: append( $result, normalize-value( nth( $value, $i ) ) );
+		// 	@else {
+		// 		$resultList: append( $resultList, normalize-value( $subValue ) );
 		// 	}
 		// }
 
-		// @debug "mvsass list syntax value" $value;
+		// @if length( $map ) > 0 {
+		// 	$resultList: append( $resultList, $map );
+		// }
 	}
 	// Assuming that $value is mvsass suntaxed value as map
 	@else if type-of( $value ) == "map" {
 		// @debug "mvsass map syntax value" $value;
+		$resultList: append( $resultList, $value );
 	}
 
-	// @debug "result" $result;
+	// @debug "result" $resultList;
+	@return $resultList;
+}
+
+// return
+// 0 - simple css value list
+// 1 - mvsass list comma seperated
+// 2 - mvsass list & map comma seperated
+@function check-list-type( $list ) {
+	$result: 0;
+
+	@each $value in $list {
+		@if ( type-of( $value ) == "list" and list-separator( $value ) == "comma" ) {
+			$result: if( $result == 2, 2, 1 );
+		}
+		@else if type-of( $value ) == "map" {
+			$result: 2;
+		}
+	}
+
 	@return $result;
 }
 
@@ -145,7 +241,10 @@
 
 @mixin normalize-mixin( $property, $value, $selector: null, $depth: 0 ) {
 	$test: normalize-value( $value );
-	@debug $test;
+	@debug XXX YYY ZZZ $test;
+	@each $key, $value in $test {
+		// @debug key $key value $value;
+	}
 }
 
 @mixin list( $model-list: $core-model-list, $is-initial: false ) {
@@ -159,30 +258,41 @@
 // }
 
 // .theme-model-list-component_syntax_base_list {
+// 	@debug theme-model-list-component_syntax_base_list;
 // 	@include list( $theme-model-list-component_syntax_base_list );
 // }
 
 // .theme-model-list-component_syntax_base_map {
+// 	@debug theme-model-list-component_syntax_base_map;
 // 	@include list( $theme-model-list-component_syntax_base_map );
 // }
 
-// .theme-model-list-component_syntax_base_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr );
-// }
+.theme-model-list-component_syntax_base_modernizr {
+	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_modernizr;
+	@include list( $theme-model-list-component_syntax_base_modernizr );
+}
 
-// .theme-model-list-component_syntax_base_list_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
-// }
+.theme-model-list-component_syntax_base_list_modernizr {
+	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_list_modernizr;
+	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+}
 
-// .theme-model-list-component_syntax_base_map_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr );
-// }
+.theme-model-list-component_syntax_base_map_modernizr {
+	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_map_modernizr;
+	@include list( $theme-model-list-component_syntax_base_map_modernizr );
+}
 
 // .theme-model-list-component_syntax_base_modernizr_nth {
+// 	@debug theme-model-list-component_syntax_base_modernizr_nth;
 // 	@include list( $theme-model-list-component_syntax_base_modernizr_nth );
 // }
 
-.theme-model-list-component_syntax_base_list_modernizr_nth_multi {
-	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
-}
+// .theme-model-list-component_syntax_base_list_modernizr_nth_multi {
+// 	@debug theme-model-list-component_syntax_base_list_modernizr_nth_multi;
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
+// }
 
+// .theme-model-list-component_syntax_base_map_modernizr_nth {
+// 	@debug theme-model-list-component_syntax_base_map_modernizr_nth;
+// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth );
+// }
