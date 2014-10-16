@@ -81,34 +81,34 @@ $theme-model-list-component_syntax_base_map_modernizr: (
 			lg      : #000030
 		) )
 	),
-	item_border-style : (
-		(
-			initial: solid,
-			md: double
-		),
-		( "flex", (
-			initial: dotted,
-			md: none
-		) ),
-		( "no-flex", (
-			initial: dotted,
-			md: none
-		) ),
-	),
-	item_border-width : (
-		(
-			initial : 1px 1px 1px 1px,
-			md      : 2px 2px 2px 2px
-		),
-		( "flex", (
-			initial : 10px 10px 10px 10px,
-			md      : 20px 20px 20px 20px
-		) ),
-		( "no-flex", (
-			initial : 10px 10px 10px 10px,
-			md      : 20px 20px 20px 20px
-		) ),
-	),
+	// item_border-style : (
+	// 	(
+	// 		initial: solid,
+	// 		md: double
+	// 	),
+	// 	( "flex", (
+	// 		initial: dotted,
+	// 		md: none
+	// 	) ),
+	// 	( "no-flex", (
+	// 		initial: dotted,
+	// 		md: none
+	// 	) ),
+	// ),
+	// item_border-width : (
+	// 	(
+	// 		initial : 1px 1px 1px 1px,
+	// 		md      : 2px 2px 2px 2px
+	// 	),
+	// 	( "flex", (
+	// 		initial : 10px 10px 10px 10px,
+	// 		md      : 20px 20px 20px 20px
+	// 	) ),
+	// 	( "no-flex", (
+	// 		initial : 10px 10px 10px 10px,
+	// 		md      : 20px 20px 20px 20px
+	// 	) ),
+	// ),
 );
 
 /* -------- */

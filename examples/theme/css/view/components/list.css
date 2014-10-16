@@ -5,22 +5,13 @@
 /* -------- */
 /* -------- */
 /* ---------------------------------------------------- */
-/* line 251, ../../../sass/view/components/list.scss */
-.theme-model-list-component_syntax_base_modernizr .list-item {
-  property: border-color;
-  property: border-style;
-  property: border-width;
-}
-
-/* line 251, ../../../sass/view/components/list.scss */
-.theme-model-list-component_syntax_base_list_modernizr .list-item {
-  property: border-color;
-  property: border-style;
-  property: border-width;
-}
-
-/* line 251, ../../../sass/view/components/list.scss */
+/* line 255, ../../../sass/view/components/list.scss */
 .theme-model-list-component_syntax_base_map_modernizr .list-item {
+  property: border-color;
+}
+
+/* line 255, ../../../sass/view/components/list.scss */
+.theme-model-list-component_syntax_base_map_modernizr_nth .list-item {
   property: border-color;
   property: border-style;
   property: border-width;

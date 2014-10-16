@@ -81,24 +81,28 @@
 			}
 		}
 		@else if $listType == 2 {
-			$map: ();
-
 			@each $subValue in $value {
+				$map: ();
 				@if type-of( $subValue ) == "list" and list-separator( $value ) == "comma" {
 
 					// @debug AAAAA $subValue;
 					//get the map with values
-					$map: nth( $subValue, -1 ); //big assumption that map with values will be last on the list
+					//$map: nth( $subValue, -1 ); //big assumption that map with values will be last on the list
 
 					// @debug BBBBBB $map;
 					//remove map vith value from the list
-					$subValue: slice( $subValue, 1, length( $subValue ) - 1 );
+					//$subValue: slice( $subValue, 1, length( $subValue ) - 1 );
 
 					// @debug BBBBBB $subValue;
 
 					//TODO Make this as a function so we can run this multiple times in loop
 					@each $subSubValue in $subValue {
-						@if mvs-value-position( $subSubValue ) == "at-value" {
+
+						// @debug CCCCCC  mvs-value-position( $subSubValue ) $subSubValue;
+						@if type-of( $subSubValue ) == "map" {
+							$map: map-merge( $map, $subSubValue );
+						}
+						@else if mvs-value-position( $subSubValue ) == "at-value" {
 							@if $screenBreakpointsKeysIndex == 1 {
 								$map: map-merge( $map, ( "initial": $subSubValue ) );
 							}
@@ -107,7 +111,7 @@
 							}
 							$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
 						}
-						@if mvs-value-position( $subSubValue ) == "at-body" {
+						@else if mvs-value-position( $subSubValue ) == "at-body" {
 							$subMap: map-get( $map, "at-body" );
 							$map: map-merge( $map, ( "at-body": if( $subMap == null, $subSubValue, append( $subMap, $subSubValue, space ) ) ) );
 						}
@@ -127,7 +131,7 @@
 					$resultList: append( $resultList, $subValue );
 				}
 				@else {
-					@debug "This should noty happend";
+					@debug "This should not happend";
 				}
 
 				@if length( $map ) > 0 {
@@ -235,7 +239,7 @@
 			}
 		}
 
-		@return "at-value"; //false;
+		@return "at-??"; //false;
 	}
 }
 
@@ -267,18 +271,18 @@
 // 	@include list( $theme-model-list-component_syntax_base_map );
 // }
 
-.theme-model-list-component_syntax_base_modernizr {
-	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_modernizr;
-	@include list( $theme-model-list-component_syntax_base_modernizr );
-}
+// .theme-model-list-component_syntax_base_modernizr {
+// 	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_modernizr;
+// 	@include list( $theme-model-list-component_syntax_base_modernizr );
+// }
 
-.theme-model-list-component_syntax_base_list_modernizr {
-	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_list_modernizr;
-	@include list( $theme-model-list-component_syntax_base_list_modernizr );
-}
+// .theme-model-list-component_syntax_base_list_modernizr {
+// 	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_list_modernizr;
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+// }
 
 .theme-model-list-component_syntax_base_map_modernizr {
-	@debug ZZZ YYY XXX theme-model-list-component_syntax_base_map_modernizr;
+	@debug --------------------------------- theme-model-list-component_syntax_base_map_modernizr;
 	@include list( $theme-model-list-component_syntax_base_map_modernizr );
 }
 
@@ -292,7 +296,7 @@
 // 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
 // }
 
-// .theme-model-list-component_syntax_base_map_modernizr_nth {
-// 	@debug theme-model-list-component_syntax_base_map_modernizr_nth;
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth );
-// }
+.theme-model-list-component_syntax_base_map_modernizr_nth {
+	@debug --------------------------------- theme-model-list-component_syntax_base_map_modernizr_nth;
+	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth );
+}
