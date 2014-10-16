@@ -1,3 +1,4 @@
+
 $theme-model-list-component_syntax_base: (
 	item_border-color : #000000,
 	item_border-style : solid,
@@ -34,16 +35,16 @@ $theme-model-list-component_syntax_base_modernizr: (
 		( "flex", #000010 ),
 		( "no-flex", #000020 )
 	),
-	item_border-style : (
-		solid,
-		( "flex", dotted ),
-		( "no-flex", dotted )
-	),
-	item_border-width : (
-		1px 1px 1px 1px,
-		( "flex", 10px 10px 10px 10px ),
-		( "no-flex", 10px 10px 10px 10px )
-	),
+	// item_border-style : (
+	// 	solid,
+	// 	( "flex", dotted ),
+	// 	( "no-flex", dotted )
+	// ),
+	// item_border-width : (
+	// 	1px 1px 1px 1px,
+	// 	( "flex", 10px 10px 10px 10px ),
+	// 	( "no-flex", 10px 10px 10px 10px )
+	// ),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr: (
@@ -52,34 +53,50 @@ $theme-model-list-component_syntax_base_list_modernizr: (
 		( "flex", #000010, #000020, #000030 ),
 		( "no-flex", #000010, #000020, #000030 )
 	),
-	item_border-style : (
-		( solid, double, ),
-		( "flex", dotted, none ),
-		( "no-flex", dotted, none )
-	),
-	item_border-width : (
-		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( "flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( "no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+	// item_border-style : (
+	// 	( solid, double, ),
+	// 	( "flex", dotted, none ),
+	// 	( "no-flex", dotted, none )
+	// ),
+	// item_border-width : (
+	// 	( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
+	// 	( "flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+	// 	( "no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
-$theme-model-list-component_syntax_base_map_modernizr: (
+$theme-model-list-component_syntax_base_map_modernizr_single: (
 	item_border-color : (
+		"no-flex", "flex", (
+			initial : #200010,
+			md      : #200020,
+			lg      : #200030
+		)
+	)
+);
+
+
+
+$theme-model-list-component_syntax_base_map_modernizr: (
+	//vst - 4
+	item_border-color : (
+		// vst - 3
+		( "flex", (
+			initial : #100010,
+			md      : #100020,
+			lg      : #100030
+		) ),
+		// vst - 3
+		( "no-flex", "flex", (
+			initial : #200010,
+			md      : #200020,
+			lg      : #200030
+		) ),
+		// vst - 2
 		(
 			initial : #000000,
 			md      : #000001,
 			lg      : #000002
 		),
-		( "flex", (
-			initial : #000010,
-			md      : #000020,
-			lg      : #000030
-		) ),
-		( "no-flex", "flex", (
-			initial : #000010,
-			md      : #000020,
-			lg      : #000030
-		) )
 	),
 	// item_border-style : (
 	// 	(
