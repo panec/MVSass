@@ -22,7 +22,7 @@
 			display: block
 		}
 
-		@include mvs-respond-map( "item_", $model-list );
+		@include mvs-respond-map( "item_", $model-list, "", 0 );
 	}
 
 	.list-item-link {
