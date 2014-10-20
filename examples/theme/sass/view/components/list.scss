@@ -32,7 +32,12 @@
 		@include -mvs-respond( $property, $values, $selector, $depth );
 	}
 	@else {
+
+		@debug $property $values;
+
 		$values: normalize-value( $values );
+
+		@debug $property normalized $values;
 
 		@each $value in $values {
 
@@ -69,7 +74,6 @@
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
 			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
 			@media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
-			// @media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: map-nth( $screen-breakpoints, $index + 1 ) - 1 ) { @content; }
 		}
 		@else {
 			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
@@ -86,12 +90,15 @@
 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
 	$valueSyntaxType       : check-value-syntax-type( $value );
 
+	@debug normalize-value $value;
+
 	// 0 - simple css value list
 	@if $valueSyntaxType == 0 {
 		$resultList: append( $resultList, ( "initial": $value ) );
 	}
 	// 1 - mvsass list of comma seperated optional modifiers & list of values
 	@else if $valueSyntaxType == 1 {
+		@debug normalize-value type 1;
 		$map: ();
 		$screenBreakpointsKeysIndex: 1;
 
@@ -123,10 +130,12 @@
 	}
 	// 2 - mvsass map of values
 	@else if $valueSyntaxType == 2 {
+		@debug normalize-value type 2;
 		$resultList: append( $resultList, $value );
 	}
 	// 3 - mvsass list of comma seperated modifiers & map of values
 	@else if $valueSyntaxType == 3 {
+		@debug normalize-value type 3;
 		$map: ();
 
 		@each $subValue in $value {
@@ -151,6 +160,7 @@
 	}
 	// 4 - nested syntax
 	@else if $valueSyntaxType == 4 {
+		@debug normalize-value type 4;
 		@each $subValue in $value {
 			$resultList: join( $resultList, normalize-value( $subValue ) );
 		}
@@ -161,9 +171,11 @@
 
 //done
 // 0 - simple css value list
-// 1 - mvsass list of comma seperated optional modifiers & list of values
+// 1 - mvsass list of comma seperated optional selectors & list of values
+// 1.1 - mvsass list of comma seperated optional selectors & map with modifires & list of values
 // 2 - mvsass map of values
-// 3 - mvsass list of comma seperated modifiers & map of values on last one
+// 3 - mvsass list of comma seperated selectors & map of values on last one
+// 3.1 - mvsass list of comma seperated selectors & map with modifires & map of values on last one
 // 4 - nested syntax
 @function check-value-syntax-type( $syntax ) {
 	$result: 0;
@@ -173,10 +185,18 @@
 
 		@each $listItem in $syntax {
 			$subSyntax: check-value-syntax-type( $listItem );
+
+			// @debug check-value-syntax-type  $subSyntax $listItem;
+
 			@if $subSyntax != 0 {
 				$result: 4;
 			}
 		}
+
+// @if type-of( $value ) == "map" and map-get( $value, "initial" ) == null {
+	// 	@return 4; //"at-block";
+	// }
+
 
 		@if type-of( nth( $syntax, -1 ) ) == "map" {
 			@each $listItem in slice( $syntax, 1, length( $syntax ) - 1 ) {
@@ -209,10 +229,10 @@
 
 
 	//TODO this is a very big assumption
-	@if type-of( $value ) == "map" and map-get( $value, "initial" ) == null {
-		@return 4; //"at-block";
-	}
-	@else if type-of( $value ) != "string" {
+	// @if type-of( $value ) == "map" and map-get( $value, "initial" ) == null {
+	// 	@return 4; //"at-block";
+	// }
+	@if type-of( $value ) != "string" {
 		@return 0; //"at-value";
 	}
 	@else {
@@ -299,13 +319,13 @@
 // 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo );
 // }
 
-.syntax_base_modernizr_nth_pseudo_mod {
-	@include list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod );
-}
+// .syntax_base_modernizr_nth_pseudo_mod {
+// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod );
+// }
 
-.syntax_base_list_modernizr_nth_pseudo_mod {
-	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
-}
+// .syntax_base_list_modernizr_nth_pseudo_mod {
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
+// }
 
 .syntax_base_map_modernizr_nth_pseudo_mod {
 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod );

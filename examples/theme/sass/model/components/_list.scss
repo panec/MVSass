@@ -447,6 +447,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
 			md      : #000001,
 			lg      : #000002
 		),
+		( ( "mod_key_1": "mod_value_1" ), (
+			initial : #000011,
+			md      : #000021,
+			lg      : #000031
+		) ),
 		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
 			initial : #000010,
 			md      : #000020,
@@ -458,32 +463,32 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
 			lg      : #000030
 		) )
 	),
-	item_border-style : (
-		(
-			initial : solid,
-			md      : double
-		),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
-			initial : dotted,
-			md      : none
-		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
-			initial : dotted,
-			md      : none
-		) ),
-	),
-	item_border-width : (
-		(
-			initial : 1px 1px 1px 1px,
-			md      : 2px 2px 2px 2px
-		),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
-			initial : 10px 10px 10px 10px,
-			md      : 20px 20px 20px 20px
-		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
-			initial : 10px 10px 10px 10px,
-			md      : 20px 20px 20px 20px
-		) ),
-	),
+	// item_border-style : (
+	// 	(
+	// 		initial : solid,
+	// 		md      : double
+	// 	),
+	// 	( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 		initial : dotted,
+	// 		md      : none
+	// 	) ),
+	// 	( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 		initial : dotted,
+	// 		md      : none
+	// 	) ),
+	// ),
+	// item_border-width : (
+	// 	(
+	// 		initial : 1px 1px 1px 1px,
+	// 		md      : 2px 2px 2px 2px
+	// 	),
+	// 	( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 		initial : 10px 10px 10px 10px,
+	// 		md      : 20px 20px 20px 20px
+	// 	) ),
+	// 	( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 		initial : 10px 10px 10px 10px,
+	// 		md      : 20px 20px 20px 20px
+	// 	) ),
+	// ),
 );
