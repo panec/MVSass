@@ -5,6 +5,163 @@
 /* -------- */
 /* -------- */
 /* line 304, ../../../../../src/mixins/_mvs.scss */
+.syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+  border-color: black;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+    border-color: #000001;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+    border-color: #000002;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-color: #000010;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-color: #000020;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-color: #000030;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-color: #000010;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-color: #000020;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-color: #000030;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+  border-style: solid;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+    border-style: double;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-style: dotted;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-style: none;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-style: dotted;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-style: none;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+  border-width: 1px 1px 1px 1px;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_list_modernizr_nth_pseudo_mod .list-item {
+    border-width: 2px 2px 2px 2px;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-width: 10px 10px 10px 10px;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-width: 20px 20px 20px 20px;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+  border-width: 10px 10px 10px 10px;
+}
+@media only screen and (min-width: 480px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_list_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1:hover:nth-child(n) {
+    border-width: 20px 20px 20px 20px;
+  }
+}
+
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1 {
+  border-color: #000011;
+}
+@media only screen and (min-width: 992px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1 {
+    border-color: #000021;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_1mod_value_1 {
+    border-color: #000031;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_2mod_value_2:hover:nth-child(n) {
+  border-color: #000010;
+}
+@media only screen and (min-width: 992px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_2mod_value_2:hover:nth-child(n) {
+    border-color: #000020;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_2mod_value_2:hover:nth-child(n) {
+    border-color: #000030;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
+.no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_3mod_value_3:hover:nth-child(n) {
+  border-color: #000010;
+}
+@media only screen and (min-width: 992px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_3mod_value_3:hover:nth-child(n) {
+    border-color: #000020;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  /* line 304, ../../../../../src/mixins/_mvs.scss */
+  .no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-itemmod_key_3mod_value_3:hover:nth-child(n) {
+    border-color: #000030;
+  }
+}
+/* line 304, ../../../../../src/mixins/_mvs.scss */
 .syntax_base_map_modernizr_nth_pseudo_mod .list-item {
   border-color: black;
 }
@@ -18,53 +175,5 @@
   /* line 304, ../../../../../src/mixins/_mvs.scss */
   .syntax_base_map_modernizr_nth_pseudo_mod .list-item {
     border-color: #000002;
-  }
-}
-/* line 304, ../../../../../src/mixins/_mvs.scss */
-.syntax_base_map_modernizr_nth_pseudo_mod .list-item {
-  border-color: #000011;
-}
-@media only screen and (min-width: 992px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .syntax_base_map_modernizr_nth_pseudo_mod .list-item {
-    border-color: #000021;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .syntax_base_map_modernizr_nth_pseudo_mod .list-item {
-    border-color: #000031;
-  }
-}
-/* line 304, ../../../../../src/mixins/_mvs.scss */
-.flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-  border-color: #000010;
-}
-@media only screen and (min-width: 992px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-    border-color: #000020;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-    border-color: #000030;
-  }
-}
-/* line 304, ../../../../../src/mixins/_mvs.scss */
-.no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-  border-color: #000010;
-}
-@media only screen and (min-width: 992px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-    border-color: #000020;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  /* line 304, ../../../../../src/mixins/_mvs.scss */
-  .no-flex .syntax_base_map_modernizr_nth_pseudo_mod .list-item:hover:nth-child(n) {
-    border-color: #000030;
   }
 }
