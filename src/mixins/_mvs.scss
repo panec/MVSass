@@ -84,20 +84,20 @@
 // 	$selector (Sass::Script::Value::Base)
 // 	$depth (Sass::Script::Value::Base)
 // 	$nthSelector (Sass::Script::Value::Base)
-@mixin -mvs-respond( $property, $value, $selector: null, $depth: 0, $nthSelector: null ) {
-	@if type-of( $property ) != "null" and type-of( $value ) != "null" {
-		@if type-of( $selector ) == "string" and ( $selector != null or $selector != "" ) {
-			@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
-				@include -mvs-respond-mixins( $property, $value );
-			}
-		}
-		@else {
-			@include mvs-parent( "#{$nthSelector}", false, $depth ) {
-				@include -mvs-respond-mixins( $property, $value );
-			}
-		}
-	}
-}
+// @mixin -mvs-respond( $property, $value, $selector: null, $depth: 0, $nthSelector: null ) {
+// 	@if type-of( $property ) != "null" and type-of( $value ) != "null" {
+// 		@if type-of( $selector ) == "string" and ( $selector != null or $selector != "" ) {
+// 			@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
+// 				@include -mvs-respond-mixins( $property, $value );
+// 			}
+// 		}
+// 		@else {
+// 			@include mvs-parent( "#{$nthSelector}", false, $depth ) {
+// 				@include -mvs-respond-mixins( $property, $value );
+// 			}
+// 		}
+// 	}
+// }
 
 //**
 // Generates styles for property in MVS list syntax
@@ -206,27 +206,27 @@
 //**
 // Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
 // Params
-// 	$prefix (Sass::Script::Value::String)
-// 	$map (Sass::Script::Value::Base)
+// 	$elementPrefix (Sass::Script::Value::String)
+// 	$valueMap (Sass::Script::Value::Base)
 // 	$selector (Sass::Script::Value::String)
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );
 //TODO Params to be extended
-@mixin mvs-respond-map( $prefix, $map, $selector: null, $depth: 0 ) {
-	$prefixLength: str-length( $prefix );
+@mixin mvs-respond-map( $elementPrefix, $valueMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListSDepth: -1 ) {
+	$elementPrefixLength: str-length( $elementPrefix );
 
-	@each $key, $value in $map {
-		@if str-index( $key, $prefix ) != null {
-			$property: str-slice( $key, $prefixLength + 1 );
+	@each $key, $value in $valueMap {
+		@if str-index( $key, $elementPrefix ) != null {
+			$property: str-slice( $key, $elementPrefixLength + 1 );
 			@if ( str-index-last( $property, "_" ) == false ) {
 				//TODO Add logic to recognize custom mixin map from extended nth syntax map
 				@if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
 					@debug $property this is a supported mixin that has a map values ;
-					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+					// @include mvs-respond-property-list( str-slice( $key, $elementPrefixLength + 1 ), $value, $selector, $depth );
 				}
 				@else {
-					@include mvs-respond-property( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListSDepth );
 				}
 			}
 		}
@@ -234,7 +234,7 @@
 }
 
 //TODO Add examples and desciption
-@mixin mvs-respond-property( $property, $values, $selector: null, $depth: 0 ) {
+@mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: 1, $parentListSelector: null, $parentListDepth: 1 ) {
 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
 
 	@if $values == null {
@@ -242,7 +242,7 @@
 	}
 	@else if is( $property, "font-family" "font" ) {
 		@warn "MVS syntax does not support #{$property} property";
-		@include -mvs-respond( $property, $values, $selector, $depth );
+		@include -mvs-respond-mixins( $property, $values );
 	}
 	@else {
 		$values: mvs-normalize-value( $values );
@@ -255,17 +255,21 @@
 			// 3 - at list container value
 			$_3: to-string( map-get( $value, "_3" ) );
 			// 4 - at block value ( for modifiers )
-			$_4: mvs-mod-to-string( map-get( $value, "_4" ) );
+			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "", "data" );
 
-			//TODO Extend funtions to pass the mod settings
-			#{$_1} &#{$_4}#{$_2}{
-				@include -mvs-respond( $property, map-get( $value, "initial" ), $selector, $depth, $_3 );
-			}
+			#{$_1} &#{$_2}{
+				@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
+					@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+						@include -mvs-respond-mixins( $property, map-get( $value, "initial" ) );
+					}
+				}}
 
 			@each $breakpoint in $screenBreakpointsKeys {
-				@include respond-to( $breakpoint ) {
-					#{$_1} &#{$_4}#{$_2}{
-						@include -mvs-respond( $property, map-get( $value, $breakpoint ), $selector, $depth, $_3 );
+				@include respond-to( $breakpoint, $_3 != "" ) {
+					@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
+						@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+							@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
+						}
 					}
 				}
 			}
@@ -318,15 +322,17 @@
 @mixin mvs-parent( $selector, $inject: true, $depth: 0 ) {
 	@if $depth > 0 {
 		@at-root {
-
 			$path: "";
 
 			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
 			@if function-exists( parentsSelector ) {
 				$path: nth( parentsSelector(), 1 );
 			}
+			@else if type-of( & ) == "list" {
+				$path: nth( &, 1 );
+			}
 			@else {
-				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided";
+				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided, or update to SASS 3.4.x";
 			}
 
 			@if $inject {
@@ -337,7 +343,10 @@
 			}
 		}
 	}
-	@else {
+	@else if $depth == 0 {
 		&#{$selector} { @content; }
+	}
+	@else {
+		@content;
 	}
 }

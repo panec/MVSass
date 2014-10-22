@@ -4,80 +4,123 @@
 /* -------- */
 /* -------- */
 /* -------- */
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.flex .syntax_base_modernizr .list-item {
-  border-color: #000010;
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.syntax_final {
+  background: #000000;
 }
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.no-flex .syntax_base_modernizr .list-item {
-  border-color: #000020;
+/* line 347, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item:nth-child(2n) {
+  border-color: green;
 }
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.syntax_base_modernizr .list-item {
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  /* line 347, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final .list-item:nth-child(2n) {
+    border-color: blue;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 347, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final .list-item:nth-child(2n) {
+    border-color: red;
+  }
+}
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item {
   border-color: black;
 }
-
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.syntax_base_list_modernizr .list-item {
-  border-color: black;
-}
-@media only screen and (min-width: 480px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .syntax_base_list_modernizr .list-item {
-    border-color: #000001;
-  }
-}
-@media only screen and (min-width: 768px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .syntax_base_list_modernizr .list-item {
-    border-color: #000002;
-  }
-}
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.flex .syntax_base_list_modernizr .list-item {
-  border-color: #000010;
-}
-@media only screen and (min-width: 480px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .flex .syntax_base_list_modernizr .list-item {
-    border-color: #000020;
-  }
-}
-@media only screen and (min-width: 768px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .flex .syntax_base_list_modernizr .list-item {
-    border-color: #000030;
-  }
-}
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.no-flex .syntax_base_list_modernizr .list-item {
-  border-color: #000010;
-}
-@media only screen and (min-width: 480px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .no-flex .syntax_base_list_modernizr .list-item {
-    border-color: #000020;
-  }
-}
-@media only screen and (min-width: 768px) {
-  /* line 340, ../../../../../src/mixins/_mvs.scss */
-  .no-flex .syntax_base_list_modernizr .list-item {
-    border-color: #000030;
-  }
-}
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.flex .syntax_base_list_modernizr .list-item:nth-child(n) {
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_final .list-item {
   border-style: dotted;
 }
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.flex .syntax_base_list_modernizr .list-item:nth-child(2n) {
-  border-style: none;
+@media only screen and (min-width: 480px) {
+  /* line 20, ../../../../core/sass/view/components/_list.scss */
+  .syntax_final .list-item {
+    border-style: dotted;
+  }
 }
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.no-flex .syntax_base_list_modernizr .list-item:nth-child(n) {
-  border-style: dotted;
+@media only screen and (min-width: 768px) {
+  /* line 20, ../../../../core/sass/view/components/_list.scss */
+  .syntax_final .list-item {
+    border-style: double;
+  }
 }
-/* line 340, ../../../../../src/mixins/_mvs.scss */
-.syntax_base_list_modernizr .list-item {
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item {
   border-style: solid;
+}
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item {
+  border-width: 1px 1px 1px 1px;
+}
+/* line 339, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item:nth-child(2n) .list-item-link {
+  color: #00FF00;
+}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final .list-item:nth-child(2n) .list-item-link {
+    color: #FF00FE;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final .list-item:nth-child(2n) .list-item-link {
+    color: #FF00FD;
+  }
+}
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.flex .syntax_final .list-item-link {
+  color: #0000FF;
+}
+@media only screen and (min-width: 480px) {
+  /* line 28, ../../../../core/sass/view/components/_list.scss */
+  .syntax_final .list-item-link {
+    color: #FF00FE;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 28, ../../../../core/sass/view/components/_list.scss */
+  .syntax_final .list-item-link {
+    color: #FF00FD;
+  }
+}
+/* line 342, ../../../../../src/mixins/_mvs.scss */
+.syntax_final[data---mod_key='mod_value'] .list-item-link {
+  color: #FF00FF;
+}
+@media only screen and (min-width: 480px) {
+  /* line 342, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final[data---mod_key='mod_value'] .list-item-link {
+    color: #FF00FE;
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* line 342, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final[data---mod_key='mod_value'] .list-item-link {
+    color: #FF00FD;
+  }
+}
+/* line 339, ../../../../../src/mixins/_mvs.scss */
+.syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
+  color: #FF00FF;
+}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
+    color: #FF00FE;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  .syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
+    color: #FF00FD;
+  }
+}
+/* line 339, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item:nth-child(2n+1) .list-item-link:before {
+  color: #00FF00;
+}
+/* line 260, ../../../../../src/mixins/_mvs.scss */
+.syntax_final .list-item-link {
+  color: #FF0000;
 }

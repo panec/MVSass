@@ -1,5 +1,9 @@
 @import "../../ref";
 
+.syntax_final {
+	@include list( $theme-model-list-component_syntax_final );
+}
+
 // .syntax_base {
 // 	@include list( $theme-model-list-component_syntax_base );
 // }
@@ -12,13 +16,13 @@
 // 	@include list( $theme-model-list-component_syntax_base_map );
 // }
 
-.syntax_base_modernizr {
-	@include list( $theme-model-list-component_syntax_base_modernizr );
-}
+// .syntax_base_modernizr {
+// 	@include list( $theme-model-list-component_syntax_base_modernizr );
+// }
 
-.syntax_base_list_modernizr {
-	@include list( $theme-model-list-component_syntax_base_list_modernizr );
-}
+// .syntax_base_list_modernizr {
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+// }
 
 // .syntax_base_map_modernizr_single {
 // 	@include list( $theme-model-list-component_syntax_base_map_modernizr_single );

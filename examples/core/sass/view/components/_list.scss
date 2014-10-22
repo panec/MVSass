@@ -7,14 +7,14 @@
 		$model-list: map-unique( $core-model-list, $model-list );
 	}
 
-	@include mvs-respond-map( "component_", $model-list );
+	@include mvs-respond-map( "_", $model-list, "", 0 );
 
 	.list-body {
 		@if $is-initial {
 			@include clearfix;
 		}
 
-		@include mvs-respond-map( "list-body_", $model-list );
+		@include mvs-respond-map( "list-body_", $model-list, "", 1 );
 	}
 
 	.list-item {
@@ -22,7 +22,7 @@
 			display: block
 		}
 
-		@include mvs-respond-map( "item_", $model-list, "", 0 );
+		@include mvs-respond-map( "item_", $model-list, "", 1, "", 0 );
 	}
 
 	.list-item-link {
@@ -30,8 +30,8 @@
 			display: block
 		}
 
-		@include mvs-respond-map( "item-link_", $model-list, " .list-item", 1 );
-		@include mvs-respond-map( "item-link_is-hover_", $model-list, " .list-item:hover", 1 );
+		@include mvs-respond-map( "item-link_", $model-list, "", 1, " .list-item", 1 );
+		@include mvs-respond-map( "item-link_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
 	}
 
 	.list-img-container {
@@ -39,7 +39,7 @@
 			display: block
 		}
 
-		@include mvs-respond-map( "item-img-container_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-img-container_", $model-list, "", 1, " .list-item", 1 );
 	}
 
 	.list-img {
@@ -48,19 +48,19 @@
 			width: 100%;
 		}
 
-		@include mvs-respond-map( "item-img_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-img_", $model-list, "", 1, " .list-item", 1 );
 	}
 
 	.list-item-body {
-		@include mvs-respond-map( "item-body_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-body_", $model-list, "", 1, " .list-item", 1 );
 	}
 
 	.list-item-header {
-		@include mvs-respond-map( "item-header_", $model-list, " .list-item", 1 );
-		@include mvs-respond-map( "item-header_is-hover_", $model-list, " .list-item:hover", 1 );
+		@include mvs-respond-map( "item-header_", $model-list, "", 1, " .list-item", 1 );
+		@include mvs-respond-map( "item-header_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
 	}
 
 	.list-item-desc {
-		@include mvs-respond-map( "item-desc_", $model-list, " .list-item", 1 );
+		@include mvs-respond-map( "item-desc_", $model-list, "", 1, " .list-item", 1 );
 	}
 }

@@ -1,3 +1,27 @@
+$theme-model-list-component_syntax_final: (
+	_background: #000000,
+
+	item_border-color : (
+		black,
+		( ":nth-child(2n)", green, blue, red )
+	),
+	item_border-style : (
+		solid,
+		( ".flex", dotted, dotted, double )
+	),
+	item_border-width : 1px 1px 1px 1px,
+
+	item-link_color: (
+		#FF0000,
+		( ":nth-child(2n)", #00FF00, #FF00FE, #FF00FD ),
+		( ".flex", #0000FF, #FF00FE, #FF00FD ),
+		( ( "mod_key": "mod_value" ), #FF00FF,#FF00FE, #FF00FD ),
+		( ":nth-child(2n+1)", ( "mod_key": "mod_value" ), #FF00FF, #FF00FE, #FF00FD ),
+		( ":before", ":nth-child(2n+1)", #00FF00 )
+	),
+);
+
+
 
 $theme-model-list-component_syntax_base: (
 	item_border-color : #000000,
@@ -53,23 +77,23 @@ $theme-model-list-component_syntax_base_list_modernizr: (
 		( ".flex", #000010, #000020, #000030 ),
 		( ".no-flex", #000010, #000020, #000030 )
 	),
-	item_border-style : (
-		solid,
-		( ".flex", (
-			( ":nth-child(n)", dotted ),
-			( ":nth-child(2n)", none ),
-		) ),
-		( ".no-flex", ":nth-child(n)", dotted )
-	),
 	// item_border-style : (
-	// 	( solid, double, ),
-	// 	( ".flex", dotted, none ),
-	// 	( ".no-flex", dotted, none )
+	// 	solid,
+	// 	( ".flex", (
+	// 		( ":nth-child(n)", dotted ),
+	// 		( ":nth-child(2n)", none ),
+	// 	) ),
+	// 	( ".no-flex", ":nth-child(n)", dotted )
 	// ),
-	// item_border-width : (
-	// 	( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-	// 	( ".flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-	// 	( ".no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+	item_border-style : (
+		( solid, double, ),
+		( ".flex", dotted, none ),
+		( ".no-flex", dotted, none )
+	),
+	item_border-width : (
+		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
+		( ".flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_single: (
@@ -85,21 +109,17 @@ $theme-model-list-component_syntax_base_map_modernizr_single: (
 
 
 $theme-model-list-component_syntax_base_map_modernizr: (
-	//vst - 4
 	item_border-color : (
-		// vst - 3
 		( ".flex", (
 			initial : #100010,
 			md      : #100020,
 			lg      : #100030
 		) ),
-		// vst - 3
 		( ".no-flex", ".flex", (
 			initial : #200010,
 			md      : #200020,
 			lg      : #200030
 		) ),
-		// vst - 2
 		(
 			initial : #000000,
 			md      : #000001,
