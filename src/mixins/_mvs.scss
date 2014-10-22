@@ -113,70 +113,70 @@
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li" );
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li", 1 );
 // 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), "", 1 );
-@mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
-	// @debug mvs-respond-property-list $property $values type-of( $values );
+// @mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
+// 	// @debug mvs-respond-property-list $property $values type-of( $values );
 
-	@if $values == null {
-		//skip
-	}
-	@else if is( $property, "font-family" "font" "z-index" ) {
-		@warn "MVS syntax does not support #{$property} property";
-		@include -mvs-respond( $property, $values, $selector, $depth );
-	}
-	@else if type-of( $values ) == "map" {
+// 	@if $values == null {
+// 		//skip
+// 	}
+// 	@else if is( $property, "font-family" "font" "z-index" ) {
+// 		@warn "MVS syntax does not support #{$property} property";
+// 		@include -mvs-respond( $property, $values, $selector, $depth );
+// 	}
+// 	@else if type-of( $values ) == "map" {
 
-		@include -mvs-respond( $property, $values, $selector, $depth );
-	}
-	@else {
-		$values                  : if( list-separator($values) == "space", ( $values, ), $values );
-		$length                  : length($values);
-		$defaultValue            : nth($values, 1);
-		$screen-breakpoints-keys : map-keys( $screen-breakpoints );
+// 		@include -mvs-respond( $property, $values, $selector, $depth );
+// 	}
+// 	@else {
+// 		$values                  : if( list-separator($values) == "space", ( $values, ), $values );
+// 		$length                  : length($values);
+// 		$defaultValue            : nth($values, 1);
+// 		$screen-breakpoints-keys : map-keys( $screen-breakpoints );
 
-		@include -mvs-respond( $property, $defaultValue, $selector, $depth );
+// 		@include -mvs-respond( $property, $defaultValue, $selector, $depth );
 
-		@if $length > 1 {
-			@for $i from 2 through $length {
-				$lastValue   : $defaultValue;
+// 		@if $length > 1 {
+// 			@for $i from 2 through $length {
+// 				$lastValue   : $defaultValue;
 
-				$subValues   : nth($values, $i);
-				$subLenght   : length($subValues);
+// 				$subValues   : nth($values, $i);
+// 				$subLenght   : length($subValues);
 
-				$isNthSyntax : mvs-is-nth($subValues);
-				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
+// 				$isNthSyntax : mvs-is-nth($subValues);
+// 				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
 
-				@if $isNthSyntax {
-					$subValues : slice( $subValues, 2 );
-					$subLenght : length( $screen-breakpoints-keys );
-				}
+// 				@if $isNthSyntax {
+// 					$subValues : slice( $subValues, 2 );
+// 					$subLenght : length( $screen-breakpoints-keys );
+// 				}
 
-				@if $isNthSyntax == false and $defaultValue != nth( $subValues, 1 ){
-					@warn "Default value" $defaultValue "is not equal to the first break point value" nth( $subValues, 1 );
-				}
+// 				@if $isNthSyntax == false and $defaultValue != nth( $subValues, 1 ){
+// 					@warn "Default value" $defaultValue "is not equal to the first break point value" nth( $subValues, 1 );
+// 				}
 
-				@for $j from 1 through $subLenght {
-					$currentValue: mvs-get-nth( $subValues, $j );
+// 				@for $j from 1 through $subLenght {
+// 					$currentValue: mvs-get-nth( $subValues, $j );
 
-					// @if $isNthSyntax == false and $lastValue != $currentValue { //DOES NOT WORK, WHY????
-					@if $isNthSyntax == false {
-						@if $lastValue != $currentValue {
-							$lastValue : $currentValue;
+// 					// @if $isNthSyntax == false and $lastValue != $currentValue { //DOES NOT WORK, WHY????
+// 					@if $isNthSyntax == false {
+// 						@if $lastValue != $currentValue {
+// 							$lastValue : $currentValue;
 
-							@include respond-to( nth( $screen-breakpoints-keys, $j ) ) {
-								@include -mvs-respond( $property, $lastValue, $selector, $depth );
-							}
-						}
-					}
-					@else {
-						@include respond-to( nth( $screen-breakpoints-keys, $j ), $is-specific: true ){
-							@include -mvs-respond($property, $currentValue, $selector, $depth, $nthSelector);
-						}
-					}
-				}
-			}
-		}
-	}
-}
+// 							@include respond-to( nth( $screen-breakpoints-keys, $j ) ) {
+// 								@include -mvs-respond( $property, $lastValue, $selector, $depth );
+// 							}
+// 						}
+// 					}
+// 					@else {
+// 						@include respond-to( nth( $screen-breakpoints-keys, $j ), $is-specific: true ){
+// 							@include -mvs-respond($property, $currentValue, $selector, $depth, $nthSelector);
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
 //**
 // Generates styles for property in MVS map syntax
@@ -191,17 +191,17 @@
 // 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li" );
 // 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li", 1 );
 // 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), "", 1 );
-@mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
-	// @debug mvs-respond-property-map $map;
-	@each $property, $value in $map {
-		@if ( type-of( $value ) == "map" ) {
-			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
-		}
-		@else {
-			@include mvs-respond-property-list( $property, $value, $selector, $depth );
-		}
-	}
-}
+// @mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
+// 	// @debug mvs-respond-property-map $map;
+// 	@each $property, $value in $map {
+// 		@if ( type-of( $value ) == "map" ) {
+// 			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
+// 		}
+// 		@else {
+// 			@include mvs-respond-property-list( $property, $value, $selector, $depth );
+// 		}
+// 	}
+// }
 
 //**
 // Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
@@ -257,6 +257,7 @@
 			// 4 - at block value ( for modifiers )
 			$_4: mvs-mod-to-string( map-get( $value, "_4" ) );
 
+			//TODO Extend funtions to pass the mod settings
 			#{$_1} &#{$_4}#{$_2}{
 				@include -mvs-respond( $property, map-get( $value, "initial" ), $selector, $depth, $_3 );
 			}
