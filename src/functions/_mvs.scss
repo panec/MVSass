@@ -96,36 +96,6 @@
 	}
 }
 
-@function mvs-value-position( $value ) {
-	$atBody: "flex" "no-flex"; //TODO Fill modernizr & cssua values
-	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
-	$atListElement: "nth-child" "nth-of-type" "first-child" "last-child";
-	// $at-block: // This can be for mods
-
-	@if type-of( $value ) != "string" {
-		@return "at-value"; //false;
-	}
-	@else {
-		@each $string in $atBody {
-			@if str-index( $value, $string ) {
-				@return "at-body";
-			}
-		}
-		@each $string in $atElement {
-			@if str-index( $value, $string ) {
-				@return "at-element";
-			}
-		}
-		@each $string in $atListElement {
-			@if str-index( $value, $string ) {
-				@return "at-list-element";
-			}
-		}
-
-		@return "at-value"; //false;
-	}
-}
-
 //**
 // Calls custom function against each set of values from MVS syntax
 // Params
@@ -224,4 +194,151 @@
 	}
 
 	@return if( $onlyResponsiveList, $subResult, $result );
+}
+
+//TODO Add example calls and description
+@function mvs-mod-to-string( $mod, $prefix: "", $modType: "class", $modDivider: "-" ){
+	$result: "";
+
+	@if $mod == null or $mod == ""{
+		//do nothing
+	}
+	@else if type-of( $mod ) == "string" {
+		$result: $result + $prefix + $modDivider + $mod;
+	}
+	@else if type-of( $mod ) == "map" {
+		@each $key, $value in $mod {
+			@if ( $modType == "data" ) {
+			    $prefix: if( str-slice( $prefix, 1, 1 ) == ".", str-slice( $prefix, 2 ), $prefix );
+				$result: $result + "[data-#{$prefix}--#{$key}='#{$value}']";
+			}
+			@else if ( $modType == "class" ) {
+				$result: $result + $prefix + "--" + $key + $modDivider + $value;
+			}
+		}
+	}
+	@else {
+		@warn "$mod is not a proper type, string & map are supported" $mod;
+	}
+
+	@return $result;
+}
+
+//TODO Add example calls and description
+@function mvs-normalize-value( $value ) {
+	$resultList            : ();
+	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+
+	@if type-of( $value ) != "map" and type-of( $value ) != "list" {
+		$resultList: append( $resultList, ( "initial": $value ) );
+	}
+
+	@else if type-of( $value ) == "map" {
+		$resultList: append( $resultList, $value );
+	}
+
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
+		$resultList: append( $resultList, ( "initial": $value ) );
+	}
+
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
+		$map: ();
+		$tempMap: ();
+		$tempList: ();
+		$screenBreakpointsKeysIndex: 1;
+
+		@each $subValue in $value {
+			@if mvs-value-position( $subValue ) == 1 {
+				$subMap: map-get( $tempMap, "_1" );
+				$tempMap: map-merge( $tempMap, ( "_1": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+			}
+			@else if mvs-value-position( $subValue ) == 2 {
+				$subMap: map-get( $tempMap, "_2" );
+				$tempMap: map-merge( $tempMap, ( "_2": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+			}
+			@else if mvs-value-position( $subValue ) == 3 {
+				$subMap: map-get( $tempMap, "_3" );
+				$tempMap: map-merge( $tempMap, ( "_3": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+			}
+			@else if mvs-value-position( $subValue ) == 4 {
+				$subMap: map-get( $tempMap, "_4" );
+				$tempMap: map-merge( $tempMap, ( "_4": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+			}
+			@else {
+				$tempList: append( $tempList, $subValue, comma );
+			}
+		}
+
+		@each $subValue in $tempList {
+			@if type-of( $subValue ) == "map" {
+				$resultList: append( $resultList, map-merge( $subValue, $tempMap ) );
+			}
+			@else if type-of( $subValue ) == "list" and list-separator( $subValue ) == "comma" {
+				$tempNormalize: mvs-normalize-value( $subValue );
+
+				@each $subNormalize in $tempNormalize {
+					$resultList: append( $resultList, map-merge( $subNormalize, $tempMap ) );
+				}
+			}
+			@else {
+				@if $screenBreakpointsKeysIndex == 1 {
+					$map: map-merge( $map, ( "initial": $subValue ) );
+				}
+				@else {
+					$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+				}
+				$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+			}
+		}
+
+		//This couses a problem when a single css value is followed by maps or list on root level it is added at the end of result
+		@if length( $map ) > 0 {
+			$resultList: append( $resultList, map-merge( $map, $tempMap ) );
+		}
+	}
+
+	@return $resultList;
+}
+
+
+//done
+// return
+// 0 - not specific value
+// 1 - at body value
+// 2 - at element value
+// 3 - at list container value
+// 4 - at block value ( for modifiers )
+//TODO Add example calls and description
+@function mvs-value-position( $value ) {
+	$atBody: ".flex" ".no-flex"; //TODO Fill modernizr & cssua values
+	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
+	$atListElement: ":nth-child" ":nth-of-type" ":first-child" ":last-child";
+
+	@if type-of( $value ) != "string" and type-of( $value ) != "map" {
+		@return 0; //"value";
+	}
+	@else if is( $value, $atBody ) {
+		@return 1; //"at-body";
+	}
+	@else if is( $value, $atElement ) {
+		@return 2; //"at-body";
+	}
+	//TODO this is a very big assumption loop thru map_keys
+	@else if type-of( $value ) == "map" {
+		@if map-get( $value, "initial" ) == null {
+			@return 4; //"at-block";
+		}
+		@else {
+			@return 0; //"value";
+		}
+	}
+	@else {
+		//Cannot be is() because the nth syntax is not fixed
+		@each $string in $atListElement {
+			@if str-index( $value, $string ) {
+				@return 3; //"at-list-element";
+			}
+		}
+	}
+	@return 0; //"value";
 }

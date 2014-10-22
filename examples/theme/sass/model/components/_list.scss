@@ -35,16 +35,16 @@ $theme-model-list-component_syntax_base_modernizr: (
 		( ".flex", #000010 ),
 		( ".no-flex", #000020 )
 	),
-	item_border-style : (
-		solid,
-		( ".flex", dotted ),
-		( ".no-flex", dotted )
-	),
-	item_border-width : (
-		1px 1px 1px 1px,
-		( ".flex", 10px 10px 10px 10px ),
-		( ".no-flex", 10px 10px 10px 10px )
-	),
+	// item_border-style : (
+	// 	solid,
+	// 	( ".flex", dotted ),
+	// 	( ".no-flex", dotted )
+	// ),
+	// item_border-width : (
+	// 	1px 1px 1px 1px,
+	// 	( ".flex", 10px 10px 10px 10px ),
+	// 	( ".no-flex", 10px 10px 10px 10px )
+	// ),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr: (
@@ -54,14 +54,22 @@ $theme-model-list-component_syntax_base_list_modernizr: (
 		( ".no-flex", #000010, #000020, #000030 )
 	),
 	item_border-style : (
-		( solid, double, ),
-		( ".flex", dotted, none ),
-		( ".no-flex", dotted, none )
+		solid,
+		( ".flex", (
+			( ":nth-child(n)", dotted ),
+			( ":nth-child(2n)", none ),
+		) ),
+		( ".no-flex", ":nth-child(n)", dotted )
 	),
-	item_border-width : (
-		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( ".flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+	// item_border-style : (
+	// 	( solid, double, ),
+	// 	( ".flex", dotted, none ),
+	// 	( ".no-flex", dotted, none )
+	// ),
+	// item_border-width : (
+	// 	( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
+	// 	( ".flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+	// 	( ".no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_single: (

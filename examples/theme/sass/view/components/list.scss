@@ -1,213 +1,5 @@
 @import "../../ref";
 
-//Params to be extended
-@mixin mvs-respond-map( $prefix, $map, $selector: null, $depth: 0 ) {
-	$prefixLength: str-length( $prefix );
-
-	@each $key, $value in $map {
-		@if str-index( $key, $prefix ) != null {
-			$property: str-slice( $key, $prefixLength + 1 );
-			@if ( str-index-last( $property, "_" ) == false ) {
-				//TODO Add logic to recognize custom mixin map from extended nth syntax map
-				@if ( mixin-exists( $property ) ) {
-					@debug $property this is a supported mixin;
-					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
-				}
-				@else {
-					@include mvs-respond-property( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
-				}
-			}
-		}
-	}
-}
-
-@mixin mvs-respond-property( $property, $values, $selector: null, $depth: 0 ) {
-	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
-
-	@if $values == null {
-		//skip
-	}
-	@else if is( $property, "font-family" "font" ) {
-		@warn "MVS syntax does not support #{$property} property";
-		@include -mvs-respond( $property, $values, $selector, $depth );
-	}
-	@else {
-
-		// @debug $property $values;
-
-		$values: normalize-value( $values );
-
-		// @debug $property normalized $values;
-
-		@each $value in $values {
-
-			// @debug " $value " length( $value ) $value;
-			// 1 - at body value
-			$_1: to-string( map-get( $value, "_1" ) );
-			// 2 - at element value
-			$_2: to-string( map-get( $value, "_2" ) );
-			// 3 - at list container value
-			$_3: to-string( map-get( $value, "_3" ) );
-			// 4 - at block value ( for modifiers )
-			$_4: to-string( map-get( $value, "_4" ) );
-
-			// "[data-#{$prefix}--#{$key}='#{$value}']"
-
-			#{$_1} &#{$_4}#{$_2}{
-				@include -mvs-respond( $property, map-get( $value, "initial" ), $selector, $depth, $_3 );
-			}
-
-			@each $breakpoint in $screenBreakpointsKeys {
-				@include respond-to( $breakpoint ) {
-					#{$_1} &#{$_4}#{$_2}{
-						@include -mvs-respond( $property, map-get( $value, $breakpoint ), $selector, $depth, $_3 );
-					}
-				}
-			}
-		}
-	}
-}
-
-@mixin respond-to( $breakpoint, $is-specific: false ) {
-	@if $is-specific {
-		$index: map-index( $screen-breakpoints, $breakpoint );
-
-		@if $index < length( $screen-breakpoints ) {
-			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
-			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
-			@media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
-		}
-		@else {
-			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
-		}
-	}
-	@else {
-		@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
-	}
-}
-
-
-@function normalize-value( $value ) {
-	$resultList            : ();
-	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
-
-	@if type-of( $value ) != "map" and type-of( $value ) != "list" {
-		$resultList: append( $resultList, ( "initial": $value ) );
-	}
-
-	@else if type-of( $value ) == "map" {
-		$resultList: append( $resultList, $value );
-	}
-
-	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
-		$resultList: append( $resultList, ( "initial": $value ) );
-	}
-
-	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
-		$map: ();
-		$tempValue: ();
-
-		@each $subValue in $value {
-			@if mvs-value-position( $subValue ) == 1 {
-				$subMap: map-get( $map, "_1" );
-				$map: map-merge( $map, ( "_1": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
-			}
-			@else if mvs-value-position( $subValue ) == 2 {
-				$subMap: map-get( $map, "_2" );
-				$map: map-merge( $map, ( "_2": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
-			}
-			@else if mvs-value-position( $subValue ) == 3 {
-				$subMap: map-get( $map, "_3" );
-				$map: map-merge( $map, ( "_3": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
-			}
-			@else if mvs-value-position( $subValue ) == 4 {
-				$subMap: map-get( $map, "_4" );
-				$map: map-merge( $map, ( "_4": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
-			}
-			@else if type-of( $subValue ) == "map" {
-				$map: map-merge( $map, $subValue );
-			}
-			@else {
-				$tempValue: append( $tempValue, $subValue, comma );
-			}
-		}
-
-		@if length( $tempValue ) > 0 {
-			$screenBreakpointsKeysIndex: 1;
-
-			@each $subValue in $tempValue {
-				@if type-of( $subValue ) == "list" and list-separator( $subValue ) == "comma" {
-					$resultList: join( $resultList, normalize-value( $subValue ) );
-				}
-				@else {
-					@if $screenBreakpointsKeysIndex == 1 {
-						$map: map-merge( $map, ( "initial": $subValue ) );
-					}
-					@else {
-						$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
-					}
-					$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
-				}
-			}
-		}
-
-		$resultList: append( $resultList, $map );
-	}
-
-	// @debug GGGGGG length( $resultList ) $resultList;
-
-	@return $resultList;
-}
-
-//done
-// return
-// 0 - not specific value
-// 1 - at body value
-// 2 - at element value
-// 3 - at list container value
-// 4 - at block value ( for modifiers )
-@function mvs-value-position( $value ) {
-
-	$atBody: ".flex" ".no-flex"; //TODO Fill modernizr & cssua values
-	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
-	$atListElement: ":nth-child" ":nth-of-type" ":first-child" ":last-child";
-	// $at-block: // This can be for mods
-
-	@if type-of( $value ) != "string" and type-of( $value ) != "map" {
-		@return 0; //"value";
-	}
-	@else if is( $value, $atBody ) {
-		@return 1; //"at-body";
-	}
-	@else if is( $value, $atElement ) {
-		@return 2; //"at-body";
-	}
-	//TODO this is a very big assumption map_keys
-	@else if type-of( $value ) == "map" {
-		@if map-get( $value, "initial" ) == null {
-			@return 4; //"at-block";
-		}
-		@else {
-			@return 0; //"value";
-		}
-	}
-	@else {
-		//Cannot be is() because the nth syntax is not fixed
-		@each $string in $atListElement {
-			@if str-index( $value, $string ) {
-				@return 3; //"at-list-element";
-			}
-		}
-	}
-	@return 0; //"value";
-}
-
-// @mixin list( $model-list: $core-model-list, $is-initial: false ) {
-// 	.list-item {
-// 		@include mvs-respond-map( "item_", $model-list );
-// 	}
-// }
-
 // .syntax_base {
 // 	@include list( $theme-model-list-component_syntax_base );
 // }
@@ -220,13 +12,13 @@
 // 	@include list( $theme-model-list-component_syntax_base_map );
 // }
 
-// .syntax_base_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr );
-// }
+.syntax_base_modernizr {
+	@include list( $theme-model-list-component_syntax_base_modernizr );
+}
 
-// .syntax_base_list_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
-// }
+.syntax_base_list_modernizr {
+	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+}
 
 // .syntax_base_map_modernizr_single {
 // 	@include list( $theme-model-list-component_syntax_base_map_modernizr_single );
@@ -272,10 +64,10 @@
 // 	@include list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod );
 // }
 
-.syntax_base_list_modernizr_nth_pseudo_mod {
-	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
-}
+// .syntax_base_list_modernizr_nth_pseudo_mod {
+// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
+// }
 
-.syntax_base_map_modernizr_nth_pseudo_mod {
-	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod );
-}
+// .syntax_base_map_modernizr_nth_pseudo_mod {
+// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod );
+// }

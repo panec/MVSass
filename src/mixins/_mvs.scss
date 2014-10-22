@@ -212,6 +212,7 @@
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );
+//TODO Params to be extended
 @mixin mvs-respond-map( $prefix, $map, $selector: null, $depth: 0 ) {
 	$prefixLength: str-length( $prefix );
 
@@ -224,11 +225,47 @@
 					@debug $property this is a supported mixin that has a map values ;
 					// @include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
 				}
-				@else if ( type-of( $value ) == "map" ) {
-					@include mvs-respond-property-map( $value, $selector, $depth );
-				}
 				@else {
-					@include mvs-respond-property-list( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+					@include mvs-respond-property( str-slice( $key, $prefixLength + 1 ), $value, $selector, $depth );
+				}
+			}
+		}
+	}
+}
+
+//TODO Add examples and desciption
+@mixin mvs-respond-property( $property, $values, $selector: null, $depth: 0 ) {
+	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+
+	@if $values == null {
+		//skip
+	}
+	@else if is( $property, "font-family" "font" ) {
+		@warn "MVS syntax does not support #{$property} property";
+		@include -mvs-respond( $property, $values, $selector, $depth );
+	}
+	@else {
+		$values: mvs-normalize-value( $values );
+
+		@each $value in $values {
+			// 1 - at body value
+			$_1: to-string( map-get( $value, "_1" ) );
+			// 2 - at element value
+			$_2: to-string( map-get( $value, "_2" ) );
+			// 3 - at list container value
+			$_3: to-string( map-get( $value, "_3" ) );
+			// 4 - at block value ( for modifiers )
+			$_4: mvs-mod-to-string( map-get( $value, "_4" ) );
+
+			#{$_1} &#{$_4}#{$_2}{
+				@include -mvs-respond( $property, map-get( $value, "initial" ), $selector, $depth, $_3 );
+			}
+
+			@each $breakpoint in $screenBreakpointsKeys {
+				@include respond-to( $breakpoint ) {
+					#{$_1} &#{$_4}#{$_2}{
+						@include -mvs-respond( $property, map-get( $value, $breakpoint ), $selector, $depth, $_3 );
+					}
 				}
 			}
 		}
@@ -244,7 +281,7 @@
 // Example
 // 	respond-to( xs ) { color: #FFF; } => @media only screen and ( min-width: 480px ) { color: #FFF; }
 // 	respond-to( xs, $is-specific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
-@mixin respond-to( $breakpoint, $is-specific: false) {
+@mixin respond-to( $breakpoint, $is-specific: false ) {
 	@if $is-specific {
 		$index: map-index( $screen-breakpoints, $breakpoint );
 
@@ -252,7 +289,6 @@
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
 			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
 			@media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
-			// @media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: map-nth( $screen-breakpoints, $index + 1 ) - 1 ) { @content; }
 		}
 		@else {
 			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
