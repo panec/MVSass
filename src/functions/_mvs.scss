@@ -243,6 +243,7 @@
 
 	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
 		$map: ();
+		$tempValue: ();
 		$tempMap: ();
 		$tempList: ();
 		$screenBreakpointsKeysIndex: 1;
@@ -282,10 +283,14 @@
 			}
 			@else {
 				@if $screenBreakpointsKeysIndex == 1 {
+					$tempValue: $subValue;
 					$map: map-merge( $map, ( "initial": $subValue ) );
 				}
 				@else {
-					$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+					@if $tempValue != $subValue {
+						$tempValue: $subValue;
+						$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+					}
 				}
 				$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
 			}

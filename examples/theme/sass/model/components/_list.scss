@@ -15,7 +15,7 @@ $theme-model-list-component_syntax_final: (
 		#FF0000,
 		( ":nth-child(2n)", #00FF00, #FF00FE, #FF00FD ),
 		( ".flex", #0000FF, #FF00FE, #FF00FD ),
-		( ( "mod_key": "mod_value" ), #FF00FF,#FF00FE, #FF00FD ),
+		( ( "mod_key": "mod_value" ), #FF00FF,#FF00FE, #FF00FF ),
 		( ":nth-child(2n+1)", ( "mod_key": "mod_value" ), #FF00FF, #FF00FE, #FF00FD ),
 		( ":before", ":nth-child(2n+1)", #00FF00 )
 	),

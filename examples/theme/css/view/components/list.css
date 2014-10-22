@@ -4,123 +4,117 @@
 /* -------- */
 /* -------- */
 /* -------- */
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .syntax_final {
   background: #000000;
 }
-/* line 347, ../../../../../src/mixins/_mvs.scss */
+/* line 351, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item:nth-child(2n) {
   border-color: green;
 }
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-  /* line 347, ../../../../../src/mixins/_mvs.scss */
+  /* line 351, ../../../../../src/mixins/_mvs.scss */
   .syntax_final .list-item:nth-child(2n) {
     border-color: blue;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* line 347, ../../../../../src/mixins/_mvs.scss */
+  /* line 351, ../../../../../src/mixins/_mvs.scss */
   .syntax_final .list-item:nth-child(2n) {
     border-color: red;
   }
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item {
   border-color: black;
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .flex .syntax_final .list-item {
   border-style: dotted;
 }
-@media only screen and (min-width: 480px) {
-  /* line 20, ../../../../core/sass/view/components/_list.scss */
-  .syntax_final .list-item {
-    border-style: dotted;
-  }
-}
 @media only screen and (min-width: 768px) {
-  /* line 20, ../../../../core/sass/view/components/_list.scss */
-  .syntax_final .list-item {
+  /* line 270, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_final .list-item {
     border-style: double;
   }
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item {
   border-style: solid;
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item {
   border-width: 1px 1px 1px 1px;
 }
-/* line 339, ../../../../../src/mixins/_mvs.scss */
+/* line 343, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item:nth-child(2n) .list-item-link {
   color: #00FF00;
 }
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  /* line 343, ../../../../../src/mixins/_mvs.scss */
   .syntax_final .list-item:nth-child(2n) .list-item-link {
     color: #FF00FE;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  /* line 343, ../../../../../src/mixins/_mvs.scss */
   .syntax_final .list-item:nth-child(2n) .list-item-link {
     color: #FF00FD;
   }
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .flex .syntax_final .list-item-link {
   color: #0000FF;
 }
 @media only screen and (min-width: 480px) {
-  /* line 28, ../../../../core/sass/view/components/_list.scss */
-  .syntax_final .list-item-link {
+  /* line 270, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_final .list-item-link {
     color: #FF00FE;
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 28, ../../../../core/sass/view/components/_list.scss */
-  .syntax_final .list-item-link {
+  /* line 270, ../../../../../src/mixins/_mvs.scss */
+  .flex .syntax_final .list-item-link {
     color: #FF00FD;
   }
 }
-/* line 342, ../../../../../src/mixins/_mvs.scss */
+/* line 346, ../../../../../src/mixins/_mvs.scss */
 .syntax_final[data---mod_key='mod_value'] .list-item-link {
   color: #FF00FF;
 }
 @media only screen and (min-width: 480px) {
-  /* line 342, ../../../../../src/mixins/_mvs.scss */
+  /* line 346, ../../../../../src/mixins/_mvs.scss */
   .syntax_final[data---mod_key='mod_value'] .list-item-link {
     color: #FF00FE;
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 342, ../../../../../src/mixins/_mvs.scss */
+  /* line 346, ../../../../../src/mixins/_mvs.scss */
   .syntax_final[data---mod_key='mod_value'] .list-item-link {
-    color: #FF00FD;
+    color: #FF00FF;
   }
 }
-/* line 339, ../../../../../src/mixins/_mvs.scss */
+/* line 343, ../../../../../src/mixins/_mvs.scss */
 .syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
   color: #FF00FF;
 }
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  /* line 343, ../../../../../src/mixins/_mvs.scss */
   .syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
     color: #FF00FE;
   }
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* line 339, ../../../../../src/mixins/_mvs.scss */
+  /* line 343, ../../../../../src/mixins/_mvs.scss */
   .syntax_final[data---mod_key='mod_value'] .list-item:nth-child(2n+1) .list-item-link {
     color: #FF00FD;
   }
 }
-/* line 339, ../../../../../src/mixins/_mvs.scss */
+/* line 343, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item:nth-child(2n+1) .list-item-link:before {
   color: #00FF00;
 }
-/* line 260, ../../../../../src/mixins/_mvs.scss */
+/* line 261, ../../../../../src/mixins/_mvs.scss */
 .syntax_final .list-item-link {
   color: #FF0000;
 }

@@ -39,22 +39,6 @@
 }
 
 //**
-// Private mixin for handling rendering css with custom mixins created for specific project
-// Params
-// 	$property (Sass::Script::Value::String)
-// 	$value (Sass::Script::Value::Base)
-// @mixin -mvs-respond-custom( $property, $value ) {
-	// $mvsRespondMixinsGenerated: true !global;
-
-	// @if $property == custom and mixin-exists( $property ){
-	// 	@include custom( $value );
-	// }
-	// @else {
-	// 	$mvsRespondMixinsGenerated: false !global;
-	// }
-// }
-
-//**
 // Private mixin for iterating thru all custom mixin libraries
 // Params
 // 	$property (Sass::Script::Value::String)
@@ -74,134 +58,6 @@
 		#{$property}: $value;
 	}
 }
-
-//**
-// Private mixin for handling rendering css properties with values in MVS syntax
-// Params
-// 	$property (Sass::Script::Value::String)
-// 	$value (Sass::Script::Value::Base)
-// 	$value (Sass::Script::Value::Base)
-// 	$selector (Sass::Script::Value::Base)
-// 	$depth (Sass::Script::Value::Base)
-// 	$nthSelector (Sass::Script::Value::Base)
-// @mixin -mvs-respond( $property, $value, $selector: null, $depth: 0, $nthSelector: null ) {
-// 	@if type-of( $property ) != "null" and type-of( $value ) != "null" {
-// 		@if type-of( $selector ) == "string" and ( $selector != null or $selector != "" ) {
-// 			@include mvs-parent( "#{$selector}#{$nthSelector}", true, $depth ) {
-// 				@include -mvs-respond-mixins( $property, $value );
-// 			}
-// 		}
-// 		@else {
-// 			@include mvs-parent( "#{$nthSelector}", false, $depth ) {
-// 				@include -mvs-respond-mixins( $property, $value );
-// 			}
-// 		}
-// 	}
-// }
-
-//**
-// Generates styles for property in MVS list syntax
-// $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
-// $depth defines how many parent selectors skip to inject $selector
-// Params
-// 	$property (Sass::Script::Value::String)
-// 	$values (Sass::Script::Value::Base)
-// 	$selector (Sass::Script::Value::String)
-// 	$depth (Sass::Script::Value::Number)
-// Example
-// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ) );
-// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li" );
-// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), " li", 1 );
-// 	mvs-respond-property-list( "border-width", ( 1px, ( 1px, 1px, 2px ) ), "", 1 );
-// @mixin mvs-respond-property-list( $property, $values, $selector: null, $depth: 0 ) {
-// 	// @debug mvs-respond-property-list $property $values type-of( $values );
-
-// 	@if $values == null {
-// 		//skip
-// 	}
-// 	@else if is( $property, "font-family" "font" "z-index" ) {
-// 		@warn "MVS syntax does not support #{$property} property";
-// 		@include -mvs-respond( $property, $values, $selector, $depth );
-// 	}
-// 	@else if type-of( $values ) == "map" {
-
-// 		@include -mvs-respond( $property, $values, $selector, $depth );
-// 	}
-// 	@else {
-// 		$values                  : if( list-separator($values) == "space", ( $values, ), $values );
-// 		$length                  : length($values);
-// 		$defaultValue            : nth($values, 1);
-// 		$screen-breakpoints-keys : map-keys( $screen-breakpoints );
-
-// 		@include -mvs-respond( $property, $defaultValue, $selector, $depth );
-
-// 		@if $length > 1 {
-// 			@for $i from 2 through $length {
-// 				$lastValue   : $defaultValue;
-
-// 				$subValues   : nth($values, $i);
-// 				$subLenght   : length($subValues);
-
-// 				$isNthSyntax : mvs-is-nth($subValues);
-// 				$nthSelector : if( $isNthSyntax, nth( $subValues, 1 ), null );
-
-// 				@if $isNthSyntax {
-// 					$subValues : slice( $subValues, 2 );
-// 					$subLenght : length( $screen-breakpoints-keys );
-// 				}
-
-// 				@if $isNthSyntax == false and $defaultValue != nth( $subValues, 1 ){
-// 					@warn "Default value" $defaultValue "is not equal to the first break point value" nth( $subValues, 1 );
-// 				}
-
-// 				@for $j from 1 through $subLenght {
-// 					$currentValue: mvs-get-nth( $subValues, $j );
-
-// 					// @if $isNthSyntax == false and $lastValue != $currentValue { //DOES NOT WORK, WHY????
-// 					@if $isNthSyntax == false {
-// 						@if $lastValue != $currentValue {
-// 							$lastValue : $currentValue;
-
-// 							@include respond-to( nth( $screen-breakpoints-keys, $j ) ) {
-// 								@include -mvs-respond( $property, $lastValue, $selector, $depth );
-// 							}
-// 						}
-// 					}
-// 					@else {
-// 						@include respond-to( nth( $screen-breakpoints-keys, $j ), $is-specific: true ){
-// 							@include -mvs-respond($property, $currentValue, $selector, $depth, $nthSelector);
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-//**
-// Generates styles for property in MVS map syntax
-// $selector defines parent selector to inject if MVS nth notation was used, if "" result will be appended
-// $depth defines how many parent selectors skip to inject $selector
-// Params
-// 	$map (Sass::Script::Value::String)
-// 	$selector (Sass::Script::Value::String)
-// 	$depth (Sass::Script::Value::Number)
-// Example
-// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ) );
-// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li" );
-// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), " li", 1 );
-// 	mvs-respond-property-map( width: ( default: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), "", 1 );
-// @mixin mvs-respond-property-map( $map, $selector: null, $depth: 0 ) {
-// 	// @debug mvs-respond-property-map $map;
-// 	@each $property, $value in $map {
-// 		@if ( type-of( $value ) == "map" ) {
-// 			@include mvs-respond-property-list( $property, mvs-map-to-list( $value ), $selector, $depth );
-// 		}
-// 		@else {
-// 			@include mvs-respond-property-list( $property, $value, $selector, $depth );
-// 		}
-// 	}
-// }
 
 //**
 // Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
@@ -246,6 +102,7 @@
 	}
 	@else {
 		$values: mvs-normalize-value( $values );
+		@debug NORMALIZED $values;
 
 		@each $value in $values {
 			// 1 - at body value
@@ -262,13 +119,16 @@
 					@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
 						@include -mvs-respond-mixins( $property, map-get( $value, "initial" ) );
 					}
-				}}
+				}
+			}
 
 			@each $breakpoint in $screenBreakpointsKeys {
-				@include respond-to( $breakpoint, $_3 != "" ) {
-					@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
-						@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
-							@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
+				#{$_1} &#{$_2}{
+					@include respond-to( $breakpoint, $_3 != "" ) {
+						@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
+							@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+								@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
+							}
 						}
 					}
 				}
