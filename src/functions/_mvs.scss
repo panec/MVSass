@@ -69,34 +69,6 @@
 }
 
 //**
-// Checks if MVS value contains CSS "nth" values
-// Supported CSS values: "nth-child", "nth-of-type", "first-child", "last-child"
-// Params
-// 	$values (Sass::Script::Value::Base)
-// Returns
-// 	(Sass::Script::Value::Bool)
-// Example
-// 	mvs-is-nth( ( 1.1, 2.2, 3.3, 4.4, 5.5 ) ) => false
-// 	mvs-is-nth( ( ":nth-child(2n)", 1.1, 2.2, 3.3, 4.4, 5.5 ) ) => true
-// @function mvs-is-nth( $values ) {
-// 	$subValue: nth( $values, 1 );
-
-// 	@if type-of( $subValue ) != "string" {
-// 		@return false;
-// 	}
-// 	@else {
-// 		$index: 0;
-// 		$nthStrings: "nth-child" "nth-of-type" "first-child" "last-child";
-
-// 		@each $subString in $nthStrings {
-// 			$index: $index + if( str-index( $subValue, $subString ), str-index( $subValue, $subString ), 0 );
-// 		}
-
-// 		@return $index > 0;
-// 	}
-// }
-
-//**
 // Calls custom function against each set of values from MVS syntax
 // Params
 // 	$list (Sass::Script::Value::Base)
@@ -125,76 +97,6 @@
 
 	@return $result;
 }
-
-//**
-// Transponds MVS map syntax to list syntax, allows for nesting MVS map syntax for nth selector
-// Params
-// 	$map (Sass::Script::Value::Base)
-// 	$onlyResponsiveList (Sass::Script::Value::Bool)
-// Returns
-// 	(Sass::Script::Value::Base)
-// Example
-// 	mvs-map-to-list( ( initial: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ) ) => 50%, ( 50%, 33.3%, 25%, 20%, 20% )
-// 	mvs-map-to-list( ( initial: 50%, xxs: 50%, xs: 33.3%, sm: 25%, md: 20% ), $onlyResponsiveList: true ) => 50%, 33.3%, 25%, 20%, 20%
-// 	mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ) ) => null, ( ":nth-child(3n+4)", null, null, null, left, left )
-// 	mvs-map-to-list( ( initial: null, ":nth-child(3n+4)": ( initial: null, md: left ) ), $onlyResponsiveList: true ) =>  null, null, null, null, null
-// 	mvs-map-to-list( ( ":nth-child(3n+4)": ( initial: null, md: left ), $onlyResponsiveList: true ) =>  null, null, null, left, left
-// @function mvs-map-to-list( $map, $onlyResponsiveList: false ){
-// 	$result: ();
-// 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
-// 	$screenBreakpointsKeysLenght : length( $screenBreakpointsKeys );
-
-// 	//Get initial value
-// 	$initial: map_get( $map, "initial" );
-
-// 	//Append initial value
-// 	$result: append( $result, $initial, comma );
-
-// 	//TODO Add settings to include support for syntax when they receive initial setting or previous value
-
-// 	//Create null list with initial values
-// 	$subResult: ();
-// 	@for $index from 1 through $screenBreakpointsKeysLenght {
-// 		// $subResult: append( $subResult, $initial, comma );
-// 		$subResult: append( $subResult, #{''}, comma ); //There is no real empty value
-// 	}
-
-// 	//Update values of that list with valued set in map
-// 	@for $index from 1 through $screenBreakpointsKeysLenght {
-// 		@if map-has-key( $map, nth( $screenBreakpointsKeys, $index ) ){
-// 			$subResult: replace-nth( $subResult, $index, map_get( $map, nth( $screenBreakpointsKeys, $index ) ) );
-// 		}
-// 	}
-
-// 	//Update null on the list to have previous value
-// 	@for $index from 1 through $screenBreakpointsKeysLenght {
-// 		@if nth( $subResult, $index ) == '' {
-// 			@if $index == 1 {
-// 				$subResult: replace-nth( $subResult, $index, $initial );
-// 			}
-// 			@else {
-// 				$subResult: replace-nth( $subResult, $index, nth( $subResult, $index - 1 ) );
-// 			}
-// 		}
-// 	}
-
-// 	//Append them to the result
-// 	$result: append( $result, $subResult, comma );
-
-// 	//Get nth syntax values
-// 	@each $key, $value in $map {
-// 		@if mvs-is-nth( $key ) {
-// 			@if type-of( $value ) == "map" {
-// 				$result: append( $result, join( $key, mvs-map-to-list( $value, $onlyResponsiveList: true ), comma ), comma );
-// 			}
-// 			@else {
-// 				$result: append( $result, join( $key, $value, comma ), comma );
-// 			}
-// 		}
-// 	}
-
-// 	@return if( $onlyResponsiveList, $subResult, $result );
-// }
 
 //TODO Add example calls and description
 @function mvs-mod-to-string( $mod, $prefix: "", $modType: "class", $modDivider: "-" ){

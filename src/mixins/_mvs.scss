@@ -112,7 +112,7 @@
 			// 3 - at list container value
 			$_3: to-string( map-get( $value, "_3" ) );
 			// 4 - at block value ( for modifiers )
-			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "", "data" );
+			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "mod", "data" );
 
 			#{$_1} &#{$_2}{
 				@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {

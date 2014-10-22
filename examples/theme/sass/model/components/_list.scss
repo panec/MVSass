@@ -19,6 +19,14 @@ $theme-model-list-component_syntax_final: (
 		( ":nth-child(2n+1)", ( "mod_key": "mod_value" ), #FF00FF, #FF00FE, #FF00FD ),
 		( ":before", ":nth-child(2n+1)", #00FF00 )
 	),
+	item-link_border-color: (
+		#00FFAA,
+		( ".flex", (
+			#000010,
+			( ":nth-child(n)", #000010 ),
+			( ":nth-child(2n)", #000110 ),
+		) ),
+	)
 );
 
 
