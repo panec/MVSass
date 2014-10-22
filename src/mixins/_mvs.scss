@@ -102,7 +102,6 @@
 	}
 	@else {
 		$values: mvs-normalize-value( $values );
-		@debug NORMALIZED $values;
 
 		@each $value in $values {
 			// 1 - at body value
