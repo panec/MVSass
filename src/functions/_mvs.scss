@@ -151,21 +151,27 @@
 		$screenBreakpointsKeysIndex: 1;
 
 		@each $subValue in $value {
-			@if mvs-value-position( $subValue ) == 1 {
+			$subValuePosition: mvs-value-position( $subValue );
+
+			@if $subValuePosition == 1 {
 				$subMap: map-get( $tempMap, "_1" );
-				$tempMap: map-merge( $tempMap, ( "_1": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				$tempMap: map-merge( $tempMap, ( "_1": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
 			}
-			@else if mvs-value-position( $subValue ) == 2 {
+			@else if $subValuePosition == 2 {
 				$subMap: map-get( $tempMap, "_2" );
-				$tempMap: map-merge( $tempMap, ( "_2": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				$tempMap: map-merge( $tempMap, ( "_2": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
 			}
-			@else if mvs-value-position( $subValue ) == 3 {
+			@else if $subValuePosition == 3 {
 				$subMap: map-get( $tempMap, "_3" );
-				$tempMap: map-merge( $tempMap, ( "_3": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				$tempMap: map-merge( $tempMap, ( "_3": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
 			}
-			@else if mvs-value-position( $subValue ) == 4 {
+			@else if $subValuePosition == 4 {
 				$subMap: map-get( $tempMap, "_4" );
-				$tempMap: map-merge( $tempMap, ( "_4": if( $subMap == null, $subValue, append( $subMap, $subValue, space ) ) ) );
+				$tempMap: map-merge( $tempMap, ( "_4": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else if $subValuePosition == 5 {
+				$subMap: map-get( $tempMap, "_5" );
+				$tempMap: map-merge( $tempMap, ( "_5": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
 			}
 			@else {
 				$tempList: append( $tempList, $subValue, comma );
@@ -215,37 +221,47 @@
 // 2 - at element value
 // 3 - at list container value
 // 4 - at block value ( for modifiers )
+// 5 - at media
 //TODO Add example calls and description
 @function mvs-value-position( $value ) {
-	$atBody: ".flex" ".no-flex"; //TODO Fill modernizr & cssua values
-	$atElement: ":hover" ":before" ":after"; //TODO Fill pseudo selectors & elements
-	$atListElement: ":nth-child" ":nth-of-type" ":first-child" ":last-child";
+	$mediaTypes            : "all" "aural" "braille" "embossed" "handheld" "print" "projection" "screen" "tty" "tv" "only aural" "only braille" "only embossed" "only handheld" "only print" "only projection" "only screen" "only tty" "only tv";
+	$modernizr             : ".applicationcache" ".audio" ".backgroundsize" ".borderimage" ".borderradius" ".boxshadow" ".canvas" ".canvastext" ".cssanimations" ".csscolumns" ".cssgradients" ".cssreflections" ".csstransforms" ".csstransforms3d" ".csstransitions" ".draganddrop" ".flexbox" ".flexboxlegacy" ".fontface" ".generatedcontent" ".geolocation" ".hashchange" ".history" ".hsla" ".indexedDB" ".inlinesvg" ".localstorage" ".multiplebgs" ".opacity" ".postmessage" ".rgba" ".sessionstorage" ".smil" ".svg" ".svgclippaths" ".textshadow" ".touch" ".video" ".webgl" ".websockets" ".websqldatabase" ".webworkers" ".no-applicationcache" ".no-audio" ".no-backgroundsize" ".no-borderimage" ".no-borderradius" ".no-boxshadow" ".no-canvas" ".no-canvastext" ".no-cssanimations" ".no-csscolumns" ".no-cssgradients" ".no-cssreflections" ".no-csstransforms" ".no-csstransforms3d" ".no-csstransitions" ".no-draganddrop" ".no-flexbox" ".no-flexboxlegacy" ".no-fontface" ".no-generatedcontent" ".no-geolocation" ".no-hashchange" ".no-history" ".no-hsla" ".no-indexedDB" ".no-inlinesvg" ".no-localstorage" ".no-multiplebgs" ".no-opacity" ".no-postmessage" ".no-rgba" ".no-sessionstorage" ".no-smil" ".no-svg" ".no-svgclippaths" ".no-textshadow" ".no-touch" ".no-video" ".no-webgl" ".no-websockets" ".no-websqldatabase" ".no-webworkers";
+	$pseudoClasses         : ":active" ":after" ":before" ":checked" ":disabled" ":empty" ":enabled" ":first-letter" ":first-line" ":focus" ":hover" ":in-range" ":invalid" ":lang(language)" ":link" ":not(selector)" ":optional" ":out-of-range" ":read-only" ":read-write" ":required" ":root" ":selection" ":target" ":valid" ":visited" "::after" "::before" "::first-letter" "::first-line" ":selection";
+	$pseudoClassesList     : ":first-child" ":first-of-type" ":last-child" ":last-of-type" ":nth-child" ":nth-last-child" ":nth-last-of-type" ":nth-of-type" ":only-child" ":only-of-type";
 
 	@if type-of( $value ) != "string" and type-of( $value ) != "map" {
-		@return 0; //"value";
+		@return 0; //css value
 	}
-	@else if is( $value, $atBody ) {
-		@return 1; //"at-body";
+	@else if is( $value, $mediaTypes ) {
+		@return 5; //media type
 	}
-	@else if is( $value, $atElement ) {
-		@return 2; //"at-body";
+	@else if is( $value, $modernizr ) {
+		@return 1; //body of the page
 	}
-	//TODO this is a very big assumption loop thru map_keys
+	@else if is( $value, $pseudoClasses ) {
+		@return 2; //current element
+	}
 	@else if type-of( $value ) == "map" {
-		@if map-get( $value, "initial" ) == null {
-			@return 4; //"at-block";
+		$valueKeys : join( "initial", map-keys( $screen-breakpoints ) );
+		$keys      : map-keys( $value );
+
+		@each $key in $keys
+		{
+			@if is( $key, $valueKeys ) {
+				@return 0; //css value
+			}
 		}
-		@else {
-			@return 0; //"value";
-		}
+
+		@return 4; //current element root parent
 	}
 	@else {
-		//Cannot be is() because the nth syntax is not fixed
-		@each $string in $atListElement {
+		//Cannot be is() because the "nth-..." syntax is not fixed and has custom value in brackets
+		@each $string in $pseudoClassesList {
 			@if str-index( $value, $string ) {
-				@return 3; //"at-list-element";
+				@return 3; //current element list parent
 			}
 		}
 	}
-	@return 0; //"value";
+
+	@return 0; //css value
 }

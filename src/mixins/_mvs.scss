@@ -91,8 +91,6 @@
 
 //TODO Add examples and desciption
 @mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: 1, $parentListSelector: null, $parentListDepth: 1 ) {
-	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
-
 	@if $values == null {
 		//skip
 	}
@@ -101,7 +99,8 @@
 		@include -mvs-respond-mixins( $property, $values );
 	}
 	@else {
-		$values: mvs-normalize-value( $values );
+		$values                : mvs-normalize-value( $values );
+		$screenBreakpointsKeys : join( "initial", map-keys( $screen-breakpoints ) );
 
 		@each $value in $values {
 			// 1 - at body value
@@ -112,18 +111,17 @@
 			$_3: to-string( map-get( $value, "_3" ) );
 			// 4 - at block value ( for modifiers )
 			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "mod", "data" );
-
-			#{$_1} &#{$_2}{
-				@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
-					@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
-						@include -mvs-respond-mixins( $property, map-get( $value, "initial" ) );
-					}
-				}
+			// 5 - media type for @media
+			// $_5: to-string( map-get( $value, "_5" ), " and " );
+			$_5: map-get( $value, "_5" );
+			@if length( $_5 ) > 1 {
+				@debug "Due limitation of interpolation in SASS @media only first value of `#{$_5}` will be added";
+				$_5: nth( $_5, 1 );
 			}
 
 			@each $breakpoint in $screenBreakpointsKeys {
 				#{$_1} &#{$_2}{
-					@include respond-to( $breakpoint, $_3 != "" ) {
+					@include respond-to( $breakpoint, $_3 != "", $_5 ) {
 						@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
 							@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
 								@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
@@ -145,21 +143,51 @@
 // Example
 // 	respond-to( xs ) { color: #FFF; } => @media only screen and ( min-width: 480px ) { color: #FFF; }
 // 	respond-to( xs, $is-specific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
-@mixin respond-to( $breakpoint, $is-specific: false ) {
-	@if $is-specific {
+//TODO Update description
+@mixin respond-to( $breakpoint: "initial", $is-specific: false, $mediaType: "" ) {
+
+	@if length( $mediaType ) > 1 {
+		@debug "Due limitation of interpolation in SASS at @media only single value are supported for $mediaType but was `#{$mediaType}`";
+	}
+
+	@if $breakpoint == "initial" {
+		@if $mediaType == null or $mediaType == "" {
+			 @content;
+		}
+		@else {
+			@media #{ $mediaType } { @content; }
+		}
+	}
+	@else if $is-specific {
 		$index: map-index( $screen-breakpoints, $breakpoint );
 
 		@if $index < length( $screen-breakpoints ) {
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
 			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
-			@media only screen and ( min-width:  map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+
+			@if $mediaType == null or $mediaType == "" {
+				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+			}
+			@else {
+				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+			}
 		}
 		@else {
-			@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			@if $mediaType == null or $mediaType == "" {
+				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			}
+			@else {
+				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			}
 		}
 	}
 	@else {
-		@media only screen and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		@if $mediaType == null or $mediaType == "" {
+			@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		}
+		@else {
+			@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		}
 	}
 }
 

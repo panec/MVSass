@@ -3,25 +3,26 @@ $theme-model-list-component_syntax_final: (
 
 	item_border-color : (
 		black,
-		( ":nth-child(2n)", green, blue, red )
+		( ":nth-child(2n)", green, blue, red ),
+		( "print", "all", transparent, orange )
 	),
 	item_border-style : (
 		solid,
-		( ".flex", dotted, dotted, double )
+		( ".flexbox", dotted, dotted, double )
 	),
 	item_border-width : 1px 1px 1px 1px,
 
 	item-link_color: (
 		#FF0000,
 		( ":nth-child(2n)", #00FF00, #FF00FE, #FF00FD ),
-		( ".flex", #0000FF, #FF00FE, #FF00FD ),
+		( ".flexbox", #0000FF, #FF00FE, #FF00FD ),
 		( ( "mod_key": "mod_value" ), #FF00FF,#FF00FE, #FF00FF ),
 		( ":nth-child(2n+1)", ( "mod_key": "mod_value" ), #FF00FF, #FF00FE, #FF00FD ),
 		( ":before", ":nth-child(2n+1)", #00FF00 )
 	),
 	item-link_border-color: (
 		#00FFAA,
-		( ".flex", (
+		( ".flexbox", (
 			#000010,
 			( ":nth-child(n)", #000010 ),
 			( ":nth-child(2n)", #000110 ),
@@ -64,49 +65,49 @@ $theme-model-list-component_syntax_base_map: (
 $theme-model-list-component_syntax_base_modernizr: (
 	item_border-color : (
 		#000000,
-		( ".flex", #000010 ),
-		( ".no-flex", #000020 )
+		( ".flexbox", #000010 ),
+		( ".no-flexbox", #000020 )
 	),
 	// item_border-style : (
 	// 	solid,
-	// 	( ".flex", dotted ),
-	// 	( ".no-flex", dotted )
+	// 	( ".flexbox", dotted ),
+	// 	( ".no-flexbox", dotted )
 	// ),
 	// item_border-width : (
 	// 	1px 1px 1px 1px,
-	// 	( ".flex", 10px 10px 10px 10px ),
-	// 	( ".no-flex", 10px 10px 10px 10px )
+	// 	( ".flexbox", 10px 10px 10px 10px ),
+	// 	( ".no-flexbox", 10px 10px 10px 10px )
 	// ),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr: (
 	item_border-color : (
 		( #000000, #000001, #000002, ),
-		( ".flex", #000010, #000020, #000030 ),
-		( ".no-flex", #000010, #000020, #000030 )
+		( ".flexbox", #000010, #000020, #000030 ),
+		( ".no-flexbox", #000010, #000020, #000030 )
 	),
 	// item_border-style : (
 	// 	solid,
-	// 	( ".flex", (
+	// 	( ".flexbox", (
 	// 		( ":nth-child(n)", dotted ),
 	// 		( ":nth-child(2n)", none ),
 	// 	) ),
-	// 	( ".no-flex", ":nth-child(n)", dotted )
+	// 	( ".no-flexbox", ":nth-child(n)", dotted )
 	// ),
 	item_border-style : (
 		( solid, double, ),
-		( ".flex", dotted, none ),
-		( ".no-flex", dotted, none )
+		( ".flexbox", dotted, none ),
+		( ".no-flexbox", dotted, none )
 	),
 	item_border-width : (
 		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( ".flex", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".no-flex", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+		( ".flexbox", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".no-flexbox", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_single: (
 	item_border-color : (
-		".no-flex", ".flex", (
+		".no-flexbox", ".flexbox", (
 			initial : #200010,
 			md      : #200020,
 			lg      : #200030
@@ -118,12 +119,12 @@ $theme-model-list-component_syntax_base_map_modernizr_single: (
 
 $theme-model-list-component_syntax_base_map_modernizr: (
 	item_border-color : (
-		( ".flex", (
+		( ".flexbox", (
 			initial : #100010,
 			md      : #100020,
 			lg      : #100030
 		) ),
-		( ".no-flex", ".flex", (
+		( ".no-flexbox", ".flexbox", (
 			initial : #200010,
 			md      : #200020,
 			lg      : #200030
@@ -139,11 +140,11 @@ $theme-model-list-component_syntax_base_map_modernizr: (
 			initial: solid,
 			md: double
 		),
-		( ".flex", (
+		( ".flexbox", (
 			initial: dotted,
 			md: none
 		) ),
-		( ".no-flex", (
+		( ".no-flexbox", (
 			initial: dotted,
 			md: none
 		) ),
@@ -153,11 +154,11 @@ $theme-model-list-component_syntax_base_map_modernizr: (
 			initial : 1px 1px 1px 1px,
 			md      : 2px 2px 2px 2px
 		),
-		( ".flex", (
+		( ".flexbox", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
-		( ".no-flex", (
+		( ".no-flexbox", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
@@ -169,36 +170,36 @@ $theme-model-list-component_syntax_base_map_modernizr: (
 $theme-model-list-component_syntax_base_modernizr_nth: (
 	item_border-color : (
 		#000000,
-		( ".flex", ":nth-child(n)", #000010 ),
-		( ".no-flex", ":nth-child(n)", #000020 )
+		( ".flexbox", ":nth-child(n)", #000010 ),
+		( ".no-flexbox", ":nth-child(n)", #000020 )
 	),
 	item_border-style : (
 		solid,
-		( ".flex", ":nth-child(n)", dotted ),
-		( ".no-flex", ":nth-child(n)", dotted )
+		( ".flexbox", ":nth-child(n)", dotted ),
+		( ".no-flexbox", ":nth-child(n)", dotted )
 	),
 	item_border-width : (
 		1px 1px 1px 1px,
-		( ".flex", ":nth-child(n)", 10px 10px 10px 10px ),
-		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px )
+		( ".flexbox", ":nth-child(n)", 10px 10px 10px 10px ),
+		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px )
 	),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr_nth: (
 	item_border-color : (
 		( #000000, #000001, #000002, ),
-		( ".flex", ":nth-child(n)", #000010, #000020, #000030 ),
-		( ".no-flex", ":nth-child(n)", #000010, #000020, #000030 )
+		( ".flexbox", ":nth-child(n)", #000010, #000020, #000030 ),
+		( ".no-flexbox", ":nth-child(n)", #000010, #000020, #000030 )
 	),
 	item_border-style : (
 		( solid, double, ),
-		( ".flex", ":nth-child(n)", dotted, none ),
-		( ".no-flex", ":nth-child(n)", dotted, none )
+		( ".flexbox", ":nth-child(n)", dotted, none ),
+		( ".no-flexbox", ":nth-child(n)", dotted, none )
 	),
 	item_border-width : (
 		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( ".flex", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+		( ".flexbox", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_nth: (
@@ -208,12 +209,12 @@ $theme-model-list-component_syntax_base_map_modernizr_nth: (
 			md      : #000001,
 			lg      : #000002
 		),
-		( ".flex", ":nth-child(n)", (
+		( ".flexbox", ":nth-child(n)", (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
 		) ),
-		( ".no-flex", ":nth-child(n)", (
+		( ".no-flexbox", ":nth-child(n)", (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
@@ -224,11 +225,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth: (
 			initial : solid,
 			md      : double
 		),
-		( ".flex", ":nth-child(n)", (
+		( ".flexbox", ":nth-child(n)", (
 			initial : dotted,
 			md      : none
 		) ),
-		( ".no-flex", ":nth-child(n)", (
+		( ".no-flexbox", ":nth-child(n)", (
 			initial : dotted,
 			md      : none
 		) ),
@@ -238,11 +239,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth: (
 			initial : 1px 1px 1px 1px,
 			md      : 2px 2px 2px 2px
 		),
-		( ".flex", ":nth-child(n)", (
+		( ".flexbox", ":nth-child(n)", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
-		( ".no-flex", ":nth-child(n)", (
+		( ".no-flexbox", ":nth-child(n)", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
@@ -254,42 +255,42 @@ $theme-model-list-component_syntax_base_map_modernizr_nth: (
 $theme-model-list-component_syntax_base_modernizr_nth_multi: (
 	item_border-color : (
 		#000000,
-		( ".flex", ":nth-child(n)", #000010 ),
-		( ".flex", ":nth-child(2n)", #000110 ),
-		( ".no-flex", ":nth-child(n)", #000020 )
+		( ".flexbox", ":nth-child(n)", #000010 ),
+		( ".flexbox", ":nth-child(2n)", #000110 ),
+		( ".no-flexbox", ":nth-child(n)", #000020 )
 	),
 	item_border-style : (
 		solid,
-		( ".flex", ":nth-child(n)", dotted ),
-		( ".flex", ":nth-child(2n)", none ),
-		( ".no-flex", ":nth-child(n)", dotted )
+		( ".flexbox", ":nth-child(n)", dotted ),
+		( ".flexbox", ":nth-child(2n)", none ),
+		( ".no-flexbox", ":nth-child(n)", dotted )
 	),
 	item_border-width : (
 		1px 1px 1px 1px,
-		( ".flex", ":nth-child(n)", 10px 10px 10px 10px ),
-		( ".flex", ":nth-child(2n)", 110px 110px 110px 110px ),
-		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px )
+		( ".flexbox", ":nth-child(n)", 10px 10px 10px 10px ),
+		( ".flexbox", ":nth-child(2n)", 110px 110px 110px 110px ),
+		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px )
 	),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr_nth_multi: (
 	item_border-color : (
 		( #000000, #000001, #000002 ),
-		( ".flex", ":nth-child(n)", #000010, #000020, #000030 ),
-		( ".flex", ":nth-child(2n)", #000110, #000120, #000130 ),
-		( ".no-flex", ":nth-child(n)", #000010, #000020, #000030 )
+		( ".flexbox", ":nth-child(n)", #000010, #000020, #000030 ),
+		( ".flexbox", ":nth-child(2n)", #000110, #000120, #000130 ),
+		( ".no-flexbox", ":nth-child(n)", #000010, #000020, #000030 )
 	),
 	item_border-style : (
 		( solid, double ),
-		( ".flex", ":nth-child(n)", dotted, none ),
-		( ".flex", ":nth-child(2n)", none, none ),
-		( ".no-flex", ":nth-child(n)", dotted, none )
+		( ".flexbox", ":nth-child(n)", dotted, none ),
+		( ".flexbox", ":nth-child(2n)", none, none ),
+		( ".no-flexbox", ":nth-child(n)", dotted, none )
 	),
 	item_border-width : (
 		( 1px 1px 1px 1px, 2px 2px 2px 2px ),
-		( ".flex", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".flex", ":nth-child(2n)", 110px 110px 110px 110px, 120px 120px 120px 120px ),
-		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+		( ".flexbox", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".flexbox", ":nth-child(2n)", 110px 110px 110px 110px, 120px 120px 120px 120px ),
+		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 //(...)
@@ -300,53 +301,53 @@ $theme-model-list-component_syntax_base_list_modernizr_nth_multi: (
 // $theme-model-list-component_syntax_base_modernizr_nth_multi_list-nesting: (
 // 	item_border-color : (
 // 		#000000,
-// 		( ".flex", (
+// 		( ".flexbox", (
 // 			// #000010,
 // 			( ":nth-child(n)", #000010 ),
 // 			( ":nth-child(2n)", #000110 ),
 // 		) ),
-// 		( ".no-flex", ":nth-child(n)", #000020 )
+// 		( ".no-flexbox", ":nth-child(n)", #000020 )
 // 	),
 // 	item_border-style : (
 // 		solid,
-// 		( ".flex", (
+// 		( ".flexbox", (
 // 			( ":nth-child(n)", dotted ),
 // 			( ":nth-child(2n)", none ),
 // 		) ),
-// 		( ".no-flex", ":nth-child(n)", dotted )
+// 		( ".no-flexbox", ":nth-child(n)", dotted )
 // 	),
 // 	item_border-width : (
 // 		1px 1px 1px 1px,
-// 		( ".flex", ":nth-child(n)", 10px 10px 10px 10px ),
-// 		( ".flex", ":nth-child(2n)", 110px 110px 110px 110px ),
-// 		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px )
+// 		( ".flexbox", ":nth-child(n)", 10px 10px 10px 10px ),
+// 		( ".flexbox", ":nth-child(2n)", 110px 110px 110px 110px ),
+// 		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px )
 // 	),
 // );
 
 // $theme-model-list-component_syntax_base_list_modernizr_nth_multi_list-nesting: (
 // 	item_border-color : (
 // 		#000000, #000001, #000002,
-// 		( ".flex",
+// 		( ".flexbox",
 // 			( ":nth-child(n)", #000010, #000020, #000030 ),
 // 			( ":nth-child(2n)", #000110, #000120, #000130 ),
 // 		) ),
-// 		( ".no-flex", ":nth-child(n)", #000010, #000020, #000030 )
+// 		( ".no-flexbox", ":nth-child(n)", #000010, #000020, #000030 )
 // 	),
 // 	item_border-style : (
 // 		solid, double,
-// 		( ".flex",
+// 		( ".flexbox",
 // 			( ":nth-child(n)", dotted, none ),
 // 			( ":nth-child(2n)", none, none ),
 // 		) ),
-// 		( ".no-flex", ":nth-child(n)", dotted, none )
+// 		( ".no-flexbox", ":nth-child(n)", dotted, none )
 // 	),
 // 	item_border-width : (
 // 		1px 1px 1px 1px, 2px 2px 2px 2px,
-// 		( ".flex", (
+// 		( ".flexbox", (
 // 			( ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ),
 // 			( ":nth-child(2n)", 110px 110px 110px 110px, 120px 120px 120px 120px ),
 // 		) ),
-// 		( ".no-flex", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+// 		( ".no-flexbox", ":nth-child(n)", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 // );
 
 //(...)
@@ -357,36 +358,36 @@ $theme-model-list-component_syntax_base_list_modernizr_nth_multi: (
 $theme-model-list-component_syntax_base_modernizr_nth_pseudo: (
 	item_border-color : (
 		#000000,
-		( ".flex", ":nth-child(n)", ":hover", #000010 ),
-		( ".no-flex", ":nth-child(n)", ":hover", #000020 )
+		( ".flexbox", ":nth-child(n)", ":hover", #000010 ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", #000020 )
 	),
 	item_border-style : (
 		solid,
-		( ".flex", ":nth-child(n)", ":hover", dotted ),
-		( ".no-flex", ":nth-child(n)", ":hover", dotted )
+		( ".flexbox", ":nth-child(n)", ":hover", dotted ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", dotted )
 	),
 	item_border-width : (
 		1px 1px 1px 1px,
-		( ".flex", ":nth-child(n)", ":hover", 10px 10px 10px 10px ),
-		( ".no-flex", ":nth-child(n)", ":hover", 10px 10px 10px 10px )
+		( ".flexbox", ":nth-child(n)", ":hover", 10px 10px 10px 10px ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", 10px 10px 10px 10px )
 	),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo: (
 	item_border-color : (
 		( #000000, #000001, #000002, ),
-		( ".flex", ":nth-child(n)", ":hover", #000010, #000020, #000030 ),
-		( ".no-flex", ":nth-child(n)", ":hover", #000010, #000020, #000030 )
+		( ".flexbox", ":nth-child(n)", ":hover", #000010, #000020, #000030 ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", #000010, #000020, #000030 )
 	),
 	item_border-style : (
 		( solid, double, ),
-		( ".flex", ":nth-child(n)", ":hover", dotted, none ),
-		( ".no-flex", ":nth-child(n)", ":hover", dotted, none )
+		( ".flexbox", ":nth-child(n)", ":hover", dotted, none ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", dotted, none )
 	),
 	item_border-width : (
 		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( ".flex", ":nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".no-flex", ":nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+		( ".flexbox", ":nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
@@ -396,12 +397,12 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
 			md      : #000001,
 			lg      : #000002
 		),
-		( ".flex", ":nth-child(n)", ":hover", (
+		( ".flexbox", ":nth-child(n)", ":hover", (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
 		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", (
+		( ".no-flexbox", ":nth-child(n)", ":hover", (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
@@ -412,11 +413,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
 			initial : solid,
 			md      : double
 		),
-		( ".flex", ":nth-child(n)", ":hover", (
+		( ".flexbox", ":nth-child(n)", ":hover", (
 			initial : dotted,
 			md      : none
 		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", (
+		( ".no-flexbox", ":nth-child(n)", ":hover", (
 			initial : dotted,
 			md      : none
 		) ),
@@ -426,11 +427,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
 			initial : 1px 1px 1px 1px,
 			md      : 2px 2px 2px 2px
 		),
-		( ".flex", ":nth-child(n)", ":hover", (
+		( ".flexbox", ":nth-child(n)", ":hover", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", (
+		( ".no-flexbox", ":nth-child(n)", ":hover", (
 			initial : 10px 10px 10px 10px,
 			md      : 20px 20px 20px 20px
 		) ),
@@ -444,36 +445,36 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo: (
 $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod: (
 	item_border-color : (
 		#000000,
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010 ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000020 )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010 ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000020 )
 	),
 	item_border-style : (
 		solid,
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted )
 	),
 	item_border-width : (
 		1px 1px 1px 1px,
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px )
 	),
 );
 
 $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod: (
 	item_border-color : (
 		( #000000, #000001, #000002, ),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), #000010, #000020, #000030 )
 	),
 	item_border-style : (
 		( solid, double, ),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), dotted, none )
 	),
 	item_border-width : (
 		( 1px 1px 1px 1px, 2px 2px 2px 2px, ),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ) )
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ),
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), 10px 10px 10px 10px, 20px 20px 20px 20px ) )
 );
 
 $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
@@ -488,12 +489,12 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
 			md      : #000021,
 			lg      : #000031
 		) ),
-		( ".flex", ":nth-child(n)", ":hover", ( "mod_key_2": "mod_value_2" ), (
+		( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_2": "mod_value_2" ), (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
 		) ),
-		( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_3": "mod_value_3" ), (
+		( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_3": "mod_value_3" ), (
 			initial : #000010,
 			md      : #000020,
 			lg      : #000030
@@ -504,11 +505,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
 	// 		initial : solid,
 	// 		md      : double
 	// 	),
-	// 	( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 	( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
 	// 		initial : dotted,
 	// 		md      : none
 	// 	) ),
-	// 	( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 	( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
 	// 		initial : dotted,
 	// 		md      : none
 	// 	) ),
@@ -518,11 +519,11 @@ $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod: (
 	// 		initial : 1px 1px 1px 1px,
 	// 		md      : 2px 2px 2px 2px
 	// 	),
-	// 	( ".flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 	( ".flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
 	// 		initial : 10px 10px 10px 10px,
 	// 		md      : 20px 20px 20px 20px
 	// 	) ),
-	// 	( ".no-flex", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
+	// 	( ".no-flexbox", ":nth-child(n)", ":hover", ( "mod_key_1": "mod_value_1" ), (
 	// 		initial : 10px 10px 10px 10px,
 	// 		md      : 20px 20px 20px 20px
 	// 	) ),

@@ -208,13 +208,13 @@
 // 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => true
 // 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb" ) } => false
 // 	.aaa .bbb.ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => false
-@function list-contain-parent-selector( $list ) {
-	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
+// @function list-contain-parent-selector( $list ) {
+// 	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
 
-	@each $selector in $list {
-		@if $parent == $selector {
-			@return true;
-		}
-	}
-	@return false;
-}
+// 	@each $selector in $list {
+// 		@if $parent == $selector {
+// 			@return true;
+// 		}
+// 	}
+// 	@return false;
+// }

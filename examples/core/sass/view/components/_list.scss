@@ -31,7 +31,7 @@
 		}
 
 		@include mvs-respond-map( "item-link_", $model-list, "", 1, " .list-item", 1 );
-		@include mvs-respond-map( "item-link_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
+		// @include mvs-respond-map( "item-link_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
 	}
 
 	.list-img-container {
@@ -57,7 +57,7 @@
 
 	.list-item-header {
 		@include mvs-respond-map( "item-header_", $model-list, "", 1, " .list-item", 1 );
-		@include mvs-respond-map( "item-header_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
+		// @include mvs-respond-map( "item-header_is-hover_", $model-list, "", 1, " .list-item:hover", 1 );
 	}
 
 	.list-item-desc {
