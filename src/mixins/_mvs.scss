@@ -122,8 +122,8 @@
 			@each $breakpoint in $screenBreakpointsKeys {
 				#{$_1} &#{$_2}{
 					@include respond-to( $breakpoint, $_3 != "", $_5 ) {
-						@include mvs-parent( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
-							@include mvs-parent( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+						@include mvs-parent-inject( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
+							@include mvs-parent-inject( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
 								@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
 							}
 						}
@@ -201,26 +201,15 @@
 // 	$inject (Sass::Script::Value::Bool)
 // 	$depth (Sass::Script::Value::Number)
 // Example
-// 	.parent .item { mvs-parent( ":hover", true ) } => .parent .item :hover
-// 	.parent .item { mvs-parent( ":hover", false ) } => .parent .item:hover
-// 	.parent .item { mvs-parent( " .test", true ) } => .parent .item .test
-// 	.parent .item { mvs-parent( ":hover", false, 1 ) } => .parent .item:hover
-// 	.parent .item { mvs-parent( " .test", true, 1 ) } => .parent .test .item
-@mixin mvs-parent( $selector, $inject: true, $depth: 0 ) {
+// 	.parent .item { mvs-parent-inject( ":hover", true ) } => .parent .item :hover
+// 	.parent .item { mvs-parent-inject( ":hover", false ) } => .parent .item:hover
+// 	.parent .item { mvs-parent-inject( " .test", true ) } => .parent .item .test
+// 	.parent .item { mvs-parent-inject( ":hover", false, 1 ) } => .parent .item:hover
+// 	.parent .item { mvs-parent-inject( " .test", true, 1 ) } => .parent .test .item
+@mixin mvs-parent-inject( $selector, $inject: true, $depth: 0 ) {
 	@if $depth > 0 {
 		@at-root {
-			$path: "";
-
-			// Custom ruby script, because SASS 3.4 do not resolves '&' for scripts
-			@if function-exists( parentsSelector ) {
-				$path: nth( parentsSelector(), 1 );
-			}
-			@else if type-of( & ) == "list" {
-				$path: nth( &, 1 );
-			}
-			@else {
-				@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided, or update to SASS 3.4.x";
-			}
+			$path: mvs-parent();
 
 			@if $inject {
 				#{insert-nth( $path, length( $path ) - $depth + 1, unquote( $selector ) )} { @content; }

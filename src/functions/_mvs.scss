@@ -98,6 +98,26 @@
 	@return $result;
 }
 
+//**
+// Gets a first parent selector from all list of parent selectors
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	.parent .item { mvs-parent() } => .parent .item
+// 	.parent .subparent .item, { mvs-parent() } => .parent .subparent .item
+// 	.parent .item, .parent_2 .item { mvs-parent() } => .parent .item
+@function mvs-parent() {
+	@if function-exists( parentsSelector ) {
+		@return nth( parentsSelector(), 1 );
+	}
+	@else if type-of( & ) == "list" {
+		@return nth( &, 1 );
+	}
+
+	@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided, or update to SASS 3.4.x";
+	@return null;
+}
+
 //TODO Add example calls and description
 @function mvs-mod-to-string( $mod, $prefix: "", $modType: "class", $modDivider: "-" ){
 	$result: "";
