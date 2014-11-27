@@ -1,10 +1,24 @@
+@mixin test( $test ) {
+
+	@debug AAAA $test;
+
+	.test {
+		color: red;
+		// @include mvs-respond-property( color, blue );
+		// @include mvs-respond-map( "_", $test, "", 0 );
+	}
+}
+
+
 @mixin mvs-respond-custom( $property, $value ) {
+
 	$mvsRespondMixinsGenerated: true !global;
 
-	@if $property == "item" and mixin-exists( $property ){
-		@include item( $value );
+	@if $property == "test" and mixin-exists( $property ){
+		@include test( $value );
 	}
 	@else {
 		$mvsRespondMixinsGenerated: false !global;
 	}
 }
+

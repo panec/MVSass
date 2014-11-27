@@ -1,6 +1,10 @@
 $theme-model-list-component_syntax_final: (
 	_background: #000000,
 
+	_test: (), //(
+		// _color: blue,
+	// ),
+
 	item_border-color : (
 		black,
 		( ":nth-child(2n)", green, blue, red ),
