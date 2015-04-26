@@ -1,0 +1,928 @@
+$screen-breakpoints: (
+	xxs : 0px,
+	xs  : 480px,
+	sm  : 768px,
+	md  : 992px,
+	lg  : 1200px
+);
+//**
+// Additional functions to handle Number object in SASS.
+
+//**
+// Returns value without unit
+// Params
+// 	$number (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Number)
+// Example
+// 	unit-remove(100px) => 100
+@function unit-remove($number) {
+	@return $number / ( $number/ 0 + 1 );
+}
+
+//**
+// Converts Number with various unit to Number with "rem" unit
+// Supported units "", "px", "rem", "" is treated as "rem"
+// Params
+// 	$number (Sass::Script::Value::Number)
+// 	$font-size-base (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Number)
+// Example
+// 	unit-convert-rem(1, 10px) => 1rem
+// 	unit-convert-rem(10px, 10px) => 1rem
+// 	unit-convert-rem(1rem, 10px) => 1rem
+@function unit-convert-rem($number, $font-size-base: 16px) {
+	@if unit( $font-size-base ) != "px" {
+		@warn "$font-size-base:" $font-size-base "has to be px value";
+		@return $number;
+	}
+
+	@if type-of( $number ) == "number" {
+		@warn "$number:" $number "is not a number";
+		@return $number;
+	}
+
+	$numberUnitless: strip-unit($number);
+	$numberUnit: unit($number);
+
+	@if $numberUnitless == 0 {
+		@return 0;
+	}
+	@else if $numberUnit == "" or $numberUnit == "rem"{
+		@return $numberUnitless + 0rem;
+	}
+	@else if $numberUnit == "px" {
+		@return $numberUnitless / strip-unit( $font-size-base ) + 0rem;
+	}
+	@else {
+		@warn "$number:" $number "cannot be converted to px";
+		@return $number;
+	}
+}
+//**
+// Additional functions to handle String object in SASS.
+
+//**
+// Returns last index of string within a string
+// Params
+// 	$string (Sass::Script::Value::String)
+// 	$substring (Sass::Script::Value::String)
+// Returns
+// 	(Sass::Script::Value::Number, Sass::Script::Value::Null)
+// Example
+// 	str-index-last('abcdefghijk', 'gh') => 7
+@function str-index-last($string, $substring){
+	$index: 0;
+	$subIndex: 0;
+
+	@while $subIndex {
+		$subIndex: str-index($string, $substring);
+		@if $subIndex and $subIndex > 0 {
+			$index: $index + $subIndex;
+			$string: str-slice($string, $subIndex + 1);
+		}
+		//NOT NEEDED IN 3.3.0 RC.3 +
+		@else {
+			$subIndex: false;
+		}
+	}
+
+	@return if( $index > 0, $index, false);
+}
+
+//**
+// Additional functions to handle List object in SASS.
+// Some of the function are borrowed from Hugo Giraudel and his technical blog
+// http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+
+//**
+// by Hugo Giraudel
+// Inserts value within List object on specific position
+// Params
+// 	$list (Sass::Script::Value::Base)
+// 	$index (Sass::Script::Value::Number)
+// 	$value (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::List)
+// Example
+// insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
+@function insert-nth( $list, $index, $value ) {
+	$result: null;
+
+	@if type-of($index) != number {
+		@warn "$index: #{quote($index)} is not a number for `insert-nth`.";
+	}
+
+	@else if $index < 1 {
+		@warn "List index 0 must be a non-zero integer for `insert-nth`";
+	}
+
+	@else if $index > length($list) {
+		@warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
+	}
+
+	@else {
+		$result: ();
+
+		@for $i from 1 through length($list) {
+			@if $i == $index {
+				$result: append($result, $value);
+			}
+
+			$result: append($result, nth($list, $i));
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// by Hugo Giraudel
+@function slice( $list, $start: 1, $end: length($list) ) {
+	$result: null;
+
+	@if type-of($start) != number or type-of($end) != number {
+		@warn "Either $start or $end are not a number for `slice`.";
+	}
+
+	@else if $start > $end {
+		@warn "The start index has to be lesser than or equals to the end index for `slice`.";
+	}
+
+	@else if $start < 1 or $end < 1 {
+		@warn "List indexes must be non-zero integers for `slice`.";
+	}
+
+	@else if $start > length($list) {
+		@warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
+	}
+
+	@else if $end > length($list) {
+		@warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
+	}
+
+	@else {
+		$result: ();
+
+		@for $i from $start through $end {
+			$result: append($result, nth($list, $i));
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// by Hugo Giraudel
+@function replace-nth($list, $index, $value) {
+	$result: null;
+	$listSeparator: list-separator( $list );
+
+	@if type-of($index) != number {
+		@warn "$index: #{quote($index)} is not a number for `replace-nth`.";
+	}
+
+	@else if $index == 0 {
+		@warn "List index 0 must be a non-zero integer for `replace-nth`.";
+	}
+
+	@else if abs($index) > length($list) {
+		@warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
+	}
+
+	@else {
+		$result: ();
+		$index: if($index < 0, length($list) + $index + 1, $index);
+
+		@for $i from 1 through length($list) {
+			@if $i == $index {
+				$result: append($result, $value, $listSeparator);
+			}
+
+			@else {
+				$result: append($result, nth($list, $i), $listSeparator);
+			}
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// by Hugo Giraudel
+@function is($value, $values) {
+	@return not not index($values, $value);
+}
+
+//**
+// by Hugo Giraudel
+@function to-string($list, $glue: '', $is-nested: false) {
+	$result: null;
+
+	@for $i from 1 through length($list) {
+		$e: nth($list, $i);
+
+		@if type-of($e) == list {
+			$result: $result#{to-string($e, $glue, true)};
+		}
+
+		@else {
+			$result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// Checks if all values on List are Number
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Bool)
+// Example
+// 	list-contain-numbers(1 10px 1rem 20px) => true
+// 	list-contain-numbers(1 #FFF 1rem 20px) => false
+@function list-contain-numbers( $list ) {
+	$isNumeric: true;
+	$length: length( $list );
+
+	@for $i from 1 through $length {
+		$value: nth( $list, $i );
+		$isNumeric: $isNumeric and type-of( $value ) == "number";
+	}
+
+	@return $isNumeric;
+}
+
+//**
+// Within List object converts Numbers with various unit values to Numbers with "rem" unit
+// Supported units "", "px", "rem", "" is treated as "rem"
+// Params
+// 	$list (Sass::Script::Value::Base)
+// 	$font-size-base (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem, 1rem
+@function list-convert-rem( $list, $font-size-base: 16px ) {
+	$length: length( $list );
+	$remValues: ();
+
+	@if unit( $font-size-base ) != "px" {
+		@warn "$font-size-base:" $font-size-base "has to be px value";
+		@return $list;
+	}
+
+	@if list-contain-numbers( $list ) {
+		@warn "$list:" $list "contains non numeric values";
+		@return $list;
+	}
+
+	@for $i from 1 through $length {
+		$remValues: append( $remValues, unit-convert-rem( nth( $list, $i ), $font-size-base ) );
+	}
+
+	@if $length == 1 {
+		@return nth( $remValues, 1 );
+	}
+
+	@return $remValues;
+}
+
+//**
+// Checks if parent selector (last item from parents selector) is within List
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Bool)
+// Example
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => true
+// 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb" ) } => false
+// 	.aaa .bbb.ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => false
+// @function list-contain-parent-selector( $list ) {
+// 	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
+
+// 	@each $selector in $list {
+// 		@if $parent == $selector {
+// 			@return true;
+// 		}
+// 	}
+// 	@return false;
+// }
+
+//**
+// Additional functions to handle Map object in SASS.
+
+//**
+// Overwrite keys from $map1 with keys from map $map2
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// Params
+// 	$map1 (Sass::Script::Value::Base)
+// 	$map2 (Sass::Script::Value::Base)
+// 	$showWarnings (Sass::Script::Value::Bool)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
+@function map-overwrite($map1, $map2, $showWarnings: true) {
+	$result: ();
+
+	@each $key, $value in $map2 {
+		@if ( map-has-key( $map1, $key ) ) {
+			$result: map-merge( $result, ( $key: $value ) );
+		}
+		@else if ( $showWarnings ) {
+			// @warn $key "does not exist in first map";
+			$result: map-merge( $result, ( $key: $value ) );
+		}
+	}
+
+	@return map-merge( $map1, $result );
+}
+
+//**
+// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// Params
+// 	$map1 (Sass::Script::Value::Base)
+// 	$map2 (Sass::Script::Value::Base)
+// 	$showWarnings (Sass::Script::Value::Bool)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
+@function map-unique($map1, $map2, $showWarnings: true) {
+	$result: ();
+
+	@each $key, $value in $map2 {
+		@if ( map-has-key($map1, $key) ) {
+			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
+		}
+		@else if ( $showWarnings ){
+			// @warn $key "does not exist in first map";
+			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// Returns $value on $n key in $map if found, null if not found
+// Params
+// 	$map (Sass::Script::Value::Base)
+// 	$n (Sass::Script::Value::Number)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
+@function map-nth( $map, $n ) {
+	$index: 1;
+
+	@if $n > length( $map ) {
+		@return null;
+	}
+
+	@each $key, $value in $map {
+		@if $n == $index {
+			@return $value;
+		}
+		$index: $index + 1;
+	}
+
+	@return null;
+}
+
+//**
+// Returns the index of the $key in $map
+// Params
+// 	$map (Sass::Script::Value::Base)
+// 	$key (Sass::Script::Value::String)
+// Returns
+// 	(Sass::Script::Value::Number)
+// Example
+// 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
+@function map-index( $map, $key ) {
+	$keys: map-keys( $map );
+
+	@return index( $keys, $key );
+}
+
+//**
+// Additional functions to handle MVS syntax in SASS.
+
+//**
+// Gets value on $n position from MVS syntax
+// If value on $n position not exists, last value is returned
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	mvs-get-nth( ( 1.1, 2.2, 3.3, 4.4, 5.5 ), 4 ) => 4.4
+// 	mvs-get-nth( ( 1.1, 2.2 ), 4 ) => 2.2
+@function mvs-get-nth( $list, $n ) {
+	$length: length( $list );
+
+	@if $length == 0 {
+		@warn "mvs-get-nth is for $list" $list " containing at least 1 element, list contains 0 elements";
+		@return null
+	}
+	@else if ( $n <= $length ) {
+		@return nth( $list, $n );
+	}
+	@else {
+		@return nth( $list, $length );
+	}
+}
+
+//**
+// Gets value on $n position from CSS shorthand syntax
+// If value on $n position not exists, corresponding value is returned
+// Params
+// 	$list (Sass::Script::Value::Base)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	get-nth-shorthand( 1px 2px 3px 4px ), 3 ) => 3px
+// 	get-nth-shorthand( 1px 2px , 3 ) => 1px
+@function get-nth-shorthand( $list, $n ) {
+	$length: length( $list );
+
+	@if $length == 0 {
+		@warn "get-nth-shorthand is for $list" $list " containing 1, 2, or 4 elements, list contains 0 elements";
+	}
+	@else if $length == 1 {
+		@return nth( $list, 1 );
+	}
+	@else if $length == 2 or $length == 3 {
+		@if $n == 1 {
+			@return nth( $list, 1 );
+		}
+		@else if $n == 2 {
+			@return nth( $list, 2 );
+		}
+		@else if $n == 3 {
+			@return nth( $list, 1 );
+		}
+		@else if $n == 4 {
+			@return nth( $list, 2 );
+		}
+	}
+	@else if $length == 4 {
+		@return nth( $list, $n );
+	}
+	@else {
+		@warn "get-nth-shorthand is for $list containing less then 5 elements";
+		@return null;
+	}
+}
+
+//**
+// Calls custom function against each set of values from MVS syntax
+// Params
+// 	$list (Sass::Script::Value::Base)
+// 	$name (Sass::Script::Value::String)
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	mvs-call( ( 1.1, ( 1.1, 2.2, 3.3, 4.4, 5.5 ) ), ceil ) => 1, ( 1, 2, 3, 4, 5 )
+@function mvs-call( $list, $name ){
+	$result: ();
+
+	$result: append( $result, call( $name, nth( $list, 1 ) ), comma );
+
+	@for $i from 2 through length( $list ) {
+		$subResult: ();
+		@if mvs-is-nth( nth( $list, $i ) ) == true {
+			@warn "nth notation is not currently supported";
+		}
+		@else {
+			@each $subValue in nth( $list, $i ) {
+				$subResult: append( $subResult, call( $name, $subValue ) , comma );
+			}
+			$result: append( $result, $subResult );
+		}
+	}
+
+	@return $result;
+}
+
+//**
+// Gets a first parent selector from all list of parent selectors
+// Returns
+// 	(Sass::Script::Value::Base)
+// Example
+// 	.parent .item { mvs-parent() } => .parent .item
+// 	.parent .subparent .item, { mvs-parent() } => .parent .subparent .item
+// 	.parent .item, .parent_2 .item { mvs-parent() } => .parent .item
+@function mvs-parent() {
+	@if function-exists( parentsSelector ) {
+		@return nth( parentsSelector(), 1 );
+	}
+	@else if type-of( & ) == "list" {
+		@return nth( &, 1 );
+	}
+
+	@debug "Function 'parentsSelector' does not exist. Check if your project uses custom Ruby script provided, or update to SASS 3.4.x";
+	@return null;
+}
+
+//TODO Add example calls and description
+@function mvs-mod-to-string( $mod, $prefix: "", $modType: "class", $modDivider: "-" ){
+	$result: "";
+
+	@if $mod == null or $mod == ""{
+		//do nothing
+	}
+	@else if type-of( $mod ) == "string" {
+		$result: $result + $prefix + $modDivider + $mod;
+	}
+	@else if type-of( $mod ) == "map" {
+		@each $key, $value in $mod {
+			@if ( $modType == "data" ) {
+			    $prefix: if( str-slice( $prefix, 1, 1 ) == ".", str-slice( $prefix, 2 ), $prefix );
+				$result: $result + "[data-#{$prefix}--#{$key}='#{$value}']";
+			}
+			@else if ( $modType == "class" ) {
+				$result: $result + $prefix + "--" + $key + $modDivider + $value;
+			}
+		}
+	}
+	@else {
+		@warn "$mod is not a proper type, string & map are supported" $mod;
+	}
+
+	@return $result;
+}
+
+//TODO Add example calls and description
+@function mvs-normalize-value( $value ) {
+	$resultList            : ();
+	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+
+	@if type-of( $value ) != "map" and type-of( $value ) != "list" {
+		$resultList: append( $resultList, ( "initial": $value ) );
+	}
+
+	@else if type-of( $value ) == "map" {
+		$resultList: append( $resultList, $value );
+	}
+
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
+		$resultList: append( $resultList, ( "initial": $value ) );
+	}
+
+	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
+		$map: ();
+		$tempValue: ();
+		$tempMap: ();
+		$tempList: ();
+		$screenBreakpointsKeysIndex: 1;
+
+		@each $subValue in $value {
+			$subValuePosition: mvs-value-position( $subValue );
+
+			@if $subValuePosition == 1 {
+				$subMap: map-get( $tempMap, "_1" );
+				$tempMap: map-merge( $tempMap, ( "_1": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else if $subValuePosition == 2 {
+				$subMap: map-get( $tempMap, "_2" );
+				$tempMap: map-merge( $tempMap, ( "_2": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else if $subValuePosition == 3 {
+				$subMap: map-get( $tempMap, "_3" );
+				$tempMap: map-merge( $tempMap, ( "_3": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else if $subValuePosition == 4 {
+				$subMap: map-get( $tempMap, "_4" );
+				$tempMap: map-merge( $tempMap, ( "_4": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else if $subValuePosition == 5 {
+				$subMap: map-get( $tempMap, "_5" );
+				$tempMap: map-merge( $tempMap, ( "_5": if( $subMap == null, $subValue, append( $subMap, $subValue, comma ) ) ) );
+			}
+			@else {
+				$tempList: append( $tempList, $subValue, comma );
+			}
+		}
+
+		@each $subValue in $tempList {
+			@if type-of( $subValue ) == "map" {
+				$resultList: append( $resultList, map-merge( $subValue, $tempMap ) );
+			}
+			@else if type-of( $subValue ) == "list" and list-separator( $subValue ) == "comma" {
+				$tempNormalize: mvs-normalize-value( $subValue );
+
+				@each $subNormalize in $tempNormalize {
+					$resultList: append( $resultList, map-merge( $subNormalize, $tempMap ) );
+				}
+			}
+			@else {
+				@if $screenBreakpointsKeysIndex == 1 {
+					$tempValue: $subValue;
+					$map: map-merge( $map, ( "initial": $subValue ) );
+				}
+				@else {
+					@if $tempValue != $subValue {
+						$tempValue: $subValue;
+						$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+					}
+				}
+				$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+			}
+		}
+
+		//This couses a problem when a single css value is followed by maps or list on root level it is added at the end of result
+		@if length( $map ) > 0 {
+			$resultList: append( $resultList, map-merge( $map, $tempMap ) );
+		}
+	}
+
+	@return $resultList;
+}
+
+
+//done
+// return
+// 0 - not specific value
+// 1 - at body value
+// 2 - at element value
+// 3 - at list container value
+// 4 - at block value ( for modifiers )
+// 5 - at media
+//TODO Add example calls and description
+@function mvs-value-position( $value ) {
+	$mediaTypes            : "all" "aural" "braille" "embossed" "handheld" "print" "projection" "screen" "tty" "tv" "only aural" "only braille" "only embossed" "only handheld" "only print" "only projection" "only screen" "only tty" "only tv";
+	$modernizr             : ".applicationcache" ".audio" ".backgroundsize" ".borderimage" ".borderradius" ".boxshadow" ".canvas" ".canvastext" ".cssanimations" ".csscolumns" ".cssgradients" ".cssreflections" ".csstransforms" ".csstransforms3d" ".csstransitions" ".draganddrop" ".flexbox" ".flexboxlegacy" ".fontface" ".generatedcontent" ".geolocation" ".hashchange" ".history" ".hsla" ".indexedDB" ".inlinesvg" ".localstorage" ".multiplebgs" ".opacity" ".postmessage" ".rgba" ".sessionstorage" ".smil" ".svg" ".svgclippaths" ".textshadow" ".touch" ".video" ".webgl" ".websockets" ".websqldatabase" ".webworkers" ".no-applicationcache" ".no-audio" ".no-backgroundsize" ".no-borderimage" ".no-borderradius" ".no-boxshadow" ".no-canvas" ".no-canvastext" ".no-cssanimations" ".no-csscolumns" ".no-cssgradients" ".no-cssreflections" ".no-csstransforms" ".no-csstransforms3d" ".no-csstransitions" ".no-draganddrop" ".no-flexbox" ".no-flexboxlegacy" ".no-fontface" ".no-generatedcontent" ".no-geolocation" ".no-hashchange" ".no-history" ".no-hsla" ".no-indexedDB" ".no-inlinesvg" ".no-localstorage" ".no-multiplebgs" ".no-opacity" ".no-postmessage" ".no-rgba" ".no-sessionstorage" ".no-smil" ".no-svg" ".no-svgclippaths" ".no-textshadow" ".no-touch" ".no-video" ".no-webgl" ".no-websockets" ".no-websqldatabase" ".no-webworkers";
+	$pseudoClasses         : ":active" ":after" ":before" ":checked" ":disabled" ":empty" ":enabled" ":first-letter" ":first-line" ":focus" ":hover" ":in-range" ":invalid" ":lang(language)" ":link" ":not(selector)" ":optional" ":out-of-range" ":read-only" ":read-write" ":required" ":root" ":selection" ":target" ":valid" ":visited" "::after" "::before" "::first-letter" "::first-line" ":selection";
+	$pseudoClassesList     : ":first-child" ":first-of-type" ":last-child" ":last-of-type" ":nth-child" ":nth-last-child" ":nth-last-of-type" ":nth-of-type" ":only-child" ":only-of-type";
+
+	@if type-of( $value ) != "string" and type-of( $value ) != "map" {
+		@return 0; //css value
+	}
+	@else if is( $value, $mediaTypes ) {
+		@return 5; //media type
+	}
+	@else if is( $value, $modernizr ) {
+		@return 1; //body of the page
+	}
+	@else if is( $value, $pseudoClasses ) {
+		@return 2; //current element
+	}
+	@else if type-of( $value ) == "map" {
+		$valueKeys : join( "initial", map-keys( $screen-breakpoints ) );
+		$keys      : map-keys( $value );
+
+		@each $key in $keys
+		{
+			@if is( $key, $valueKeys ) {
+				@return 0; //css value
+			}
+		}
+
+		@return 4; //current element root parent
+	}
+	@else {
+		//Cannot be is() because the "nth-..." syntax is not fixed and has custom value in brackets
+		@each $string in $pseudoClassesList {
+			@if str-index( $value, $string ) {
+				@return 3; //current element list parent
+			}
+		}
+	}
+
+	@return 0; //css value
+}
+
+//**
+// MVS mixins
+
+//**
+// Private mixin for handling rendering css with Compass mixins
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
+@mixin -mvs-respond-compass( $property, $value ) {
+	//https://github.com/nex3/sass/issues/626#issuecomment-39012395 Feature under consideration SASS 3.4
+	// @if mixin-exists( $property ) {
+	// 	@include #{ $property }( $value );
+	// }
+
+	//TODO: Add full list of Compass mixins
+	$mvsRespondMixinsGenerated: true !global;
+
+	@if $property == "background" and mixin-exists( $property ){
+		@include background( $value );
+	}
+	@else if $property == "background-image" and mixin-exists( $property ) {
+		@include background( $value );
+	}
+	@else if $property == "ellipsis" and mixin-exists( $property ) {
+		@include ellipsis( $value );
+	}
+	@else if $property == "display-flex" and mixin-exists( $property ) {
+		@include display-flex();
+	}
+	@else if $property == "flex-direction" and mixin-exists( $property ) {
+		@include flex-direction( $value );
+	}
+	@else if $property == "user-select" and mixin-exists( $property ) {
+		@include user-select( $value );
+	}
+	@else {
+		$mvsRespondMixinsGenerated: false !global;
+	}
+}
+
+//**
+// Private mixin for iterating thru all custom mixin libraries
+// Params
+// 	$property (Sass::Script::Value::String)
+// 	$value (Sass::Script::Value::Base)
+@mixin -mvs-respond-mixins( $property, $value ) {
+	$mvsRespondMixinsGenerated: false !global;
+
+	@if $mvsRespondMixinsGenerated == false and mixin-exists( "mvs-respond-custom" ) {
+		@include mvs-respond-custom( $property, $value );
+	}
+
+	@if $mvsRespondMixinsGenerated == false {
+		@include -mvs-respond-compass( $property, $value );
+	}
+
+	@if $mvsRespondMixinsGenerated == false {
+		#{$property}: $value;
+	}
+}
+
+//**
+// Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
+// Params
+// 	$elementPrefix (Sass::Script::Value::String)
+// 	$valueMap (Sass::Script::Value::Base)
+// 	$selector (Sass::Script::Value::String)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	mvs-respond-map( "list-item", $map );
+//TODO Params to be extended
+@mixin mvs-respond-map( $elementPrefix, $valueMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
+	$elementPrefixLength: str-length( $elementPrefix );
+
+	@each $key, $value in $valueMap {
+		@if str-index( $key, $elementPrefix ) != null {
+			$property: str-slice( $key, $elementPrefixLength + 1 );
+			@if ( str-index-last( $property, "_" ) == false ) {
+				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
+				@if mixin-exists( $property ) {
+					@debug $property this is a supported mixin;
+					@include -mvs-respond-mixins( $property, $value );
+				}
+				@else {
+					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
+				}
+			}
+		}
+	}
+}
+
+//TODO Add examples and desciption
+@mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: 1, $parentListSelector: null, $parentListDepth: 1 ) {
+	@if $values == null {
+		//skip
+	}
+	@else if is( $property, "font-family" "font" ) {
+		@warn "MVS syntax does not support #{$property} property";
+		@include -mvs-respond-mixins( $property, $values );
+	}
+	@else {
+		$values                : mvs-normalize-value( $values );
+		$screenBreakpointsKeys : join( "initial", map-keys( $screen-breakpoints ) );
+
+		@each $value in $values {
+			// 1 - at body value
+			$_1: to-string( map-get( $value, "_1" ) );
+			// 2 - at element value
+			$_2: to-string( map-get( $value, "_2" ) );
+			// 3 - at list container value
+			$_3: to-string( map-get( $value, "_3" ) );
+			// 4 - at block value ( for modifiers )
+			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "mod", "data" );
+			// 5 - media type for @media
+			// $_5: to-string( map-get( $value, "_5" ), " and " );
+			$_5: map-get( $value, "_5" );
+			@if length( $_5 ) > 1 {
+				@debug "Due limitation of interpolation in SASS @media only first value of `#{$_5}` will be added";
+				$_5: nth( $_5, 1 );
+			}
+
+			@each $breakpoint in $screenBreakpointsKeys {
+				#{$_1} &#{$_2}{
+					@include respond-to( $breakpoint, $_3 != "", $_5 ) {
+						@include mvs-parent-inject( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
+							@include mvs-parent-inject( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+								@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//**
+// Generates styles for screen size bigger then defined breakpoint,
+// If $is-specific is true then generates styles only for the defined breakpoint
+// Params
+// 	$breakpoint (Sass::Script::Value::String)
+// 	$is-specific (Sass::Script::Value::Bool)
+// Example
+// 	respond-to( xs ) { color: #FFF; } => @media only screen and ( min-width: 480px ) { color: #FFF; }
+// 	respond-to( xs, $is-specific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
+//TODO Update description
+@mixin respond-to( $breakpoint: "initial", $is-specific: false, $mediaType: "" ) {
+
+	@if length( $mediaType ) > 1 {
+		@debug "Due limitation of interpolation in SASS at @media only single value are supported for $mediaType but was `#{$mediaType}`";
+	}
+
+	@if $breakpoint == "initial" {
+		@if $mediaType == null or $mediaType == "" {
+			 @content;
+		}
+		@else {
+			@media #{ $mediaType } { @content; }
+		}
+	}
+	@else if $is-specific {
+		$index: map-index( $screen-breakpoints, $breakpoint );
+
+		@if $index < length( $screen-breakpoints ) {
+			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
+			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
+
+			@if $mediaType == null or $mediaType == "" {
+				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+			}
+			@else {
+				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+			}
+		}
+		@else {
+			@if $mediaType == null or $mediaType == "" {
+				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			}
+			@else {
+				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			}
+		}
+	}
+	@else {
+		@if $mediaType == null or $mediaType == "" {
+			@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		}
+		@else {
+			@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+		}
+	}
+}
+
+//Based on http://sassmeister.com/gist/7786284
+//http://www.youtube.com/watch?feature=player_detailpage&v=-ZJeOJGazgE#t=1846
+
+//**
+// Injects or appends $selector into parent selector on position defined by $depth starting from last
+// Params
+// 	$selector (Sass::Script::Value::String)
+// 	$inject (Sass::Script::Value::Bool)
+// 	$depth (Sass::Script::Value::Number)
+// Example
+// 	.parent .item { mvs-parent-inject( ":hover", true ) } => .parent .item :hover
+// 	.parent .item { mvs-parent-inject( ":hover", false ) } => .parent .item:hover
+// 	.parent .item { mvs-parent-inject( " .test", true ) } => .parent .item .test
+// 	.parent .item { mvs-parent-inject( ":hover", false, 1 ) } => .parent .item:hover
+// 	.parent .item { mvs-parent-inject( " .test", true, 1 ) } => .parent .test .item
+@mixin mvs-parent-inject( $selector, $inject: true, $depth: 0 ) {
+	@if $depth > 0 {
+		@at-root {
+			$path: mvs-parent();
+
+			@if $inject {
+				#{insert-nth( $path, length( $path ) - $depth + 1, unquote( $selector ) )} { @content; }
+			}
+			@else {
+				#{replace-nth( $path, length( $path ) - $depth, nth( $path, length( $path ) - $depth ) + unquote( $selector ) )} { @content; }
+			}
+		}
+	}
+	@else if $depth == 0 {
+		&#{$selector} { @content; }
+	}
+	@else {
+		@content;
+	}
+}

@@ -38,5 +38,9 @@
 		}
 	}
 
+	#{ $prefix }__#{ "sample" } {
+		@include mvs-respond-map( "sample_", $model );
+	}
+
 	@content;
 }

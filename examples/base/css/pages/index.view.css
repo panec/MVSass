@@ -43,6 +43,7 @@
   @media (min-width: 1200px) {
     .page-index__container:before {
       content: "lg"; } }
-
-.page-index {
-  color: #111111; }
+.page-index__sample {
+  border: solid 1px #f5f2f0; }
+.page-index__sample {
+  padding: 10px; }

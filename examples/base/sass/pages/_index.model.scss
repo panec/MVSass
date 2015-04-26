@@ -12,4 +12,7 @@ $page-index-model: (
 	breakpoints-indicator_font-family      : ( Monaco, Consolas, "Lucida Console", monospace ),
 	breakpoints-indicator_z-index          : 1000,
 	breakpoints-indicator_content          : ( "xxs", "xs", "sm", "md", "lg" ),
+
+	sample_border                          : solid 1px #f5f2f0,
+	sample_padding                         : 10px,
 );

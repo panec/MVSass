@@ -16,8 +16,9 @@
 	content: "xxs"
 }
 
-.page-index {
-	color: #111
+.page-index__sample {
+	border: solid 1px #f5f2f0;
+	padding: 10px
 }
 
 @media (min-width: 480px) {

@@ -2,23 +2,18 @@
 
 @import "index.model";
 
-@include page-index( $page-index-model, $isInitial: true );
-
-.page-index {
-	color: #111111;
-	// &:after {
-	// 	@include mvs-respond-map( "body-breakpoints-indicator_", $theme-model-page-home );
-	// }
-
-	// .body-container {
-	// 	@include mvs-respond-map( "body-container_", $theme-model-page-home );
-	// }
-
-	// .list_1,
-	// .list_2 {
-	// 	@include list( (
-	// 		component_float : ( null, ( null, null, null, left, left ) ),
-	// 		component_width : ( null, ( null, null, null, 50%, 50% ) ),
-	// 	) );
-	// }
+@include page-index( $page-index-model, $isInitial: true ) {
+	pre[data-src]::after {
+		content: attr(data-src);
+		color: black;
+		background-color: #CFCFCF;
+		display: inline-block;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		font-size: 0.9em;
+		border-radius: 5px 0 0 0px;
+		padding: 0 0.5em;
+		text-shadow: none;
+	}
 }

@@ -1,0 +1,48 @@
+$component-box-model: ();
+
+@mixin component-box( $model: $component-box-model, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
+	@if $isInitial {
+		$model: map-overwrite( $component-box-model, $model );
+		$component-box-model: $model !global;
+	}
+	@else {
+		$model: map-unique( $component-box-model, $model );
+	}
+
+	$prefix: ".c-box";
+
+	@if ( $mod == "" or length( $mod ) == 0  ) {
+		#{ $prefix } {
+			@include _component-box( $model, "&", $isInitial ) { @content; };
+		}
+	}
+	@else {
+		#{ mvs-mod-to-string( $mod, $prefix, $modType, $modDivider ) } {
+			@include _component-box( $model, $prefix, $isInitial ) { @content; };
+		}
+	}
+}
+
+@mixin _component-box( $model: $component-box-model, $prefix: "", $isInitial: false ) {
+	$staticPrefix: $prefix;
+
+	@if ( $prefix == "&" ) {
+		$staticPrefix: nth( mvs-parent(), -1 );
+	}
+
+	@include mvs-respond-map( "_", $model );
+
+	#{ $prefix }__#{ "img-container" } {
+		@include mvs-respond-map( "img-container_", $model );
+	}
+
+	#{ $prefix }__#{ "img" } {
+		@include mvs-respond-map( "img_", $model );
+	}
+
+	#{ $prefix }__#{ "body" } {
+		@include mvs-respond-map( "body_", $model );
+	}
+
+	@content;
+}

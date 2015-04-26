@@ -1,0 +1,4 @@
+@import "ref.controlers";
+@import "box.model_ver2";
+
+@include component-box( $component-box-model_ver2, $mod: "ver2" );

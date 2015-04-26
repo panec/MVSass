@@ -6,8 +6,18 @@
 	<title>MVS List example</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="../base/css/components/list.css">
-	<link rel="stylesheet" href="../base/css/pages/index.view.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver0-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver1-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver2-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver3-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver4-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver5-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver6-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver7-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/components/box.view_ver8-opt-beauty.css">
+
+	<link rel="stylesheet" href="../base/css/components/list.view-opt-beauty.css">
+	<link rel="stylesheet" href="../base/css/pages/index.view-opt-beauty.css">
 
 	<link rel="stylesheet" href="js/prism.css">
 
@@ -18,64 +28,354 @@
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 	<div class="page-index__container">
+		<!-- Box version 0 -->
 		<figure>
 			<figcaption>
-				Item
+				Box version 0
 			</figcaption>
 
-			<samp>
-				<div class="item">
-					<span class="item__img-container">
-						<img class="item__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+			<div class="page-index__sample">
+				<div class="c-box">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
 					</span>
-					<div class="item__body">
-						item item desc
+					<div class="c-box__body">
+						Box body
 					</div>
 				</div>
-			</samp>
+			</div>
 
-			<pre class="language-markup"><code>
-				<script type="prism-html-markup">
-					<div class="item">
-						<span class="item__img-container">
-							<img class="item__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
-						</span>
-						<div class="item__body">
-							item item desc
-						</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+				<pre><code class="language-markup">
+					&lt;div class=&quot;c-box&quot;&gt;
+						&lt;span class=&quot;c-box__img-container&quot;&gt;
+							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
+						&lt;/span&gt;
+						&lt;div class=&quot;c-box__body&quot;&gt;
+							Box body
+						&lt;/div&gt;
+					&lt;/div&gt;
+				</code></pre>
+
+				<pre data-src="../base/sass/components/_box.model_ver0.scss"></pre>
+				<pre data-src="../base/sass/components/box.view_ver0.scss"></pre>
+				<pre data-src="../base/css/components/box.view_ver0.css"></pre>
+			</details>
+		</figure>
+		<!-- Box version 1 -->
+		<figure>
+			<figcaption>
+				Box version 1
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver1">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
 					</div>
-				</script>
-			</code></pre>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+				<pre><code class="language-markup">
+					&lt;div class=&quot;c-box-ver1&quot;&gt;
+						&lt;span class=&quot;c-box__img-container&quot;&gt;
+							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
+						&lt;/span&gt;
+						&lt;div class=&quot;c-box__body&quot;&gt;
+							Box body
+						&lt;/div&gt;
+					&lt;/div&gt;
+				</code></pre>
+				<p>Only difference is in line 1 <code class="language-markup">class="c-box-ver1"</code></p>
+				<pre data-src="../base/sass/components/_box.model_ver1.scss"></pre>
+				<pre data-src="../base/sass/components/box.view_ver1.scss"></pre>
+				<pre data-src="../base/css/components/box.view_ver1.css"></pre>
+			</details>
+		</figure>
+		<!-- Box version 2 -->
+		<figure>
+			<figcaption>
+				Box version 2
+			</figcaption>
 
-			<pre class="language-scss"><code>
-				@if ( $prefix == "&" ) {
-					$staticPrefix: nth( mvs-parent(), -1 );
-				}
+			<div class="page-index__sample">
+				<div class="c-box-ver2">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+				<pre><code class="language-markup">
+					&lt;div class=&quot;c-box-ver1&quot;&gt;
+						&lt;span class=&quot;c-box__img-container&quot;&gt;
+							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
+						&lt;/span&gt;
+						&lt;div class=&quot;c-box__body&quot;&gt;
+							Box body
+						&lt;/div&gt;
+					&lt;/div&gt;
+				</code></pre>
 
-				@include mvs-respond-map( "_", $model );
+				<pre><code class="language-scss">
+					$component-box-model_ver1: (
+						_width: ( null, 100%, 80%, 60%, 40% )
+					);
 
-				#{ $prefix }__#{ "container" } {
-					@include mvs-respond-map( "container_", $model );
-
-					&:before {
-						@include mvs-respond-map( "breakpoints-indicator_", $model );
+					@include component-box( $component-box-model_ver1, $mod: "ver1" );
+				</code></pre>
+				<pre><code class="language-css">
+					@media (min-width: 480px) {
+						.c-box-ver1 {
+							width: 100%
+						}
 					}
-				}
-			</code></pre>
-			<pre class="language-css"><code>
-				.page-index__container:before {
-					font-family: Monaco, Consolas, "Lucida Console", monospace;
-					display: block;
-					position: fixed;
-					bottom: 10px;
-					left: 10px;
-					padding: 10px;
-					background-color: #DEDEDE;
-					font-size: 2rem;
-					z-index: 1000;
-					content: "xxs"
-				}
-			</code></pre>
+
+					@media (min-width: 768px) {
+						.c-box-ver1 {
+							width: 80%
+						}
+					}
+
+					@media (min-width: 992px) {
+						.c-box-ver1 {
+							width: 60%
+						}
+					}
+
+					@media (min-width: 1200px) {
+						.c-box-ver1 {
+							width: 40%
+						}
+					}
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 3 -->
+		<figure>
+			<figcaption>
+				Box version 3
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver3">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 4 -->
+		<figure>
+			<figcaption>
+				Box version 4
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver4">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 5 -->
+		<figure>
+			<figcaption>
+				Box version 5
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver5">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 6 -->
+		<figure>
+			<figcaption>
+				Box version 6
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver6">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 7 -->
+		<figure>
+			<figcaption>
+				Box version 7
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver7">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 8 -->
+		<figure>
+			<figcaption>
+				Box version 8
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver8">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+		<!-- Box version 9 -->
+		<figure>
+			<figcaption>
+				Box version 9
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver9">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
+		</figure>
+
+		<!-- Box version 10 -->
+		<figure>
+			<figcaption>
+				Box version 10
+			</figcaption>
+
+			<div class="page-index__sample">
+				<div class="c-box-ver10">
+					<span class="c-box__img-container">
+						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+					</span>
+					<div class="c-box__body">
+						Box body
+					</div>
+				</div>
+			</div>
+			<details>
+				<summary>Markup, sass & css - click to expand</summary>
+
+				<pre><code class="language-scss">
+
+				</code></pre>
+				<pre><code class="language-css">
+
+				</code></pre>
+			</details>
 		</figure>
 
 	</div>
@@ -101,5 +401,9 @@
 		});
 	</script>
 	<script src="js/prism.js"></script>
+
+	<!-- height: 10px;
+	overflow: hidden;
+ -->
 </body>
 </html>
