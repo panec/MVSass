@@ -31,7 +31,9 @@ $theme-model-list-component_syntax_final: (
 			( ":nth-child(n)", #000010 ),
 			( ":nth-child(2n)", #000110 ),
 		) ),
-	)
+	),
+
+	'item_color' : #123,
 );
 
 

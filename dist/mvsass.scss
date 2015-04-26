@@ -769,20 +769,20 @@ $screen-breakpoints: (
 // Example
 // 	mvs-respond-map( "list-item", $map );
 //TODO Params to be extended
-@mixin mvs-respond-map( $elementPrefix, $valueMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListSDepth: -1 ) {
+@mixin mvs-respond-map( $elementPrefix, $valueMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
 	$elementPrefixLength: str-length( $elementPrefix );
 
 	@each $key, $value in $valueMap {
 		@if str-index( $key, $elementPrefix ) != null {
 			$property: str-slice( $key, $elementPrefixLength + 1 );
 			@if ( str-index-last( $property, "_" ) == false ) {
-				//TODO Add logic to recognize custom mixin map from extended nth syntax map
-				@if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
-					@debug $property this is a supported mixin that has a map values ;
-					// @include mvs-respond-property-list( str-slice( $key, $elementPrefixLength + 1 ), $value, $selector, $depth );
+				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
+				@if mixin-exists( $property ) {
+					@debug $property this is a supported mixin;
+					@include -mvs-respond-mixins( $property, $value );
 				}
 				@else {
-					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListSDepth );
+					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
 				}
 			}
 		}

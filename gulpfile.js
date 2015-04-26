@@ -24,13 +24,24 @@ gulp.task('styles', function () {
 	}))
 	.pipe($.duration('Compile time'))
 	.pipe($.size({ title: 'Example css before optimization' }))
-	.pipe($.rename(function (path) {
-		path.basename += ".opt";
+	.pipe($.rename({
+		suffix: "-opt"
 	}))
 	.pipe($.combineMediaQueries())
 	.pipe($.csso())
 	.pipe($.duration('Optimization time'))
 	.pipe($.size({ title: 'Example css after optimization' }))
+	.pipe(gulp.dest('examples/theme/css'))
+	.pipe($.rename({
+		suffix: "-beauty"
+	}))
+	.pipe($.jsbeautifier({
+		logSuccess: false,
+		indentChar: "	",
+		indentSize: 1
+	}))
+	.pipe($.duration('Beautifing time'))
+	.pipe($.size({ title: 'Example css after beautifing' }))
 	.pipe(gulp.dest('examples/theme/css'));
 });
 
