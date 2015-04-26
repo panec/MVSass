@@ -1,56 +1,88 @@
-$core-model-list: (
-	//component
-	component_clear                      : null,
-	component_float                      : null,
-	component_width                      : null,
+@mixin component-list( $model-list: $core-model-list, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
+	@if $isInitial {
+		$model-list: map-overwrite( $core-model-list, $model-list );
+		$core-model-list: $model-list !global;
+	}
+	@else {
+		$model-list: map-unique( $core-model-list, $model-list );
+	}
 
-	//list-body
-	list-body_background-color           : null,
-	list-body_border-color               : null,
-	list-body_border-style               : null,
-	list-body_border-width               : null,
-	list-body_color                      : null,
-	list-body_margin                     : null,
-	list-body_padding                    : null,
-	list-body_box-shadow                 : null,
+	$prefix: ".list";
 
-	//item
-	item_clear                           : null,
-	item_float                           : null,
-	item_width                           : null,
-	item_background-color                : null,
+	@if ( $mod == "" or length( $mod ) == 0  ) {
+		#{ $prefix } {
+			@include _component-list( $model-list, "&", $isInitial ) { @content; };
+		}
+	}
+	@else {
+		#{ $prefix + mvs-mod-to-string( $mod, $prefix, $modType, $modDivider ) } {
+			@include _component-list( $model-list, $prefix, $isInitial ) { @content; };
+		}
+	}
+}
 
-	//item-link
-	item-link_background-color           : null,
-	item-link_border-color               : null,
-	item-link_border-style               : null,
-	item-link_border-width               : null,
-	item-link_color                      : null,
-	item-link_margin                     : null,
-	item-link_padding                    : null,
-	item-link_text-decoration            : null,
-	//item-link hover state
-	item-link_is-hover_text-decoration   : null,
+@mixin _component-list( $model-list: $core-model-list, $prefix: "", $isInitial: false ) {
 
-	//item-headline
-	item-header_color                    : null,
-	item-header_font-family              : null,
-	item-header_font-size                : null,
-	item-header_font-style               : null,
-	item-header_font-weight              : null,
-	item-header_line-height              : null,
-	item-header_letter-spacing           : null,
-	item-header_margin                   : null,
-	//item-headline hover state
-	item-header_is-hover_text-decoration : null,
+	$staticPrefix: $prefix;
 
+	@if ( $prefix == "&" ) {
+		$staticPrefix: nth( mvs-parent(), -1 );
+	}
 
-	item-img-container_padding           : null,
-	item-img-container_box-shadow        : null,
-	item-img-container_border-radius     : null,
+	@include mvs-respond-map( "_", $model-list, "", 0 );
 
-	item-img_padding                     : null,
-	item-img_position                    : null,
-	item-img_z-index                     : null,
+	#{ $prefix }__#{ "body" } {
+		@if $isInitial {
+			@include clearfix;
+		}
 
-);
+		@include mvs-respond-map( "body_", $model-list, "", 1 );
+	}
+
+	#{ $prefix }__#{ "item" } {
+		@if $isInitial {
+			display: block
+		}
+
+		@include mvs-respond-map( "item_", $model-list, "", 1, "", 0 );
+	}
+
+	#{ $prefix }__#{ "item-link" } {
+		@if $isInitial {
+			display: block
+		}
+
+		@include mvs-respond-map( "item-link_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	#{ $prefix }__#{ "item-img-container" } {
+		@if $isInitial {
+			display: block
+		}
+
+		@include mvs-respond-map( "item-img-container_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	#{ $prefix }__#{ "item-img" } {
+		@if $isInitial {
+			display: block;
+			width: 100%;
+		}
+
+		@include mvs-respond-map( "item-img_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	#{ $prefix }__#{ "item-body" } {
+		@include mvs-respond-map( "item-body_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	#{ $prefix }__#{ "item-header" } {
+		@include mvs-respond-map( "item-header_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	#{ $prefix }__#{ "item-desc" } {
+		@include mvs-respond-map( "item-desc_", $model-list, "", 1, #{ $staticPrefix }__#{ "item" }, 1 );
+	}
+
+	@content;
+}

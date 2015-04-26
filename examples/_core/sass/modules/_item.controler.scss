@@ -1,3 +1,19 @@
-$core-model-module-item: (
+@mixin item( $model-module-item: $core-model-module-item, $isInitial: false, $is-standalone: false ) {
 
-);
+	@debug item mixin;
+
+	@if $isInitial {
+		$model-module-item: map-overwrite( $core-model-module-item, $model-module-item );
+		$core-model-module-item: $model-module-item !global;
+	}
+	@else {
+		$model-module-item: map-unique( $core-model-module-item, $model-module-item );
+	}
+
+	@include mvs-respond-map( "_", $model-module-item );
+
+	.item {
+		@include mvs-respond-map( "item_", $model-module-item );
+	}
+
+}

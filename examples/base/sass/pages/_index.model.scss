@@ -1,0 +1,15 @@
+$page-index-model: (
+	container_margin                       : 0 auto,
+	container_width                        : ( auto, auto, 740px, 960px, 1160px ),
+
+	breakpoints-indicator_display          : block,
+	breakpoints-indicator_position         : fixed,
+	breakpoints-indicator_bottom           : 10px,
+	breakpoints-indicator_left             : 10px,
+	breakpoints-indicator_padding          : 10px,
+	breakpoints-indicator_background-color : #DEDEDE,
+	breakpoints-indicator_font-size        : 2rem,
+	breakpoints-indicator_font-family      : ( Monaco, Consolas, "Lucida Console", monospace ),
+	breakpoints-indicator_z-index          : 1000,
+	breakpoints-indicator_content          : ( "xxs", "xs", "sm", "md", "lg" ),
+);

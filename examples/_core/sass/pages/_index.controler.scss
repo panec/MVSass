@@ -1,0 +1,42 @@
+@mixin page-index( $model: $page-index-model, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
+	@if $isInitial {
+		$model: map-overwrite( $page-index-model, $model );
+		$page-index-model: $model !global;
+	}
+	@else {
+		$model: map-unique( $page-index-model, $model );
+	}
+
+	$prefix: ".page-index";
+
+	@if ( $mod == "" or length( $mod ) == 0  ) {
+		#{ $prefix } {
+			@include _page-index( $model, "&", $isInitial ) { @content; };
+		}
+	}
+	@else {
+		#{ $prefix + mvs-mod-to-string( $mod, $prefix, $modType, $modDivider ) } {
+			@include _page-index( $model, $prefix, $isInitial ) { @content; };
+		}
+	}
+}
+
+@mixin _page-index( $model: $page-index-model, $prefix: "", $isInitial: false ) {
+	$staticPrefix: $prefix;
+
+	@if ( $prefix == "&" ) {
+		$staticPrefix: nth( mvs-parent(), -1 );
+	}
+
+	@include mvs-respond-map( "_", $model );
+
+	#{ $prefix }__#{ "container" } {
+		@include mvs-respond-map( "container_", $model );
+
+		&:before {
+			@include mvs-respond-map( "breakpoints-indicator_", $model );
+		}
+	}
+
+	@content;
+}
