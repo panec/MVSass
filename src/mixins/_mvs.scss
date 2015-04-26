@@ -78,7 +78,7 @@
 			@if ( str-index-last( $property, "_" ) == false ) {
 				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
 				@if mixin-exists( $property ) {
-					@debug $property this is a supported mixin;
+					@debug $property is a supported mixin;
 					@include -mvs-respond-mixins( $property, $value );
 				}
 				@else {

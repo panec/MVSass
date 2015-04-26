@@ -1,3 +1,16 @@
+@import "variables";
+
+// List syntax
 $component-box-model_ver1: (
 	_width: ( null, 100%, 80%, 60%, 40% ),
+);
+// Map syntax
+$component-box-model_ver1_m: (
+	_width: (
+		xxs : null,
+		xs  : 100%,
+		sm  : 80%,
+		md  : 60%,
+		lg  : 40%,
+	),
 );

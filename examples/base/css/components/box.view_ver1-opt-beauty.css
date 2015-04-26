@@ -1,23 +1,27 @@
-@media (min-width: 480px) {
-	.c-box-ver1 {
+@media (min-width: 420px) {
+	.c-box-ver1,
+	.c-box-ver1_m {
 		width: 100%
 	}
 }
 
-@media (min-width: 768px) {
-	.c-box-ver1 {
+@media (min-width: 620px) {
+	.c-box-ver1,
+	.c-box-ver1_m {
 		width: 80%
 	}
 }
 
-@media (min-width: 992px) {
-	.c-box-ver1 {
+@media (min-width: 820px) {
+	.c-box-ver1,
+	.c-box-ver1_m {
 		width: 60%
 	}
 }
 
-@media (min-width: 1200px) {
-	.c-box-ver1 {
+@media (min-width: 1020px) {
+	.c-box-ver1,
+	.c-box-ver1_m {
 		width: 40%
 	}
 }

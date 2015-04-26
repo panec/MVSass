@@ -2,3 +2,4 @@
 @import "box.model_ver1";
 
 @include component-box( $component-box-model_ver1, $mod: "ver1" );
+@include component-box( $component-box-model_ver1_m, $mod: "ver1_m" );

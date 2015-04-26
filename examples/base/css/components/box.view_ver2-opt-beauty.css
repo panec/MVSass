@@ -1,30 +1,38 @@
 .c-box-ver2 .c-box__body {
-	background: #F5F2F0
+	background: #ccbdb3
 }
 
-@media (min-width: 480px) {
-	.c-box-ver2 {
-		width: 100%
-	}
-	.c-box-ver2 .c-box__body {
-		background: red
+@media (min-width: 0) {
+	.c-box-ver2_m .c-box__body,
+	.c-box-ver2_1_m .c-box__body {
+		background: #ccbdb3
 	}
 }
 
-@media (min-width: 768px) {
-	.c-box-ver2 {
-		width: 80%
+@media (min-width: 420px) {
+	.c-box-ver2_m .c-box__body {
+		background: #ccbdb3
 	}
 }
 
-@media (min-width: 992px) {
-	.c-box-ver2 {
-		width: 60%
+@media (min-width: 620px) {
+	.c-box-ver2 .c-box__body,
+	.c-box-ver2_m .c-box__body,
+	.c-box-ver2_1_m .c-box__body {
+		background: #a38876
 	}
 }
 
-@media (min-width: 1200px) {
-	.c-box-ver2 {
-		width: 40%
+@media (min-width: 820px) {
+	.c-box-ver2_m .c-box__body {
+		background: #a38876
+	}
+}
+
+@media (min-width: 1020px) {
+	.c-box-ver2 .c-box__body,
+	.c-box-ver2_m .c-box__body,
+	.c-box-ver2_1_m .c-box__body {
+		background: #6b5648
 	}
 }

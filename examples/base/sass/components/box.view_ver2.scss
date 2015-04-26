@@ -2,3 +2,5 @@
 @import "box.model_ver2";
 
 @include component-box( $component-box-model_ver2, $mod: "ver2" );
+@include component-box( $component-box-model_ver2_m, $mod: "ver2_m" );
+@include component-box( $component-box-model_ver2_1_m, $mod: "ver2_1_m" );

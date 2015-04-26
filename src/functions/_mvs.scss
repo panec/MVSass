@@ -245,6 +245,7 @@
 //TODO Add example calls and description
 @function mvs-value-position( $value ) {
 	$mediaTypes            : "all" "aural" "braille" "embossed" "handheld" "print" "projection" "screen" "tty" "tv" "only aural" "only braille" "only embossed" "only handheld" "only print" "only projection" "only screen" "only tty" "only tv";
+	$js                    : ".js" ".no-js";
 	$modernizr             : ".applicationcache" ".audio" ".backgroundsize" ".borderimage" ".borderradius" ".boxshadow" ".canvas" ".canvastext" ".cssanimations" ".csscolumns" ".cssgradients" ".cssreflections" ".csstransforms" ".csstransforms3d" ".csstransitions" ".draganddrop" ".flexbox" ".flexboxlegacy" ".fontface" ".generatedcontent" ".geolocation" ".hashchange" ".history" ".hsla" ".indexedDB" ".inlinesvg" ".localstorage" ".multiplebgs" ".opacity" ".postmessage" ".rgba" ".sessionstorage" ".smil" ".svg" ".svgclippaths" ".textshadow" ".touch" ".video" ".webgl" ".websockets" ".websqldatabase" ".webworkers" ".no-applicationcache" ".no-audio" ".no-backgroundsize" ".no-borderimage" ".no-borderradius" ".no-boxshadow" ".no-canvas" ".no-canvastext" ".no-cssanimations" ".no-csscolumns" ".no-cssgradients" ".no-cssreflections" ".no-csstransforms" ".no-csstransforms3d" ".no-csstransitions" ".no-draganddrop" ".no-flexbox" ".no-flexboxlegacy" ".no-fontface" ".no-generatedcontent" ".no-geolocation" ".no-hashchange" ".no-history" ".no-hsla" ".no-indexedDB" ".no-inlinesvg" ".no-localstorage" ".no-multiplebgs" ".no-opacity" ".no-postmessage" ".no-rgba" ".no-sessionstorage" ".no-smil" ".no-svg" ".no-svgclippaths" ".no-textshadow" ".no-touch" ".no-video" ".no-webgl" ".no-websockets" ".no-websqldatabase" ".no-webworkers";
 	$pseudoClasses         : ":active" ":after" ":before" ":checked" ":disabled" ":empty" ":enabled" ":first-letter" ":first-line" ":focus" ":hover" ":in-range" ":invalid" ":lang(language)" ":link" ":not(selector)" ":optional" ":out-of-range" ":read-only" ":read-write" ":required" ":root" ":selection" ":target" ":valid" ":visited" "::after" "::before" "::first-letter" "::first-line" ":selection";
 	$pseudoClassesList     : ":first-child" ":first-of-type" ":last-child" ":last-of-type" ":nth-child" ":nth-last-child" ":nth-last-of-type" ":nth-of-type" ":only-child" ":only-of-type";
@@ -254,6 +255,9 @@
 	}
 	@else if is( $value, $mediaTypes ) {
 		@return 5; //media type
+	}
+	@else if is( $value, $js ) {
+		@return 1; //body of the page
 	}
 	@else if is( $value, $modernizr ) {
 		@return 1; //body of the page

@@ -1,3 +1,14 @@
+@import "compass";
+@import "variables";
+//TODO: Does not generates @media (min-width: ) {} blocks
 $component-box-model_ver8: (
-
+	body_ellipsis: ( null, true, false, null ),
+);
+//TODO: Does not generates @media (min-width: ) {} blocks
+$component-box-model_ver8_m: (
+	body_ellipsis: (
+		xxs : false,
+		xs  : false,
+		sm  : null,
+	),
 );

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="js">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,356 +28,275 @@
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 	<div class="page-index__container">
-		<!-- Box version 0 -->
-		<figure>
+		<!-- Variables -->
+		<figure id="variables">
 			<figcaption>
-				Box version 0
+				<h2>Variables</h2>
+				<p>
+					Settings used in following examples for setting up behaviour of the container in relation to viewport width & some basic global variables.
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/_variables.scss"></pre>
+		</figure>
+
+		<!-- Box version 0 -->
+		<figure id="box_ver0">
+			<figcaption>
+				<h2>Box version 0</h2>
+				<p>
+					Default markup and styling for <code>box</code> component.
+				</p>
+			</figcaption>
+
+			<pre><code class="language-markup">
+				&lt;div class=&quot;c-box&quot;&gt;
+					&lt;span class=&quot;c-box__img-container&quot;&gt;
+						&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/500x125/f5f2f0/00000.jpg&quot;&gt;
+					&lt;/span&gt;
+					&lt;div class=&quot;c-box__body&quot;&gt;
+						Box body
+					&lt;/div&gt;
+				&lt;/div&gt;
+			</code></pre>
+
+			<pre data-src="../base/sass/components/_box.model_ver0.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver0.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver0-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-				<pre><code class="language-markup">
-					&lt;div class=&quot;c-box&quot;&gt;
-						&lt;span class=&quot;c-box__img-container&quot;&gt;
-							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
-						&lt;/span&gt;
-						&lt;div class=&quot;c-box__body&quot;&gt;
-							Box body
-						&lt;/div&gt;
-					&lt;/div&gt;
-				</code></pre>
-
-				<pre data-src="../base/sass/components/_box.model_ver0.scss"></pre>
-				<pre data-src="../base/sass/components/box.view_ver0.scss"></pre>
-				<pre data-src="../base/css/components/box.view_ver0.css"></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 1 -->
-		<figure>
+		<figure id="box_ver1">
 			<figcaption>
-				Box version 1
+				<h2>Box version 1</h2>
+				<p>
+					Version of <code>box</code> component with custom class of <code>class="c-box-ver1"</code> that applies sizing rules on specific breakpoints.
+				</p>
 			</figcaption>
+
+			<pre><code class="language-markup">
+				&lt;div class=&quot;c-box-ver1&quot;&gt;
+					&lt;span class=&quot;c-box__img-container&quot;&gt;
+						&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/500x125/f5f2f0/00000.jpg&quot;&gt;
+					&lt;/span&gt;
+					&lt;div class=&quot;c-box__body&quot;&gt;
+						Box body
+					&lt;/div&gt;
+				&lt;/div&gt;
+			</code></pre>
+
+			<pre data-src="../base/sass/components/_box.model_ver1.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver1.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver1-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver1">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-				<pre><code class="language-markup">
-					&lt;div class=&quot;c-box-ver1&quot;&gt;
-						&lt;span class=&quot;c-box__img-container&quot;&gt;
-							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
-						&lt;/span&gt;
-						&lt;div class=&quot;c-box__body&quot;&gt;
-							Box body
-						&lt;/div&gt;
-					&lt;/div&gt;
-				</code></pre>
-				<p>Only difference is in line 1 <code class="language-markup">class="c-box-ver1"</code></p>
-				<pre data-src="../base/sass/components/_box.model_ver1.scss"></pre>
-				<pre data-src="../base/sass/components/box.view_ver1.scss"></pre>
-				<pre data-src="../base/css/components/box.view_ver1.css"></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 2 -->
-		<figure>
+		<figure id="box_ver2">
 			<figcaption>
-				Box version 2
+				<h2>Box version 2</h2>
+				<p>
+					MVSass generates code in mobile first fasion with open ranges and optizes code by automatically removing unnecesary code for each breakpoint for each variable.
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/components/_box.model_ver2.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver2.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver2-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver2">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-				<pre><code class="language-markup">
-					&lt;div class=&quot;c-box-ver1&quot;&gt;
-						&lt;span class=&quot;c-box__img-container&quot;&gt;
-							&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/100x100/f5f2f0/00000.jpg&quot;&gt;
-						&lt;/span&gt;
-						&lt;div class=&quot;c-box__body&quot;&gt;
-							Box body
-						&lt;/div&gt;
-					&lt;/div&gt;
-				</code></pre>
-
-				<pre><code class="language-scss">
-					$component-box-model_ver1: (
-						_width: ( null, 100%, 80%, 60%, 40% )
-					);
-
-					@include component-box( $component-box-model_ver1, $mod: "ver1" );
-				</code></pre>
-				<pre><code class="language-css">
-					@media (min-width: 480px) {
-						.c-box-ver1 {
-							width: 100%
-						}
-					}
-
-					@media (min-width: 768px) {
-						.c-box-ver1 {
-							width: 80%
-						}
-					}
-
-					@media (min-width: 992px) {
-						.c-box-ver1 {
-							width: 60%
-						}
-					}
-
-					@media (min-width: 1200px) {
-						.c-box-ver1 {
-							width: 40%
-						}
-					}
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 3 -->
-		<figure>
+		<figure id="box_ver3">
 			<figcaption>
-				Box version 3
+				<h2>Box version 3</h2>
+				<p>
+					MVSass when generating code against the same mixin but initialised with <code>$isInitial: true</code> will ommit fields with the same values on each of the breakpoints.
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/components/_box.model_ver3.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver3.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver3-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver3">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 4 -->
-		<figure>
+		<figure id="box_ver4">
 			<figcaption>
-				Box version 4
+				<h2>Box version 4</h2>
+				<p>
+					MVsass supports automatically injecting css classes of Modernizr and other popular UI testing frameworks that decorate <code>HTML</code> element with classes.
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/components/_box.model_ver4.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver4.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver4-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver4">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 5 -->
-		<figure>
+		<figure id="box_ver5">
 			<figcaption>
-				Box version 5
+				<h2>Box version 5</h2>
+				<p>
+					MVSass supports automatically injecting pseuso selectors for each variable
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/components/_box.model_ver5.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver5.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver5-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver5">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 6 -->
-		<figure>
+		<figure id="box_ver6">
 			<figcaption>
-				Box version 6
+				<h2>Box version 6</h2>
+				<p>
+					MVSass supports automatically injecting modifiers class or attribues selectors for each variable on root element of component.
+				</p>
 			</figcaption>
 
+			<pre><code class="language-markup">
+				&lt;div class=&quot;c-box&quot; data-mod--mod_key=&quot;mod_value&quot;&gt;
+					&lt;span class=&quot;c-box__img-container&quot;&gt;
+						&lt;img class=&quot;c-box__img&quot; src=&quot;http://dummyimage.com/500x125/f5f2f0/00000.jpg&quot;&gt;
+					&lt;/span&gt;
+					&lt;div class=&quot;c-box__body&quot;&gt;
+						Box body
+					&lt;/div&gt;
+				&lt;/div&gt;
+			</code></pre>
+
+			<pre data-src="../base/sass/components/_box.model_ver6.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver6.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver6-opt-beauty.css"></pre>
+
 			<div class="page-index__sample">
-				<div class="c-box-ver6">
+				<div class="c-box-ver6" data-mod--mod_key="mod_value">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 7 -->
-		<figure>
+		<figure id="box_ver7">
 			<figcaption>
-				Box version 7
+				<h2>Box version 7</h2>
+				<p>
+					MVSass supports automatically injecting elements from Box examples 4, 5, & 6 at the same time, with support of multiple combinations.
+				</p>
 			</figcaption>
 
+			<pre data-src="../base/sass/components/_box.model_ver7.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver7.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver7-opt-beauty.css"></pre>
+
 			<div class="page-index__sample">
-				<div class="c-box-ver7">
+				<div class="c-box-ver7" data-mod--mod_key="mod_value">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
 						Box body
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
+
 		<!-- Box version 8 -->
-		<figure>
+		<figure id="box_ver8">
 			<figcaption>
-				Box version 8
+				<h2>Box version 8</h2>
+				<p>
+					MVSass supports injecting supported mixins in parameters
+				</p>
 			</figcaption>
+
+			<pre data-src="../base/sass/components/_box.model_ver8.scss"></pre>
+			<pre data-src="../base/sass/components/box.view_ver8.scss"></pre>
+			<pre data-src="../base/css/components/box.view_ver8-opt-beauty.css"></pre>
 
 			<div class="page-index__sample">
 				<div class="c-box-ver8">
 					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
+						<img class="c-box__img" src="http://dummyimage.com/500x125/f5f2f0/00000.jpg">
 					</span>
 					<div class="c-box__body">
-						Box body
+						Box body - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tellus lectus, dapibus eu felis eu, facilisis sodales nisi.
 					</div>
 				</div>
 			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
 		</figure>
-		<!-- Box version 9 -->
-		<figure>
-			<figcaption>
-				Box version 9
-			</figcaption>
-
-			<div class="page-index__sample">
-				<div class="c-box-ver9">
-					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
-					</span>
-					<div class="c-box__body">
-						Box body
-					</div>
-				</div>
-			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
-		</figure>
-
-		<!-- Box version 10 -->
-		<figure>
-			<figcaption>
-				Box version 10
-			</figcaption>
-
-			<div class="page-index__sample">
-				<div class="c-box-ver10">
-					<span class="c-box__img-container">
-						<img class="c-box__img" src="http://dummyimage.com/100x100/f5f2f0/00000.jpg">
-					</span>
-					<div class="c-box__body">
-						Box body
-					</div>
-				</div>
-			</div>
-			<details>
-				<summary>Markup, sass & css - click to expand</summary>
-
-				<pre><code class="language-scss">
-
-				</code></pre>
-				<pre><code class="language-css">
-
-				</code></pre>
-			</details>
-		</figure>
-
 	</div>
 	<script type="text/javascript">
 		[].forEach.call(document.querySelectorAll('code'), function($code) {

@@ -1,3 +1,15 @@
-$component-box-model_ver4: (
+@import "variables";
 
+$component-box-model_ver4: (
+	body_background : ( ".js", lighten( $default-color, 20% ), lighten( $default-color, 20% ), lighten( $default-color, 40% ) ),
 );
+//TODO: Generates obsolete: @media (min-width: 0) {}
+$component-box-model_ver4_m: (
+	body_background : (
+		".js", (
+			xxs : $default-color,
+			sm  : lighten( $default-color, 40% ),
+		),
+	),
+);
+

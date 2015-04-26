@@ -1,4 +1,4 @@
-$component-box-model: ();
+$component-box-model: () !global;
 
 @mixin component-box( $model: $component-box-model, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
 	@if $isInitial {
@@ -30,18 +30,18 @@ $component-box-model: ();
 		$staticPrefix: nth( mvs-parent(), -1 );
 	}
 
-	@include mvs-respond-map( "_", $model );
+	@include mvs-respond-map( "_", $model, "", 0 );
 
 	#{ $prefix }__#{ "img-container" } {
-		@include mvs-respond-map( "img-container_", $model );
+		@include mvs-respond-map( "img-container_", $model, "", 1 );
 	}
 
 	#{ $prefix }__#{ "img" } {
-		@include mvs-respond-map( "img_", $model );
+		@include mvs-respond-map( "img_", $model, "", 1 );
 	}
 
 	#{ $prefix }__#{ "body" } {
-		@include mvs-respond-map( "body_", $model );
+		@include mvs-respond-map( "body_", $model, "", 1 );
 	}
 
 	@content;

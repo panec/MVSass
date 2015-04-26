@@ -1,7 +1,9 @@
+@import "variables";
+
 $component-box-model_ver0: (
 	img-container_display : block,
 
 	img_width             : 100%,
 
-	body_background       : #F5F2F0,
+	body_background       : $default-color,
 );

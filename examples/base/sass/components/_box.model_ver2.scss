@@ -1,5 +1,23 @@
-$component-box-model_ver2: (
-	_width: ( null, 100%, 80%, 60%, 40% ),
+@import "variables";
 
-	body_background: ( #F5F2F0, #FF0000, #FF0000, #FF0000, #FF0000 )
+$component-box-model_ver2: (
+	body_background: ( darken( $default-color, 20% ), darken( $default-color, 20% ), darken( $default-color, 40% ), darken( $default-color, 40% ), darken( $default-color, 60% ) )
+);
+
+$component-box-model_ver2_m: (
+	body_background: (
+		xxs : darken( $default-color, 20% ),
+		xs  : darken( $default-color, 20% ),
+		sm  : darken( $default-color, 40% ),
+		md  : darken( $default-color, 40% ),
+		lg  : darken( $default-color, 60% ),
+	),
+);
+
+$component-box-model_ver2_1_m: (
+	body_background: (
+		xxs : darken( $default-color, 20% ),
+		sm  : darken( $default-color, 40% ),
+		lg  : darken( $default-color, 60% ),
+	),
 );

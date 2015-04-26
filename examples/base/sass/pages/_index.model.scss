@@ -1,6 +1,8 @@
+@import "variables";
+
 $page-index-model: (
 	container_margin                       : 0 auto,
-	container_width                        : ( auto, auto, 740px, 960px, 1160px ),
+	container_width                        : $screen-containers,
 
 	breakpoints-indicator_display          : block,
 	breakpoints-indicator_position         : fixed,
