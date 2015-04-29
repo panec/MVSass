@@ -3,7 +3,7 @@
 $component-box-model_ver2: (
 	body_background: ( darken( $default-color, 20% ), darken( $default-color, 20% ), darken( $default-color, 40% ), darken( $default-color, 40% ), darken( $default-color, 60% ) )
 );
-
+//TODO: Generates obsolete xs & md - @media (min-width: ...) {} block
 $component-box-model_ver2_m: (
 	body_background: (
 		xxs : darken( $default-color, 20% ),

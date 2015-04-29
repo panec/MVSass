@@ -1,12 +1,7 @@
-.c-box-ver2 .c-box__body {
+.c-box-ver2 .c-box__body,
+.c-box-ver2_m .c-box__body,
+.c-box-ver2_1_m .c-box__body {
 	background: #ccbdb3
-}
-
-@media (min-width: 0) {
-	.c-box-ver2_m .c-box__body,
-	.c-box-ver2_1_m .c-box__body {
-		background: #ccbdb3
-	}
 }
 
 @media (min-width: 420px) {

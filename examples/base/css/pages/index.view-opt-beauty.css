@@ -1,5 +1,6 @@
 .page-index__container {
-	margin: 0 auto
+	margin: 0 auto;
+	width: auto
 }
 
 .page-index__container:before {
@@ -34,9 +35,12 @@
 	text-shadow: none
 }
 
-@media (min-width: 0) {
-	.page-index__container {
-		width: auto
+@media -sass-debug-info {
+	filename {
+		font-family: file\: \/\/C\: \/Users\/Maciej\/Documents\/GitHub\/MVSass\/examples\/base\/sass\/pages\/index\.view\.scss
+	}
+	line {
+		font-family: \000035
 	}
 }
 

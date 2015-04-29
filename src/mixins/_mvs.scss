@@ -44,18 +44,20 @@
 // 	$property (Sass::Script::Value::String)
 // 	$value (Sass::Script::Value::Base)
 @mixin -mvs-respond-mixins( $property, $value ) {
-	$mvsRespondMixinsGenerated: false !global;
+	@if $value != null {
+		$mvsRespondMixinsGenerated: false !global;
 
-	@if $mvsRespondMixinsGenerated == false and mixin-exists( "mvs-respond-custom" ) {
-		@include mvs-respond-custom( $property, $value );
-	}
+		@if $mvsRespondMixinsGenerated == false and mixin-exists( "mvs-respond-custom" ) {
+			@include mvs-respond-custom( $property, $value );
+		}
 
-	@if $mvsRespondMixinsGenerated == false {
-		@include -mvs-respond-compass( $property, $value );
-	}
+		@if $mvsRespondMixinsGenerated == false {
+			@include -mvs-respond-compass( $property, $value );
+		}
 
-	@if $mvsRespondMixinsGenerated == false {
-		#{$property}: $value;
+		@if $mvsRespondMixinsGenerated == false {
+			#{$property}: $value;
+		}
 	}
 }
 
@@ -77,13 +79,14 @@
 			$property: str-slice( $key, $elementPrefixLength + 1 );
 			@if ( str-index-last( $property, "_" ) == false ) {
 				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
-				@if mixin-exists( $property ) {
-					@debug $property is a supported mixin;
-					@include -mvs-respond-mixins( $property, $value );
-				}
-				@else {
+				// TODO Add support for custom-mixins
+				// @if mixin-exists( $property ) {
+				// 	@debug $property is a supported mixin;
+				// 	@include -mvs-respond-mixins( $property, $value );
+				// }
+				// @else {
 					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
-				}
+				// }
 			}
 		}
 	}
@@ -99,8 +102,12 @@
 		@include -mvs-respond-mixins( $property, $values );
 	}
 	@else {
+		@debug "VALUES " $values;
+
 		$values                : mvs-normalize-value( $values );
 		$screenBreakpointsKeys : join( "initial", map-keys( $screen-breakpoints ) );
+
+		@debug "VALUES NORMALIZED " $values;
 
 		@each $value in $values {
 			// 1 - at body value
@@ -150,9 +157,9 @@
 		@debug "Due limitation of interpolation in SASS at @media only single value are supported for $mediaType but was `#{$mediaType}`";
 	}
 
-	@if $breakpoint == "initial" {
+	@if $breakpoint == "initial" or $breakpoint == nth( map-keys( $screen-breakpoints ), 1 ) {
 		@if $mediaType == null or $mediaType == "" {
-			 @content;
+			@content;
 		}
 		@else {
 			@media #{ $mediaType } { @content; }

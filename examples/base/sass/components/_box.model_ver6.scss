@@ -3,7 +3,7 @@
 $component-box-model_ver6: (
 	body_background : ( ( "mod_key": "mod_value" ), mix( $default-color, #ff0000, 20% ) ),
 );
-//TODO: Generates obsolete: @media (min-width: 0) {}
+
 $component-box-model_ver6_m: (
 	body_background : (
 		( "mod_key": "mod_value" ), (

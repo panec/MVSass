@@ -8,9 +8,8 @@
 
 .c-box-ver3_m .c-box__img {
   width: 100%; }
-@media (min-width: 0px) {
-  .c-box-ver3_m .c-box__body {
-    background: #f5f2f0; } }
+.c-box-ver3_m .c-box__body {
+  background: #f5f2f0; }
 @media (min-width: 620px) {
   .c-box-ver3_m .c-box__body {
     background: #ccbdb3; } }

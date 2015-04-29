@@ -146,7 +146,9 @@
 	@return $result;
 }
 
-//TODO Add example calls and description
+// TODO Add example calls and description
+// TODO Add logic for optimising maps
+// TODO Remove "initial" from code base
 @function mvs-normalize-value( $value ) {
 	$resultList            : ();
 	$screenBreakpointsKeys : map-keys( $screen-breakpoints );

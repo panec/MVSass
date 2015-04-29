@@ -1,15 +1,8 @@
-.c-box-ver5 .c-box__img-container:before {
+.c-box-ver5 .c-box__img-container:before,
+.c-box-ver5_m .c-box__img-container:before {
 	content: "xxs";
 	position: absolute;
 	margin: 5px
-}
-
-@media (min-width: 0) {
-	.c-box-ver5_m .c-box__img-container:before {
-		content: "xxs";
-		position: absolute;
-		margin: 5px
-	}
 }
 
 @media (min-width: 420px) {

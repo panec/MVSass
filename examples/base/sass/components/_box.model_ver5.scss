@@ -6,7 +6,7 @@ $component-box-model_ver5: (
 	img-container_position : ( ":before", absolute ),
 	img-container_margin   : ( ":before", 5px ),
 );
-//TODO: Generates obsolete: @media (min-width: 0) {}
+
 $component-box-model_ver5_m: (
 	img-container_content : (
 		":before", (

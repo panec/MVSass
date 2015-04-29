@@ -1,3 +1,5 @@
+$core-model-list: () !global;
+
 @mixin component-list( $model-list: $core-model-list, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
 	@if $isInitial {
 		$model-list: map-overwrite( $core-model-list, $model-list );

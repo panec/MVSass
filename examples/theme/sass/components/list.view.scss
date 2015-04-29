@@ -1,77 +1,78 @@
-@import "../../ref";
+@import "ref.controlers";
+@import "list.model";
 
 .syntax_final {
-	@include list( $theme-model-list-component_syntax_final );
+	@include component-list( $theme-model-list-component_syntax_final );
 }
 
 // .syntax_base {
-// 	@include list( $theme-model-list-component_syntax_base );
+// 	@include component-list( $theme-model-list-component_syntax_base );
 // }
 
 // .syntax_base_list {
-// 	@include list( $theme-model-list-component_syntax_base_list );
+// 	@include component-list( $theme-model-list-component_syntax_base_list );
 // }
 
 // .syntax_base_map {
-// 	@include list( $theme-model-list-component_syntax_base_map );
+// 	@include component-list( $theme-model-list-component_syntax_base_map );
 // }
 
 // .syntax_base_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr );
+// 	@include component-list( $theme-model-list-component_syntax_base_modernizr );
 // }
 
 // .syntax_base_list_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr );
+// 	@include component-list( $theme-model-list-component_syntax_base_list_modernizr );
 // }
 
 // .syntax_base_map_modernizr_single {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_single );
+// 	@include component-list( $theme-model-list-component_syntax_base_map_modernizr_single );
 // }
 
 // .syntax_base_map_modernizr {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr );
+// 	@include component-list( $theme-model-list-component_syntax_base_map_modernizr );
 // }
 
 // .syntax_base_modernizr_nth {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth );
+// 	@include component-list( $theme-model-list-component_syntax_base_modernizr_nth );
 // }
 
 // .syntax_base_list_modernizr_nth_multi {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
+// 	@include component-list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
 // }
 
 // .syntax_base_map_modernizr_nth {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth );
+// 	@include component-list( $theme-model-list-component_syntax_base_map_modernizr_nth );
 // }
 
 // .syntax_base_modernizr_nth_multi {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth_multi );
+// 	@include component-list( $theme-model-list-component_syntax_base_modernizr_nth_multi );
 // }
 
 // .syntax_base_list_modernizr_nth_multi {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
+// 	@include component-list( $theme-model-list-component_syntax_base_list_modernizr_nth_multi );
 // }
 
 // .syntax_base_modernizr_nth_pseudo {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo );
+// 	@include component-list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo );
 // }
 
 // .syntax_base_list_modernizr_nth_pseudo {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo );
+// 	@include component-list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo );
 // }
 
 // .syntax_base_map_modernizr_nth_pseudo {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo );
+// 	@include component-list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo );
 // }
 
 // .syntax_base_modernizr_nth_pseudo_mod {
-// 	@include list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod );
+// 	@include component-list( $theme-model-list-component_syntax_base_modernizr_nth_pseudo_mod );
 // }
 
 // .syntax_base_list_modernizr_nth_pseudo_mod {
-// 	@include list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
+// 	@include component-list( $theme-model-list-component_syntax_base_list_modernizr_nth_pseudo_mod );
 // }
 
 // .syntax_base_map_modernizr_nth_pseudo_mod {
-// 	@include list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod );
+// 	@include component-list( $theme-model-list-component_syntax_base_map_modernizr_nth_pseudo_mod );
 // }

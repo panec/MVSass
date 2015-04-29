@@ -1,9 +1,9 @@
 @import "variables";
 
 $component-box-model_ver4: (
-	body_background : ( ".js", lighten( $default-color, 20% ), lighten( $default-color, 20% ), lighten( $default-color, 40% ) ),
+	body_background : ( ".js", $default-color, $default-color, lighten( $default-color, 40% ) ),
 );
-//TODO: Generates obsolete: @media (min-width: 0) {}
+
 $component-box-model_ver4_m: (
 	body_background : (
 		".js", (

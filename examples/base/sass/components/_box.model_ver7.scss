@@ -7,7 +7,7 @@ $component-box-model_ver7: (
 		( ".js", ":hover", ( "mod_key": "mod_value" ), mix( $default-color, #ff0000, 80% ),  mix( $default-color, #ff0000, 100% ) ),
 	),
 );
-//TODO: Generates obsolete: @media (min-width: 0) {}
+
 $component-box-model_ver7_m: (
 	body_background : (
 		(
