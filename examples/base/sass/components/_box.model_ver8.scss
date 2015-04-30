@@ -14,3 +14,22 @@ $component-box-model_ver8_m: (
 		lg  : null
 	),
 );
+
+// Brand new approach
+$component-box-model_ver8: (
+	body_: (
+		ellipsis: ( null, true, false, false, null ),
+	)
+);
+//TODO: Generates obsolete md - @media (min-width: 820px) {} block
+$component-box-model_ver8_m: (
+	body_: (
+		ellipsis: (
+			xxs : null,
+			xs  : true,
+			sm  : false,
+			md  : false,
+			lg  : null
+		),
+	)
+);

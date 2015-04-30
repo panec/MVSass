@@ -7,3 +7,19 @@ $component-box-model_ver0: (
 
 	body_background       : $default-color,
 );
+
+
+// Brand new approach
+$component-box-model_ver0: (
+	img-container: (
+		display: block,
+	)
+
+	img_: (
+		width: 100%,
+	)
+
+	body_: (
+		background: $default-color,
+	)
+);

@@ -11,3 +11,26 @@ $component-box-model_ver6_m: (
 		),
 	),
 );
+
+// Brand new approach
+$component-box-model_ver6: (
+	body_: (
+		background:
+		(
+			( "mod_key": "mod_value" ),
+			mix( $default-color, #ff0000, 20% )
+		),
+	),
+);
+
+$component-box-model_ver6_m: (
+	body_: (
+		background:
+		(
+			( "mod_key": "mod_value" ),
+			(
+				xxs: mix( $default-color, #ff0000, 20% ),
+			),
+		),
+	),
+);
