@@ -1,29 +1,14 @@
 @import "compass";
-@import "variables";
+@import "../variables";
 
 $component-box-model_ver8: (
-	body_ellipsis: ( null, true, false, false, null ),
-);
-//TODO: Generates obsolete md - @media (min-width: 820px) {} block
-$component-box-model_ver8_m: (
-	body_ellipsis: (
-		xxs : null,
-		xs  : true,
-		sm  : false,
-		md  : false,
-		lg  : null
-	),
-);
-
-// Brand new approach
-$component-box-model_ver8: (
-	body_: (
+	_body: (
 		ellipsis: ( null, true, false, false, null ),
 	)
 );
 //TODO: Generates obsolete md - @media (min-width: 820px) {} block
 $component-box-model_ver8_m: (
-	body_: (
+	_body: (
 		ellipsis: (
 			xxs : null,
 			xs  : true,

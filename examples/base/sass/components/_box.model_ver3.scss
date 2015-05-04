@@ -1,15 +1,23 @@
-@import "variables";
+@import "../variables";
 
-//TODO: Generates obsolete: .c-box__img { width: 100% }
+//TODO: Generates obsolete: .c-box__img { width: 100% } because was defined in ver_0
 $component-box-model_ver3: (
-	img_width       : 100%,
-	body_background : ( $default-color, $default-color, darken( $default-color, 20% ) ),
+	_img: (
+		width: 100%,
+	),
+	_body: (
+		background: ( $default-color, $default-color, darken( $default-color, 20% ) ),
+	),
 );
-//TODO: Generates obsolete: .c-box__img { width: 100% }
+//TODO: Generates obsolete: .c-box__img { width: 100% } because was defined in ver_0
 $component-box-model_ver3_m: (
-	img_width       : 100%,
-	body_background : (
-		xxs : $default-color,
-		sm  : darken( $default-color, 20% ),
+	_img: (
+		width: 100%,
+	),
+	_body: (
+		background: (
+			xxs: $default-color,
+			sm : darken( $default-color, 20% ),
+		),
 	),
 );

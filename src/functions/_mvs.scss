@@ -131,7 +131,7 @@
 	@else if type-of( $mod ) == "map" {
 		@each $key, $value in $mod {
 			@if ( $modType == "data" ) {
-			    $prefix: if( str-slice( $prefix, 1, 1 ) == ".", str-slice( $prefix, 2 ), $prefix );
+				$prefix: if( str-slice( $prefix, 1, 1 ) == ".", str-slice( $prefix, 2 ), $prefix );
 				$result: $result + "[data-#{$prefix}--#{$key}='#{$value}']";
 			}
 			@else if ( $modType == "class" ) {
@@ -147,14 +147,12 @@
 }
 
 // TODO Add example calls and description
-// TODO Add logic for optimising maps
-// TODO Remove "initial" from code base
 @function mvs-normalize-value( $value ) {
 	$resultList            : ();
-	$screenBreakpointsKeys : map-keys( $screen-breakpoints );
+	$screenBreakpointsKeys : map-keys( $mvs-screenBreakpoints );
 
 	@if type-of( $value ) != "map" and type-of( $value ) != "list" {
-		$resultList: append( $resultList, ( "initial": $value ) );
+		$resultList: append( $resultList, ( nth( $screenBreakpointsKeys, 1 ): $value ) );
 	}
 
 	@else if type-of( $value ) == "map" {
@@ -162,7 +160,7 @@
 	}
 
 	@else if type-of( $value ) == "list" and list-separator( $value ) == "space" {
-		$resultList: append( $resultList, ( "initial": $value ) );
+		$resultList: append( $resultList, ( nth( $screenBreakpointsKeys, 1 ): $value ) );
 	}
 
 	@else if type-of( $value ) == "list" and list-separator( $value ) == "comma" {
@@ -212,16 +210,19 @@
 				}
 			}
 			@else {
-				@if $screenBreakpointsKeysIndex == 1 {
-					$tempValue: $subValue;
-					$map: map-merge( $map, ( "initial": $subValue ) );
-				}
-				@else {
-					@if $tempValue != $subValue {
-						$tempValue: $subValue;
-						$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
-					}
-				}
+				// @if $screenBreakpointsKeysIndex == 1 {
+				// 	$tempValue: $subValue;
+				// 	$map: map-merge( $map, ( nth( $screenBreakpointsKeys, 1 ): $subValue ) );
+				// }
+				// @else {
+				// 	@if $tempValue != $subValue {
+				// 		$tempValue: $subValue;
+				// 		$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
+				// 	}
+				// }
+				// $screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
+
+				$map: map-merge( $map, ( nth( $screenBreakpointsKeys, $screenBreakpointsKeysIndex ): $subValue ) );
 				$screenBreakpointsKeysIndex: $screenBreakpointsKeysIndex + 1;
 			}
 		}
@@ -230,6 +231,58 @@
 		@if length( $map ) > 0 {
 			$resultList: append( $resultList, map-merge( $map, $tempMap ) );
 		}
+	}
+
+	@return $resultList;
+}
+
+@function mvs-optimize-value( $value ) {
+	$resultList                 : ();
+	$screenBreakpointsKeys      : map-keys( $mvs-screenBreakpoints );
+	$screenBreakpointsKeysIndex : 1;
+
+	@each $mvsMap in $value {
+		$tempValue : ();
+		$tempMap   : ();
+
+		$subValue: map-get( $mvsMap, "_1" );
+		$tempMap: map-merge( $tempMap, ( "_1": $subValue ) );
+
+		$subValue: map-get( $mvsMap, "_2" );
+		$tempMap: map-merge( $tempMap, ( "_2": $subValue ) );
+
+		$subValue: map-get( $mvsMap, "_3" );
+		$tempMap: map-merge( $tempMap, ( "_3": $subValue ) );
+
+		$subValue: map-get( $mvsMap, "_4" );
+		$tempMap: map-merge( $tempMap, ( "_4": $subValue ) );
+
+		$subValue: map-get( $mvsMap, "_5" );
+		$tempMap: map-merge( $tempMap, ( "_5": $subValue ) );
+
+		@for $i from 1 through length( $screenBreakpointsKeys ) {
+			$subValue: map-get( $mvsMap, nth( $screenBreakpointsKeys, $i ) );
+
+			@if $i == 1 {
+				$tempValue: $subValue;
+				$tempMap: map-merge( $tempMap, ( nth( $screenBreakpointsKeys, $i ): $subValue ) );
+			}
+			@else if $tempValue != $subValue {
+				$tempValue: $subValue;
+				$tempMap: map-merge( $tempMap, ( nth( $screenBreakpointsKeys, $i ): $subValue ) );
+			}
+		}
+
+		// TODO Add support for nth syntax
+		// It is not a map with nth values
+		// @if map-get( $tempMap, "_3" ) == null {
+
+		// }
+		// @else {
+
+		// }
+
+		$resultList: append( $resultList, $tempMap );
 	}
 
 	@return $resultList;
@@ -246,34 +299,27 @@
 // 5 - at media
 //TODO Add example calls and description
 @function mvs-value-position( $value ) {
-	$mediaTypes            : "all" "aural" "braille" "embossed" "handheld" "print" "projection" "screen" "tty" "tv" "only aural" "only braille" "only embossed" "only handheld" "only print" "only projection" "only screen" "only tty" "only tv";
-	$js                    : ".js" ".no-js";
-	$modernizr             : ".applicationcache" ".audio" ".backgroundsize" ".borderimage" ".borderradius" ".boxshadow" ".canvas" ".canvastext" ".cssanimations" ".csscolumns" ".cssgradients" ".cssreflections" ".csstransforms" ".csstransforms3d" ".csstransitions" ".draganddrop" ".flexbox" ".flexboxlegacy" ".fontface" ".generatedcontent" ".geolocation" ".hashchange" ".history" ".hsla" ".indexedDB" ".inlinesvg" ".localstorage" ".multiplebgs" ".opacity" ".postmessage" ".rgba" ".sessionstorage" ".smil" ".svg" ".svgclippaths" ".textshadow" ".touch" ".video" ".webgl" ".websockets" ".websqldatabase" ".webworkers" ".no-applicationcache" ".no-audio" ".no-backgroundsize" ".no-borderimage" ".no-borderradius" ".no-boxshadow" ".no-canvas" ".no-canvastext" ".no-cssanimations" ".no-csscolumns" ".no-cssgradients" ".no-cssreflections" ".no-csstransforms" ".no-csstransforms3d" ".no-csstransitions" ".no-draganddrop" ".no-flexbox" ".no-flexboxlegacy" ".no-fontface" ".no-generatedcontent" ".no-geolocation" ".no-hashchange" ".no-history" ".no-hsla" ".no-indexedDB" ".no-inlinesvg" ".no-localstorage" ".no-multiplebgs" ".no-opacity" ".no-postmessage" ".no-rgba" ".no-sessionstorage" ".no-smil" ".no-svg" ".no-svgclippaths" ".no-textshadow" ".no-touch" ".no-video" ".no-webgl" ".no-websockets" ".no-websqldatabase" ".no-webworkers";
-	$pseudoClasses         : ":active" ":after" ":before" ":checked" ":disabled" ":empty" ":enabled" ":first-letter" ":first-line" ":focus" ":hover" ":in-range" ":invalid" ":lang(language)" ":link" ":not(selector)" ":optional" ":out-of-range" ":read-only" ":read-write" ":required" ":root" ":selection" ":target" ":valid" ":visited" "::after" "::before" "::first-letter" "::first-line" ":selection";
-	$pseudoClassesList     : ":first-child" ":first-of-type" ":last-child" ":last-of-type" ":nth-child" ":nth-last-child" ":nth-last-of-type" ":nth-of-type" ":only-child" ":only-of-type";
-
 	@if type-of( $value ) != "string" and type-of( $value ) != "map" {
 		@return 0; //css value
 	}
-	@else if is( $value, $mediaTypes ) {
+	@else if is( $value, $mvs-cssMediaTypes ) {
 		@return 5; //media type
 	}
-	@else if is( $value, $js ) {
+	@else if is( $value, $mvs-cssModernizrClasses ) {
 		@return 1; //body of the page
 	}
-	@else if is( $value, $modernizr ) {
-		@return 1; //body of the page
-	}
-	@else if is( $value, $pseudoClasses ) {
+	@else if is( $value, $mvs-cssPseudoClasses ) {
 		@return 2; //current element
 	}
 	@else if type-of( $value ) == "map" {
-		$valueKeys : join( "initial", map-keys( $screen-breakpoints ) );
+		$screenBreakpointsKeys : map-keys( $mvs-screenBreakpoints );
+		// TODO Reconsider using nth( $screenBreakpointsKeys, 1 )
+		// $valueKeys : join( nth( $screenBreakpointsKeys, 1 ), map-keys( $mvs-screenBreakpoints ) );
 		$keys      : map-keys( $value );
 
 		@each $key in $keys
 		{
-			@if is( $key, $valueKeys ) {
+			@if is( $key, $screenBreakpointsKeys ) {
 				@return 0; //css value
 			}
 		}
@@ -282,7 +328,7 @@
 	}
 	@else {
 		//Cannot be is() because the "nth-..." syntax is not fixed and has custom value in brackets
-		@each $string in $pseudoClassesList {
+		@each $string in $mvs-cssPseudoClassesNth {
 			@if str-index( $value, $string ) {
 				@return 3; //current element list parent
 			}

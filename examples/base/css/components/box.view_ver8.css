@@ -25,9 +25,3 @@
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis; } }
-@media (min-width: 820px) {
-  .c-box-ver8_m .c-box__body {
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis; } }

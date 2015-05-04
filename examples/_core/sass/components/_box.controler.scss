@@ -31,18 +31,27 @@ $component-box-model: () !global;
 	}
 
 	@include mvs-respond-map( "_", $model, "", 0 );
+	// TODO add support for removing selectors with pseuso selectors
+	// $model: map-remove( $model, "_" );
 
 	#{ $prefix }__#{ "img-container" } {
-		@include mvs-respond-map( "img-container_", $model, "", 1 );
+		@include mvs-respond-map( "_img-container", $model, "", 1 );
+		// $model: map-remove( $model, "_img-container" );
 	}
 
 	#{ $prefix }__#{ "img" } {
-		@include mvs-respond-map( "img_", $model, "", 1 );
+		@include mvs-respond-map( "_img", $model, "", 1 );
+		// $model: map-remove( $model, "_img" );
 	}
 
 	#{ $prefix }__#{ "body" } {
-		@include mvs-respond-map( "body_", $model, "", 1 );
+		@include mvs-respond-map( "_body", $model, "", 1 );
+		// $model: map-remove( $model, "_body" );
 	}
+
+	// @if type-of( $model ) == "map" and length( $model ) > 0 {
+	// 	@debug "List of selectors passed in $model that ware not rendered via controller: `#{ map-keys( $model ) }`";
+	// }
 
 	@content;
 }

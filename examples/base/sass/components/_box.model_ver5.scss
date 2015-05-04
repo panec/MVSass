@@ -1,29 +1,54 @@
-@import "variables";
+@import "../variables";
 
-//TODO: Add support to inject pseudo selectors to parameter name
 $component-box-model_ver5: (
-	img-container_content  : ( ":before", "xxs", "xs", "sm", "md", "lg" ),
-	img-container_position : ( ":before", absolute ),
-	img-container_margin   : ( ":before", 5px ),
+	_img-container: (
+		content  : ( ":before", "xxs", "xs", "sm", "md", "lg" ),
+		position : ( ":before", absolute ),
+		margin   : ( ":before", 5px ),
+	),
+
+	"_img-container::before" : (
+		content  : ( "xxs", "xs", "sm", "md", "lg" ),
+		position : absolute,
+		margin   : 5px,
+	)
 );
 
 $component-box-model_ver5_m: (
-	img-container_content : (
-		":before", (
+	_img-container: (
+		content : (
+			":before", (
+				xxs : "xxs",
+				xs  : "xs",
+				sm  : "sm",
+				md  : "md",
+				lg  : "lg",
+			),
+		),
+		position : (
+			":before", (
+				xxs: absolute,
+			)
+		),
+		margin : (
+			":before", (
+				xxs: 5px,
+			),
+		),
+	),
+
+	"_img-container::before": (
+		content : (
 			xxs : "xxs",
 			xs  : "xs",
 			sm  : "sm",
 			md  : "md",
 			lg  : "lg",
 		),
-	),
-	img-container_position : (
-		":before", (
+		position : (
 			xxs: absolute,
-		)
-	),
-	img-container_margin   : (
-		":before", (
+		),
+		margin : (
 			xxs: 5px,
 		),
 	),

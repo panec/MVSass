@@ -1,25 +1,16 @@
-@import "variables";
+@import "../variables";
 
 $component-box-model_ver0: (
-	img-container_display : block,
-
-	img_width             : 100%,
-
-	body_background       : $default-color,
-);
-
-
-// Brand new approach
-$component-box-model_ver0: (
-	img-container: (
+	_img-container: (
 		display: block,
-	)
+		test: 1
+	),
 
-	img_: (
+	_img: (
 		width: 100%,
-	)
+	),
 
-	body_: (
+	_body: (
 		background: $default-color,
-	)
+	),
 );

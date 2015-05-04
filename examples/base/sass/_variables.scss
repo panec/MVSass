@@ -1,10 +1,10 @@
-$screen-breakpoints: (
-	xxs : 0px,
-	xs  : 420px,
-	sm  : 620px,
-	md  : 820px,
-	lg  : 1020px
-);
+$mvs-screenBreakpoints: (
+	xxs     : 0px,
+	xs      : 420px,
+	sm      : 620px,
+	md      : 820px,
+	lg      : 1020px
+) !global;
 
 $screen-containers: (
 	xxs : auto,

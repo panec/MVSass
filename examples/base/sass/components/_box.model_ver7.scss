@@ -1,34 +1,8 @@
-@import "variables";
+@import "../variables";
 
 $component-box-model_ver7: (
-	body_background : (
-		( mix( $default-color, #ff0000, 20% ), mix( $default-color, #ff0000, 40% ) ),
-		( ":active", ( "mod_key": "mod_value" ), mix( $default-color, #ff0000, 60% ) ),
-		( ".js", ":hover", ( "mod_key": "mod_value" ), mix( $default-color, #ff0000, 80% ),  mix( $default-color, #ff0000, 100% ) ),
-	),
-);
-
-$component-box-model_ver7_m: (
-	body_background : (
-		(
-			xxs : mix( $default-color, #ff0000, 20% ),
-			xs  : mix( $default-color, #ff0000, 40% ),
-		),
-		( ":active", ( "mod_key": "mod_value" ), (
-			xxs : mix( $default-color, #ff0000, 60% ),
-		) ),
-		( ".js", ":hover", ( "mod_key": "mod_value" ), (
-			xxs : mix( $default-color, #ff0000, 80% ),
-			xs  : mix( $default-color, #ff0000, 100% ),
-		) ),
-	),
-);
-
-
-// Brand new approach
-$component-box-model_ver7: (
-	body_: (
-		background : (
+	_body: (
+		background: (
 			(
 				mix( $default-color, #ff0000, 20% ), mix( $default-color, #ff0000, 40% )
 			),
@@ -38,30 +12,69 @@ $component-box-model_ver7: (
 			),
 			(
 				".js", ":hover", ( "mod_key": "mod_value" ),
-				mix( $default-color, #ff0000, 80% ),  mix( $default-color, #ff0000, 100% )
+				mix( $default-color, #ff0000, 80% ), mix( $default-color, #ff0000, 100% )
 			),
 		),
-	)
-);
-//TODO: Generates obsolete md - @media (min-width: 820px) {} block
-$component-box-model_ver7_m: (
-	body_: (
+	),
+	// Or last two properties can be wrote as this
+	"_body:active": (
 		background: (
 			(
-				xxs : mix( $default-color, #ff0000, 20% ),
-				xs  : mix( $default-color, #ff0000, 40% ),
+				( "mod_key": "mod_value" ),
+				mix( $default-color, #ff0000, 60% )
+			),
+		),
+	),
+	"_body:hover": (
+		background: (
+			(
+				".js", ( "mod_key": "mod_value" ),
+				mix( $default-color, #ff0000, 80% ), mix( $default-color, #ff0000, 100% )
+			),
+		),
+	),
+);
+
+$component-box-model_ver7_m: (
+	_body: (
+		background: (
+			(
+				xxs: mix( $default-color, #ff0000, 20% ),
+				xs : mix( $default-color, #ff0000, 40% ),
 			),
 			(
 				":active", ( "mod_key": "mod_value" ),
 				(
-					xxs : mix( $default-color, #ff0000, 60% ),
+					xxs: mix( $default-color, #ff0000, 60% ),
 				)
 			),
 			(
 				".js", ":hover", ( "mod_key": "mod_value" ),
 				(
-					xxs : mix( $default-color, #ff0000, 80% ),
-					xs  : mix( $default-color, #ff0000, 100% ),
+					xxs: mix( $default-color, #ff0000, 80% ),
+					xs : mix( $default-color, #ff0000, 100% ),
+				)
+			),
+		),
+	),
+	// Or last two properties can be wrote as this
+	"_body:active": (
+		background: (
+			(
+				( "mod_key": "mod_value" ),
+				(
+					xxs: mix( $default-color, #ff0000, 60% ),
+				)
+			),
+		),
+	),
+	"_body:hover": (
+		background: (
+			(
+				".js", ( "mod_key": "mod_value" ),
+				(
+					xxs: mix( $default-color, #ff0000, 80% ),
+					xs : mix( $default-color, #ff0000, 100% ),
 				)
 			),
 		),
