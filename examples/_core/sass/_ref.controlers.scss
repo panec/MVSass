@@ -7,3 +7,19 @@
 @import "components/list.controler";
 // Pages
 @import "pages/index.controler";
+
+
+
+$mvs-customMixins: "module-item" !global;
+
+@mixin mvs-respond-custom( $property, $value ) {
+	$mvsRespondMixinsGenerated: true !global;
+
+	@if $property == "module-item" and mixin-exists( $property ){
+		@debug "Property" $property "with values" $value "will be generated using custom mixin";
+		@include module-item( $value );
+	}
+	@else {
+		$mvsRespondMixinsGenerated: false !global;
+	}
+}

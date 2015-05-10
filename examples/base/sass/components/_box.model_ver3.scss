@@ -1,16 +1,17 @@
 @import "../variables";
+@import "box.model_ver0";
 
 //TODO: Generates obsolete: .c-box__img { width: 100% } because was defined in ver_0
-$component-box-model_ver3: (
+$component-box-model_ver3: map-unique( $component-box-model_ver0, (
 	_img: (
 		width: 100%,
 	),
 	_body: (
 		background: ( $default-color, $default-color, darken( $default-color, 20% ) ),
 	),
-);
+) );
 //TODO: Generates obsolete: .c-box__img { width: 100% } because was defined in ver_0
-$component-box-model_ver3_m: (
+$component-box-model_ver3_m: map-unique( $component-box-model_ver0, (
 	_img: (
 		width: 100%,
 	),
@@ -20,4 +21,4 @@ $component-box-model_ver3_m: (
 			sm : darken( $default-color, 20% ),
 		),
 	),
-);
+) );

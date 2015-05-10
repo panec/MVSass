@@ -1,12 +1,13 @@
 @import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver4: (
+$component-box-model_ver4: map-unique( $component-box-model_ver0, (
 	_body: (
 		background: ( ".js", $default-color, $default-color, lighten( $default-color, 40% ) ),
 	),
-);
+) );
 
-$component-box-model_ver4_m: (
+$component-box-model_ver4_m: map-unique( $component-box-model_ver0, (
 	_body: (
 		background: (
 			".js", (
@@ -15,4 +16,4 @@ $component-box-model_ver4_m: (
 			),
 		),
 	),
-);
+) );

@@ -90,7 +90,7 @@ gulp.task('optimizeExample', function () {
 		.pipe(gulp.dest('examples'));
 });
 
-gulp.task('cleanExample', function () {
+gulp.task('cleanExample', function ( cb ) {
 	$.del( 'examples/**/css', cb);
 });
 

@@ -315,7 +315,7 @@
 		$screenBreakpointsKeys : map-keys( $mvs-screenBreakpoints );
 		// TODO Reconsider using nth( $screenBreakpointsKeys, 1 )
 		// $valueKeys : join( nth( $screenBreakpointsKeys, 1 ), map-keys( $mvs-screenBreakpoints ) );
-		$keys      : map-keys( $value );
+		$keys: map-keys( $value );
 
 		@each $key in $keys
 		{

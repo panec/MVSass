@@ -1,12 +1,13 @@
 @import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver2: (
+$component-box-model_ver2: map-unique( $component-box-model_ver0, (
 	_body: (
 		background: ( darken( $default-color, 20% ), darken( $default-color, 20% ), darken( $default-color, 40% ), darken( $default-color, 40% ), darken( $default-color, 60% ) ),
 	),
-);
-//TODO: Generates obsolete xs & md - @media (min-width: ...) {} block
-$component-box-model_ver2_m: (
+) );
+
+$component-box-model_ver2_m:  map-unique( $component-box-model_ver0, (
 	_body: (
 		background: (
 			xxs: darken( $default-color, 20% ),
@@ -16,9 +17,9 @@ $component-box-model_ver2_m: (
 			lg : darken( $default-color, 60% ),
 		),
 	),
-);
+) );
 
-$component-box-model_ver2_1_m: (
+$component-box-model_ver2_1_m:  map-unique( $component-box-model_ver0, (
 	_body: (
 		background: (
 			xxs: darken( $default-color, 20% ),
@@ -26,4 +27,4 @@ $component-box-model_ver2_1_m: (
 			lg : darken( $default-color, 60% ),
 		),
 	),
-);
+) );

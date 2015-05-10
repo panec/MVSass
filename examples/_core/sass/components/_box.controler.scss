@@ -1,13 +1,13 @@
-$component-box-model: () !global;
+// $component-box-model: () !global;
 
-@mixin component-box( $model: $component-box-model, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-"  ) {
-	@if $isInitial {
-		$model: map-overwrite( $component-box-model, $model );
-		$component-box-model: $model !global;
-	}
-	@else {
-		$model: map-unique( $component-box-model, $model );
-	}
+@mixin component-box( $model, $isInitial: false, $mod: (), $modType: "class", $modDivider: "-" ) {
+	// @if $isInitial {
+	// 	$model: map-overwrite( $component-box-model, $model );
+	// 	$component-box-model: $model !global;
+	// }
+	// @else {
+	// 	$model: map-unique( $component-box-model, $model );
+	// }
 
 	$prefix: ".c-box";
 
@@ -23,7 +23,7 @@ $component-box-model: () !global;
 	}
 }
 
-@mixin _component-box( $model: $component-box-model, $prefix: "", $isInitial: false ) {
+@mixin _component-box( $model, $prefix: "", $isInitial: false ) {
 	$staticPrefix: $prefix;
 
 	@if ( $prefix == "&" ) {

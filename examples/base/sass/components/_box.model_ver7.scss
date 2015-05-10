@@ -1,6 +1,7 @@
 @import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver7: (
+$component-box-model_ver7: map-unique( $component-box-model_ver0, (
 	_body: (
 		background: (
 			(
@@ -33,9 +34,9 @@ $component-box-model_ver7: (
 			),
 		),
 	),
-);
+) );
 
-$component-box-model_ver7_m: (
+$component-box-model_ver7_m: map-unique( $component-box-model_ver0, (
 	_body: (
 		background: (
 			(
@@ -79,4 +80,4 @@ $component-box-model_ver7_m: (
 			),
 		),
 	)
-);
+) );

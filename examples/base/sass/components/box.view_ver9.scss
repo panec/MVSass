@@ -1,0 +1,11 @@
+@import "ref.controlers";
+@import "box.model_ver9";
+
+@include component-box( $component-box-model_ver9, $mod: "ver9" );
+@include component-box( $component-box-model_ver9_m, $mod: "ver9_m" );
+
+// @debug mvs-normalize-value( ( null, true, false, false, null ) );
+
+// @debug mvs-normalize-value( ( 2px, ( 5px 10px ), 15px ) );
+
+// @debug mvs-normalize-value( ( 2px, ( 'vertical-radius': 5px, 'radius': 10px ), 15px ) );

@@ -1,6 +1,7 @@
 @import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver5: (
+$component-box-model_ver5: map-unique( $component-box-model_ver0, (
 	_img-container: (
 		content  : ( ":before", "xxs", "xs", "sm", "md", "lg" ),
 		position : ( ":before", absolute ),
@@ -12,9 +13,9 @@ $component-box-model_ver5: (
 		position : absolute,
 		margin   : 5px,
 	)
-);
+) );
 
-$component-box-model_ver5_m: (
+$component-box-model_ver5_m: map-unique( $component-box-model_ver0, (
 	_img-container: (
 		content : (
 			":before", (
@@ -52,4 +53,4 @@ $component-box-model_ver5_m: (
 			xxs: 5px,
 		),
 	),
-);
+) );

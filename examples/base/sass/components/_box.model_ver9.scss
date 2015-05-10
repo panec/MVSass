@@ -1,0 +1,41 @@
+@import "compass";
+@import "../variables";
+@import "box.model_ver0";
+
+$component-box-model_ver9: map-unique( $component-box-model_ver0, (
+	_body: (
+		color: #111,
+		module-item: (
+			_: (
+				color: #222,
+			),
+			_item: (
+				color: (
+					(
+						#333,
+					),
+					(
+						// TODO The modifier is applied on the module but it is not nested inside body but appended to it
+						( "mod-key": "mod-value" ),
+						#444,
+					),
+				),
+			),
+		),
+	),
+) );
+
+$component-box-model_ver9_m: map-unique( $component-box-model_ver0, (
+	_body: (
+		color: (
+			xxs : #111,
+		),
+		module-item: (
+			_: (
+				color: (
+					xxs: #222,
+				),
+			),
+		),
+	),
+) );

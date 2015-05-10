@@ -15,23 +15,34 @@
 	//TODO: Add full list of Compass mixins
 	$mvsRespondMixinsGenerated: true !global;
 
-	@if $property == "background" and mixin-exists( $property ){
-		@include background( $value );
+	// http://compass-style.org/reference/compass/css3/border_radius/#mixin-border-radius
+	// border-radius($radius, $vertical-radius)
+	@if $property == "border-radius" and mixin-exists( $property ){
+		@include border-radius( $value... );
 	}
+	// http://compass-style.org/reference/compass/css3/images/#mixin-background
+	@else if $property == "background" and mixin-exists( $property ){
+		@include background( $value... );
+	}
+	// http://compass-style.org/reference/compass/css3/images/#mixin-background-image
 	@else if $property == "background-image" and mixin-exists( $property ) {
-		@include background( $value );
+		@include background( $value... );
 	}
+	//http://compass-style.org/reference/compass/typography/text/ellipsis/
 	@else if $property == "ellipsis" and mixin-exists( $property ) {
-		@include ellipsis( $value );
+		@include ellipsis( $value... );
 	}
+	//http://compass-style.org/reference/compass/css3/flexbox/#mixin-display-flex
 	@else if $property == "display-flex" and mixin-exists( $property ) {
 		@include display-flex();
 	}
+	// http://compass-style.org/reference/compass/css3/flexbox/#mixin-flex-direction
 	@else if $property == "flex-direction" and mixin-exists( $property ) {
-		@include flex-direction( $value );
+		@include flex-direction( $value... );
 	}
+	// http://compass-style.org/reference/compass/css3/user_interface/#mixin-user-select
 	@else if $property == "user-select" and mixin-exists( $property ) {
-		@include user-select( $value );
+		@include user-select( $value... );
 	}
 	@else {
 		$mvsRespondMixinsGenerated: false !global;
@@ -104,6 +115,16 @@
 @mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: 1, $parentListSelector: null, $parentListDepth: 1 ) {
 	@if $values == null {
 		//skip
+	}
+	//TODO Refactor this section to be more readible
+	@else if is( $property, $mvs-customMixins ) {
+		@if not mixin-exists( $property ) {
+			@warn "Property \"#{$property}\" is a custom mixin but does not exits";
+		}
+		@else {
+			@warn "Property \"#{$property}\" is a custom mixin but does! exits";
+			@include mvs-respond-custom( $property, $values );
+		}
 	}
 	@else if not is( $property, $mvs-cssProperties ) and not mixin-exists( $property ){
 		@warn "Property \"#{$property}\" is not a valid CSS property & there is no mixin for it";
