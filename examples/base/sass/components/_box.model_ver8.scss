@@ -1,16 +1,30 @@
-// @import "compass";
-@import "variables";
+@import "compass";
+@import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver8: (
-	// body_ellipsis: ( null, true, false, false, null ),
-);
-//TODO: Generates obsolete md - @media (min-width: 820px) {} block
-$component-box-model_ver8_m: (
-	// body_ellipsis: (
-	// 	xxs : null,
-	// 	xs  : true,
-	// 	sm  : false,
-	// 	md  : false,
-	// 	lg  : null
-	// ),
-);
+$component-box-model_ver8: map-unique( $component-box-model_ver0, (
+	_body: (
+		ellipsis: ( null, true, false, false, null ),
+		//TODO Too much unwrap of values
+		// border-radius: ( 2px, ( 5px, 10px ), 15px ),
+		// border-radius: ( 2px, ( 'vertical-radius': 5px, 'radius': 10px ), 15px ),
+		border-radius: ( 2px, ( 5px 10px ), 15px ),
+	)
+) );
+
+$component-box-model_ver8_m: map-unique( $component-box-model_ver0, (
+	_body: (
+		ellipsis: (
+			xxs : null,
+			xs  : true,
+			sm  : false,
+			md  : false,
+			lg  : null
+		),
+		border-radius: (
+			xxs : 2px,
+			xs  : 5px 10px,
+			sm  : 15px,
+		),
+	)
+) );

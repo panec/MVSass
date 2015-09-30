@@ -10,6 +10,13 @@
 @media (min-width: 420px) and (max-width: 619px) {
   .js .c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:hover {
     background: #f5f2f0; } }
+.c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:active {
+  background: #f99190; }
+.js .c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:hover {
+  background: #f7c1c0; }
+@media (min-width: 420px) {
+  .js .c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:hover {
+    background: #f5f2f0; } }
 
 .c-box-ver7_m .c-box__body {
   background: #fd3030; }
@@ -21,5 +28,12 @@
 .js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
   background: #f7c1c0; }
 @media (min-width: 420px) and (max-width: 619px) {
+  .js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
+    background: #f5f2f0; } }
+.c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:active {
+  background: #f99190; }
+.js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
+  background: #f7c1c0; }
+@media (min-width: 420px) {
   .js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
     background: #f5f2f0; } }

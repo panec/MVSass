@@ -1,13 +1,24 @@
-@import "variables";
+@import "../variables";
+@import "box.model_ver0";
 
-$component-box-model_ver6: (
-	body_background : ( ( "mod_key": "mod_value" ), mix( $default-color, #ff0000, 20% ) ),
-);
-
-$component-box-model_ver6_m: (
-	body_background : (
-		( "mod_key": "mod_value" ), (
-			xxs: mix( $default-color, #ff0000, 20% ),
+$component-box-model_ver6: map-unique( $component-box-model_ver0, (
+	_body: (
+		background:
+		(
+			( "mod_key": "mod_value" ),
+			mix( $default-color, #ff0000, 20% )
 		),
 	),
-);
+) );
+
+$component-box-model_ver6_m: map-unique( $component-box-model_ver0, (
+	_body: (
+		background:
+		(
+			( "mod_key": "mod_value" ),
+			(
+				xxs: mix( $default-color, #ff0000, 20% ),
+			),
+		),
+	),
+) );

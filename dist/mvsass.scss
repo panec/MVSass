@@ -1194,15 +1194,15 @@ $css-properties:
 		@if str-index( $key, $elementPrefix ) != null {
 			$property: str-slice( $key, $elementPrefixLength + 1 );
 			@if ( str-index-last( $property, "_" ) == false ) {
-				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
+				@if ( mixin-exists( "mvs-respond-custom" ) and mixin-exists( $property ) and type-of( $value ) == "map" ) {
 				// TODO Add support for custom-mixins
 				// @if mixin-exists( $property ) {
-				// 	@debug $property is a supported mixin;
-				// 	@include -mvs-respond-mixins( $property, $value );
-				// }
-				// @else {
+					@debug $property is a supported mixin;
+					@include mvs-respond-custom( $property, $value );
+				}
+				@else {
 					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
-				// }
+				}
 			}
 		}
 	}

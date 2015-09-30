@@ -1,18 +1,18 @@
 @import "ref.controlers";
 @import "index.model";
 
-@include page-index( $page-index-model, $isInitial: true ) {
-	pre[data-src]::after {
-		content: attr(data-src);
-		color: black;
-		background-color: #CFCFCF;
-		display: inline-block;
-		position: absolute;
-		bottom: 0;
-		right: 0;
-		font-size: 0.9em;
-		border-radius: 5px 0 0 0px;
-		padding: 0 0.5em;
-		text-shadow: none;
-	}
-}
+// @include page-index( $page-index-model, $isInitial: true ) {
+// 	pre[data-src]::after {
+// 		content: attr(data-src);
+// 		color: black;
+// 		background-color: #CFCFCF;
+// 		display: inline-block;
+// 		position: absolute;
+// 		bottom: 0;
+// 		right: 0;
+// 		font-size: 0.9em;
+// 		border-radius: 5px 0 0 0px;
+// 		padding: 0 0.5em;
+// 		text-shadow: none;
+// 	}
+// }

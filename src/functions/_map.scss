@@ -12,7 +12,7 @@
 // 	(Sass::Script::Value::Base)
 // Example
 // 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
-@function map-overwrite($map1, $map2, $showWarnings: true) {
+@function map-overwrite( $map1, $map2, $showWarnings: true ) {
 	$result: ();
 
 	@each $key, $value in $map2 {
@@ -38,8 +38,8 @@
 // Returns
 // 	(Sass::Script::Value::Base)
 // Example
-// 	mvs-map-merge( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
-@function map-unique($map1, $map2, $showWarnings: true) {
+// 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
+@function map-unique( $map1, $map2, $showWarnings: true ) {
 	$result: ();
 
 	@each $key, $value in $map2 {

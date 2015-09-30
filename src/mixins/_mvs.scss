@@ -6,7 +6,7 @@
 // Params
 // 	$property (Sass::Script::Value::String)
 // 	$value (Sass::Script::Value::Base)
-@mixin -mvs-respond-compass( $property, $value ) {
+@mixin _mvs-respond-compass( $property, $value ) {
 	//https://github.com/nex3/sass/issues/626#issuecomment-39012395 Feature under consideration SASS 3.4
 	// @if mixin-exists( $property ) {
 	// 	@include #{ $property }( $value );
@@ -15,23 +15,34 @@
 	//TODO: Add full list of Compass mixins
 	$mvsRespondMixinsGenerated: true !global;
 
-	@if $property == "background" and mixin-exists( $property ){
-		@include background( $value );
+	// http://compass-style.org/reference/compass/css3/border_radius/#mixin-border-radius
+	// border-radius($radius, $vertical-radius)
+	@if $property == "border-radius" and mixin-exists( $property ){
+		@include border-radius( $value... );
 	}
+	// http://compass-style.org/reference/compass/css3/images/#mixin-background
+	@else if $property == "background" and mixin-exists( $property ){
+		@include background( $value... );
+	}
+	// http://compass-style.org/reference/compass/css3/images/#mixin-background-image
 	@else if $property == "background-image" and mixin-exists( $property ) {
-		@include background( $value );
+		@include background( $value... );
 	}
+	//http://compass-style.org/reference/compass/typography/text/ellipsis/
 	@else if $property == "ellipsis" and mixin-exists( $property ) {
-		@include ellipsis( $value );
+		@include ellipsis( $value... );
 	}
+	//http://compass-style.org/reference/compass/css3/flexbox/#mixin-display-flex
 	@else if $property == "display-flex" and mixin-exists( $property ) {
 		@include display-flex();
 	}
+	// http://compass-style.org/reference/compass/css3/flexbox/#mixin-flex-direction
 	@else if $property == "flex-direction" and mixin-exists( $property ) {
-		@include flex-direction( $value );
+		@include flex-direction( $value... );
 	}
+	// http://compass-style.org/reference/compass/css3/user_interface/#mixin-user-select
 	@else if $property == "user-select" and mixin-exists( $property ) {
-		@include user-select( $value );
+		@include user-select( $value... );
 	}
 	@else {
 		$mvsRespondMixinsGenerated: false !global;
@@ -43,7 +54,7 @@
 // Params
 // 	$property (Sass::Script::Value::String)
 // 	$value (Sass::Script::Value::Base)
-@mixin -mvs-respond-mixins( $property, $value ) {
+@mixin _mvs-respond-mixins( $property, $value ) {
 	@if $value != null {
 		$mvsRespondMixinsGenerated: false !global;
 
@@ -52,7 +63,7 @@
 		}
 
 		@if $mvsRespondMixinsGenerated == false {
-			@include -mvs-respond-compass( $property, $value );
+			@include _mvs-respond-compass( $property, $value );
 		}
 
 		@if $mvsRespondMixinsGenerated == false {
@@ -64,29 +75,37 @@
 //**
 // Calls mvs-respond-propetry-list mixin against all keys in $map that contain only $prefix and css property
 // Params
-// 	$elementPrefix (Sass::Script::Value::String)
-// 	$valueMap (Sass::Script::Value::Base)
+// 	$elementSelector (Sass::Script::Value::String)
+// 	$mvsMap (Sass::Script::Value::Base)
 // 	$selector (Sass::Script::Value::String)
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );
 //TODO Params to be extended
-@mixin mvs-respond-map( $elementPrefix, $valueMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
-	$elementPrefixLength: str-length( $elementPrefix );
+@mixin mvs-respond-map( $elementSelector, $mvsMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
+	$propertiesMap: map_get( $mvsMap, $elementSelector );
 
-	@each $key, $value in $valueMap {
-		@if str-index( $key, $elementPrefix ) != null {
-			$property: str-slice( $key, $elementPrefixLength + 1 );
-			@if ( str-index-last( $property, "_" ) == false ) {
-				// @if ( mixin-exists( $property ) and type-of( $value ) == "map" ) {
-				// TODO Add support for custom-mixins
-				// @if mixin-exists( $property ) {
-				// 	@debug $property is a supported mixin;
-				// 	@include -mvs-respond-mixins( $property, $value );
-				// }
-				// @else {
-					@include mvs-respond-property( str-slice( $key, $elementPrefixLength + 1 ), $value, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
-				// }
+	@if $propertiesMap != null {
+		@each $property, $values in $propertiesMap {
+			@include mvs-respond-property( $property, $values, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
+		}
+	}
+
+	//TODO Add support for multiple pseudo selectors at once
+	//TODO Add suport for lang(...) & not(...)
+	@each $cssPseudoClass in $mvs-cssPseudoClasses {
+		@if map_has_key( $mvsMap, quote( $elementSelector + $cssPseudoClass ) ) == true {
+			$propertiesMap: map_get( $mvsMap, quote( $elementSelector + $cssPseudoClass ) );
+
+			@each $property, $values in $propertiesMap {
+				@if type-of( $values ) == "map" {
+					$values: append( $cssPseudoClass, $values, comma );
+				}
+				@else {
+					$values: join( $cssPseudoClass, $values, comma );
+				}
+
+				@include mvs-respond-property( $property, $values, $parentBlockSelector, $parentBlockDepth, $parentListSelector, $parentListDepth );
 			}
 		}
 	}
@@ -97,17 +116,32 @@
 	@if $values == null {
 		//skip
 	}
+	//TODO Refactor this section to be more readible
+	@else if is( $property, $mvs-customMixins ) {
+		@if not mixin-exists( $property ) {
+			@warn "Property \"#{$property}\" is a custom mixin but does not exits";
+		}
+		@else {
+			@warn "Property \"#{$property}\" is a custom mixin but does! exits";
+			@include mvs-respond-custom( $property, $values );
+		}
+	}
+	@else if not is( $property, $mvs-cssProperties ) and not mixin-exists( $property ){
+		@warn "Property \"#{$property}\" is not a valid CSS property & there is no mixin for it";
+		@debug "TODO Add support for custom mixins";
+	}
 	@else if is( $property, "font-family" "font" ) {
-		@warn "MVS syntax does not support #{$property} property";
-		@include -mvs-respond-mixins( $property, $values );
+		//TODO Can support if values are quoted on each breakpoint
+		@warn "MVS syntax does not support \"#{$property}\" property";
+		@include _mvs-respond-mixins( $property, $values );
 	}
 	@else {
 		@debug "VALUES " $values;
-
 		$values                : mvs-normalize-value( $values );
-		$screenBreakpointsKeys : join( "initial", map-keys( $screen-breakpoints ) );
-
 		@debug "VALUES NORMALIZED" $values;
+		$values                : mvs-optimize-value( $values );
+		@debug "VALUES OPTIMIZED" $values;
+		$screenBreakpointsKeys : join( "initial", map-keys( $mvs-screenBreakpoints ) );
 
 		@each $value in $values {
 			// 1 - at body value
@@ -126,17 +160,12 @@
 				$_5: nth( $_5, 1 );
 			}
 
-			// @debug "dolar_3: " #{map-get( $value, "_3" )} "|" map-get( $value, "_3" ) == null "|" type-of($_3) "|" $_3 != "";
-
-			// @debug "type-of map get null: " type-of( map-get( (), abc ) );
-			// @debug "_3 is value: " map-get( $value, "_3" ) " is null: " map-get( $value, "_3" ) == null " type-of: " type-of($_3);
-
 			@each $breakpoint in $screenBreakpointsKeys {
 				#{$_1} &#{$_2}{
 					@include respond-to( $breakpoint, $_3 != "", $_5 ) {
 						@include mvs-parent-inject( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
 							@include mvs-parent-inject( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
-								@include -mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
+								@include _mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
 							}
 						}
 					}
@@ -162,7 +191,7 @@
 		@debug "Due limitation of interpolation in SASS at @media only single value are supported for $mediaType but was `#{$mediaType}`";
 	}
 
-	@if $breakpoint == "initial" or $breakpoint == nth( map-keys( $screen-breakpoints ), 1 ) {
+	@if $breakpoint == "initial" or $breakpoint == nth( map-keys( $mvs-screenBreakpoints ), 1 ) {
 		@if $mediaType == null or $mediaType == "" {
 			@content;
 		}
@@ -171,34 +200,34 @@
 		}
 	}
 	@else if $is-specific {
-		$index: map-index( $screen-breakpoints, $breakpoint );
+		$index: map-index( $mvs-screenBreakpoints, $breakpoint );
 
-		@if $index < length( $screen-breakpoints ) {
+		@if $index < length( $mvs-screenBreakpoints ) {
 			//loosly based on https://raw.githubusercontent.com/guardian/sass-mq/master/_mq.scss
-			$max-width-unit: unit( map-nth( $screen-breakpoints, $index + 1 ) );
+			$max-width-unit: unit( map-nth( $mvs-screenBreakpoints, $index + 1 ) );
 
 			@if $mediaType == null or $mediaType == "" {
-				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+				@media ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $mvs-screenBreakpoints, $index + 1 ) - 1, map-nth( $mvs-screenBreakpoints, $index + 1 ) - .01 ) ) { @content; }
 			}
 			@else {
-				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $screen-breakpoints, $index + 1 ) - 1, map-nth( $screen-breakpoints, $index + 1 ) - .01 ) ) { @content; }
+				@media #{ $mediaType } and ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) and ( max-width: if( $max-width-unit == "px" , map-nth( $mvs-screenBreakpoints, $index + 1 ) - 1, map-nth( $mvs-screenBreakpoints, $index + 1 ) - .01 ) ) { @content; }
 			}
 		}
 		@else {
 			@if $mediaType == null or $mediaType == "" {
-				@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+				@media ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) { @content; }
 			}
 			@else {
-				@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+				@media #{ $mediaType } and ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) { @content; }
 			}
 		}
 	}
 	@else {
 		@if $mediaType == null or $mediaType == "" {
-			@media ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			@media ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) { @content; }
 		}
 		@else {
-			@media #{ $mediaType } and ( min-width: map-get( $screen-breakpoints, $breakpoint ) ) { @content; }
+			@media #{ $mediaType } and ( min-width: map-get( $mvs-screenBreakpoints, $breakpoint ) ) { @content; }
 		}
 	}
 }

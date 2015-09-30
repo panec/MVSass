@@ -1,19 +1,35 @@
-@mixin item( $model-module-item: $core-model-module-item, $isInitial: false, $is-standalone: false ) {
+@mixin module-item( $model, $isInitial: false, $is-standalone: false,$mod: (), $modType: "class", $modDivider: "-" ) {
 
-	@debug item mixin;
+	@debug "MODULE ITEM" $model;
 
-	@if $isInitial {
-		$model-module-item: map-overwrite( $core-model-module-item, $model-module-item );
-		$core-model-module-item: $model-module-item !global;
+	$prefix: ".m-item";
+
+	@if ( $mod == "" or length( $mod ) == 0  ) {
+		#{ $prefix } {
+			@include _module-item( $model, "&", $isInitial ) { @content; };
+		}
 	}
 	@else {
-		$model-module-item: map-unique( $core-model-module-item, $model-module-item );
+		#{ mvs-mod-to-string( $mod, $prefix, $modType, $modDivider ) } {
+			@include _module-item( $model, $prefix, $isInitial ) { @content; };
+		}
+	}
+}
+
+@mixin _module-item( $model, $prefix: "", $isInitial: false, $is-standalone: false ) {
+	$staticPrefix: $prefix;
+
+	@if ( $prefix == "&" ) {
+		$staticPrefix: nth( mvs-parent(), -1 );
 	}
 
-	@include mvs-respond-map( "_", $model-module-item );
+	@include mvs-respond-map( "_", $model, "", 1, "", 0 );
 
-	.item {
-		@include mvs-respond-map( "item_", $model-module-item );
+	#{ $prefix }__#{ "item" } {
+		// @include mvs-respond-map( "_item", $model, if( $is-standalone, "", $staticPrefix ), 1, "", 0 );
+		@include mvs-respond-map( "_item", $model, $staticPrefix, 1, "", 0 );
+
 	}
 
+	@content;
 }

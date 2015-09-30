@@ -1,9 +1,16 @@
-@import "variables";
+@import "../variables";
 
 $component-box-model_ver0: (
-	img-container_display : block,
+	_img-container: (
+		display: block,
+		test: 1
+	),
 
-	img_width             : 100%,
+	_img: (
+		width: 100%,
+	),
 
-	body_background       : $default-color,
+	_body: (
+		background: $default-color,
+	),
 );
