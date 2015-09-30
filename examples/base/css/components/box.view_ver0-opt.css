@@ -1,1 +1,12 @@
-.c-box__img-container{display:block}.c-box__img{width:100%}.c-box__body{background:#f5f2f0}
+.c-box__img-container {
+	display: block;
+}
+
+.c-box__img {
+	width: 100%;
+}
+
+.c-box__body {
+	background: #f5f2f0;
+}
+

@@ -1,4 +1,7 @@
-.c-box-ver6[data-mod--mod_key='mod_value'] .c-box__body,
-.c-box-ver6_m[data-mod--mod_key='mod_value'] .c-box__body {
-	background: #fd3030
+.c-box-ver6 .c-box__body .c-box-ver6[data-mod--mod_key='mod_value'] .c-box__body {
+	background: #fd3030;
+}
+
+.c-box-ver6_m .c-box__body .c-box-ver6_m[data-mod--mod_key='mod_value'] .c-box__body {
+	background: #fd3030;
 }

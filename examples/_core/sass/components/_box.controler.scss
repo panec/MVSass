@@ -25,7 +25,7 @@ $component-box-model: () !global;
 
 @mixin _component-box( $model: $component-box-model, $prefix: "", $isInitial: false ) {
 	$staticPrefix: $prefix;
-
+	
 	@if ( $prefix == "&" ) {
 		$staticPrefix: nth( mvs-parent(), -1 );
 	}

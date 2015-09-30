@@ -33,6 +33,7 @@ gulp.task('cleanLib', function (cb) {
 gulp.task('compileExampleBase', function () {
 	return gulp.src('examples/base/sass/**/*.scss')
 		.pipe($.compass({
+			force       : true,
 			debug       : false,
 			time        : true,
 			comments    : false,
@@ -46,9 +47,24 @@ gulp.task('compileExampleBase', function () {
 		.pipe($.duration('Base compile time'));
 });
 
+gulp.task('compileExampleBase:node', function () {
+	return gulp.src('examples/base/sass/**/*.scss')
+		.pipe($.rename({
+			suffix: "-node"
+		}))
+		.pipe($.sass({
+			includePaths   : [ './examples/_core/sass', './examples/base/sass/' ],
+			outputStyle    : 'nested',
+			sourceComments: false
+		}).on('error', $.sass.logError))
+		.pipe(gulp.dest('examples/base/css'))
+		.pipe($.duration('Base compile time'));
+});
+
 gulp.task('compileExampleTheme', function () {
 	return gulp.src('examples/theme/sass/**/*.scss')
 		.pipe($.compass({
+			force       : true,
 			debug       : false,
 			time        : true,
 			comments    : false,
@@ -62,6 +78,20 @@ gulp.task('compileExampleTheme', function () {
 		.pipe($.duration('Theme compile time'));
 });
 
+gulp.task('compileExampleTheme:node', function () {
+	return gulp.src('examples/theme/sass/**/*.scss')
+		.pipe($.rename({
+			suffix: "-node"
+		}))
+		.pipe($.sass({
+			includePaths   : [ './examples/_core/sass', './examples/theme/sass/' ],
+			outputStyle    : 'nested',
+			sourceComments: false
+		}).on('error', $.sass.logError))
+		.pipe(gulp.dest('examples/theme/css'))
+		.pipe($.duration('Theme compile time'));
+});
+
 gulp.task('optimizeExample', function () {
 	return gulp.src([ 'examples/**/*.css', '!examples/**/*-opt.css', '!examples/**/*-opt-beauty.css' ])
 		.pipe($.size({ title: 'Example css before optimization' }))
@@ -69,7 +99,7 @@ gulp.task('optimizeExample', function () {
 			suffix: "-opt"
 		}))
 		.pipe($.combineMediaQueries())
-		.pipe($.csso())
+		// .pipe($.csso())
 		.pipe($.duration('Optimization time'))
 		.pipe($.size({ title: 'Example css after optimization' }))
 		.pipe(gulp.dest('examples'))
@@ -291,6 +321,11 @@ gulp.task( 'default', function( cb ) {
 gulp.task( 'compileExample', function( cb ) {
 	$.runSequence( 'compileExampleBase', 'compileExampleTheme', 'optimizeExample', cb );
 });
+
+gulp.task( 'compileExample:node', function( cb ) {
+	$.runSequence( 'compileExampleBase:node', 'compileExampleTheme:node', 'optimizeExample', cb );
+});
+
 
 gulp.task( 'watchExample:Base', function( cb ) {
 	$.runSequence( 'compileExampleBase', 'compileExampleTheme', 'optimizeExample', cb );

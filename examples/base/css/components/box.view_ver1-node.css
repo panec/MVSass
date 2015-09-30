@@ -1,12 +1,15 @@
 @media (min-width: 420px) and (max-width: 619px) {
   .c-box-ver1 {
     width: 100%; } }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .c-box-ver1 {
     width: 80%; } }
+
 @media (min-width: 820px) and (max-width: 1019px) {
   .c-box-ver1 {
     width: 60%; } }
+
 @media (min-width: 1020px) {
   .c-box-ver1 {
     width: 40%; } }
@@ -14,12 +17,15 @@
 @media (min-width: 420px) and (max-width: 619px) {
   .c-box-ver1_m {
     width: 100%; } }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .c-box-ver1_m {
     width: 80%; } }
+
 @media (min-width: 820px) and (max-width: 1019px) {
   .c-box-ver1_m {
     width: 60%; } }
+
 @media (min-width: 1020px) {
   .c-box-ver1_m {
     width: 40%; } }

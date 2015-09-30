@@ -1,38 +1,47 @@
 .c-box-ver7 .c-box__body {
-	background: #fd3030
+	background: #fd3030;
 }
 
-.c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:active {
-	background: #f99190
+@media (min-width: 420px) and (max-width: 619px) {
+	.c-box-ver7 .c-box__body {
+		background: #fb6160;
+	}
 }
 
-.js .c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:hover {
-	background: #f7c1c0
+.c-box-ver7 .c-box__body:active .c-box-ver7 .c-box__body[data-mod--mod_key='mod_value']:active {
+	background: #f99190;
+}
+
+.js .c-box-ver7 .c-box__body:hover .js .c-box-ver7 .c-box__body[data-mod--mod_key='mod_value']:hover {
+	background: #f7c2c0;
+}
+
+@media (min-width: 420px) and (max-width: 619px) {
+	.js .c-box-ver7 .c-box__body:hover .js .c-box-ver7 .c-box__body[data-mod--mod_key='mod_value']:hover {
+		background: #f5f2f0;
+	}
 }
 
 .c-box-ver7_m .c-box__body {
-	background: #fd3030
+	background: #fd3030;
 }
 
-.c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:active {
-	background: #f99190
-}
-
-.js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
-	background: #f7c1c0
-}
-
-@media (min-width: 420px) {
-	.c-box-ver7 .c-box__body {
-		background: #fb6060
-	}
-	.js .c-box-ver7[data-mod--mod_key='mod_value'] .c-box__body:hover {
-		background: #f5f2f0
-	}
+@media (min-width: 420px) and (max-width: 619px) {
 	.c-box-ver7_m .c-box__body {
-		background: #fb6060
+		background: #fb6160;
 	}
-	.js .c-box-ver7_m[data-mod--mod_key='mod_value'] .c-box__body:hover {
-		background: #f5f2f0
+}
+
+.c-box-ver7_m .c-box__body:active .c-box-ver7_m .c-box__body[data-mod--mod_key='mod_value']:active {
+	background: #f99190;
+}
+
+.js .c-box-ver7_m .c-box__body:hover .js .c-box-ver7_m .c-box__body[data-mod--mod_key='mod_value']:hover {
+	background: #f7c2c0;
+}
+
+@media (min-width: 420px) and (max-width: 619px) {
+	.js .c-box-ver7_m .c-box__body:hover .js .c-box-ver7_m .c-box__body[data-mod--mod_key='mod_value']:hover {
+		background: #f5f2f0;
 	}
 }

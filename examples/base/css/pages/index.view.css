@@ -1,78 +1,55 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
 .page-index__container {
   margin: 0 auto; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
 .page-index__container {
   width: auto; }
-@media (min-width: 420px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+@media (min-width: 420px) and (max-width: 619px) {
   .page-index__container {
     width: 400px; } }
-@media (min-width: 620px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+@media (min-width: 620px) and (max-width: 819px) {
   .page-index__container {
     width: 600px; } }
-@media (min-width: 820px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+@media (min-width: 820px) and (max-width: 1019px) {
   .page-index__container {
     width: 800px; } }
 @media (min-width: 1020px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container {
     width: 1000px; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/examples\/_core\/sass\/pages\/_index\.controler\.scss}line{font-family:\0000336}}
 .page-index__container:before {
   font-family: Monaco, Consolas, "Lucida Console", monospace; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     display: block; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     position: fixed; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     bottom: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     left: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     padding: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     background-color: #DEDEDE; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     font-size: 2rem; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     z-index: 1000; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
   .page-index__container:before {
     content: "xxs"; }
-  @media (min-width: 420px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+  @media (min-width: 420px) and (max-width: 619px) {
     .page-index__container:before {
       content: "xs"; } }
-  @media (min-width: 620px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+  @media (min-width: 620px) and (max-width: 819px) {
     .page-index__container:before {
       content: "sm"; } }
-  @media (min-width: 820px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
+  @media (min-width: 820px) and (max-width: 1019px) {
     .page-index__container:before {
       content: "md"; } }
   @media (min-width: 1020px) {
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
     .page-index__container:before {
       content: "lg"; } }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
 .page-index__sample {
   border: solid 1px #f5f2f0; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/src\/mixins\/_mvs\.scss}line{font-family:\00003130}}
 .page-index__sample {
   padding: 10px; }
-@media -sass-debug-info{filename{font-family:file\:\/\/C\:\/Users\/Maciej\/Documents\/GitHub\/MVSass\/examples\/base\/sass\/pages\/index\.view\.scss}line{font-family:\000035}}
 .page-index pre[data-src]::after {
   content: attr(data-src);
   color: black;

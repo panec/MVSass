@@ -1,11 +1,13 @@
 .js .c-box-ver4 .c-box__body {
   background: #f5f2f0; }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .js .c-box-ver4 .c-box__body {
     background: white; } }
 
 .js .c-box-ver4_m .c-box__body {
   background: #f5f2f0; }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .js .c-box-ver4_m .c-box__body {
     background: white; } }

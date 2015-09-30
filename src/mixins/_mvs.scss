@@ -107,7 +107,7 @@
 		$values                : mvs-normalize-value( $values );
 		$screenBreakpointsKeys : join( "initial", map-keys( $screen-breakpoints ) );
 
-		@debug "VALUES NORMALIZED " $values;
+		@debug "VALUES NORMALIZED" $values;
 
 		@each $value in $values {
 			// 1 - at body value
@@ -125,6 +125,11 @@
 				@debug "Due limitation of interpolation in SASS @media only first value of `#{$_5}` will be added";
 				$_5: nth( $_5, 1 );
 			}
+
+			// @debug "dolar_3: " #{map-get( $value, "_3" )} "|" map-get( $value, "_3" ) == null "|" type-of($_3) "|" $_3 != "";
+
+			// @debug "type-of map get null: " type-of( map-get( (), abc ) );
+			// @debug "_3 is value: " map-get( $value, "_3" ) " is null: " map-get( $value, "_3" ) == null " type-of: " type-of($_3);
 
 			@each $breakpoint in $screenBreakpointsKeys {
 				#{$_1} &#{$_2}{

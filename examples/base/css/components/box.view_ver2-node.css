@@ -1,32 +1,40 @@
 .c-box-ver2 .c-box__body {
   background: #ccbdb3; }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .c-box-ver2 .c-box__body {
     background: #a38876; } }
+
 @media (min-width: 1020px) {
   .c-box-ver2 .c-box__body {
     background: #6b5648; } }
 
 .c-box-ver2_m .c-box__body {
   background: #ccbdb3; }
+
 @media (min-width: 420px) and (max-width: 619px) {
   .c-box-ver2_m .c-box__body {
     background: #ccbdb3; } }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .c-box-ver2_m .c-box__body {
     background: #a38876; } }
+
 @media (min-width: 820px) and (max-width: 1019px) {
   .c-box-ver2_m .c-box__body {
     background: #a38876; } }
+
 @media (min-width: 1020px) {
   .c-box-ver2_m .c-box__body {
     background: #6b5648; } }
 
 .c-box-ver2_1_m .c-box__body {
   background: #ccbdb3; }
+
 @media (min-width: 620px) and (max-width: 819px) {
   .c-box-ver2_1_m .c-box__body {
     background: #a38876; } }
+
 @media (min-width: 1020px) {
   .c-box-ver2_1_m .c-box__body {
     background: #6b5648; } }
