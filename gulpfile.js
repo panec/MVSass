@@ -44,8 +44,8 @@ gulp.task('compileExampleBase', function () {
 			style       : 'nested',
 			import_path : 'examples/_core/sass',
 			css         : 'examples/base/css',
-			sass        : 'examples/base/sass',
-			require     : './src/ruby/parentsSelector.rb'
+			sass        : 'examples/base/sass'
+			// require     : './src/ruby/parentsSelector.rb'
 			// config_file : 'examples/base/config.rb'
 		}))
 		.pipe($.duration('Base compile time'));
@@ -59,7 +59,7 @@ gulp.task('compileExampleBase:node', function () {
 		.pipe($.sass({
 			includePaths   : [ './examples/_core/sass', './examples/base/sass/' ],
 			outputStyle    : 'nested',
-			sourceComments: false
+			sourceComments : false
 		}).on('error', $.sass.logError))
 		.pipe(gulp.dest('examples/base/css'))
 		.pipe($.duration('Base compile time'));
@@ -90,7 +90,7 @@ gulp.task('compileExampleTheme:node', function () {
 		.pipe($.sass({
 			includePaths   : [ './examples/_core/sass', './examples/theme/sass/' ],
 			outputStyle    : 'nested',
-			sourceComments: false
+			sourceComments : false
 		}).on('error', $.sass.logError))
 		.pipe(gulp.dest('examples/theme/css'))
 		.pipe($.duration('Theme compile time'));
@@ -103,7 +103,7 @@ gulp.task('optimizeExample', function () {
 			suffix: "-opt"
 		}))
 		.pipe($.combineMediaQueries())
-		// .pipe($.csso())
+		.pipe($.csso())
 		.pipe($.duration('Optimization time'))
 		.pipe($.size({ title: 'Example css after optimization' }))
 		.pipe(gulp.dest('examples'))
@@ -125,11 +125,11 @@ gulp.task('cleanExample', function ( cb ) {
 });
 
 gulp.task( 'compileExample', function( cb ) {
-	$.runSequence( 'cleanExample', 'compileExampleBase', 'compileExampleTheme', 'optimizeExample', cb );
+	$.runSequence( 'compileExampleBase', 'compileExampleTheme', 'optimizeExample', cb );
 });
 
 gulp.task( 'compileExample:node', function( cb ) {
-	$.runSequence( 'cleanExample', 'compileExampleBase:node', 'compileExampleTheme:node', 'optimizeExample', cb );
+	$.runSequence( 'compileExampleBase:node', 'compileExampleTheme:node', 'optimizeExample', cb );
 });
 
 // Example project watch & compile

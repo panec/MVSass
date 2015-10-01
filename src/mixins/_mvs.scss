@@ -112,7 +112,7 @@
 }
 
 //TODO Add examples and desciption
-@mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: 1, $parentListSelector: null, $parentListDepth: 1 ) {
+@mixin mvs-respond-property( $property, $values, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: 1 ) {
 	@if $values == null {
 		//skip
 	}
@@ -145,11 +145,14 @@
 
 		@each $value in $values {
 			// 1 - at body value
-			$_1: to-string( map-get( $value, "_1" ) );
+			// $_1: to-string( map-get( $value, "_1" ) );
+			$_1: map-get( $value, "_1" );
 			// 2 - at element value
-			$_2: to-string( map-get( $value, "_2" ) );
+			// $_2: to-string( map-get( $value, "_2" ) );
+			$_2: map-get( $value, "_2" );
 			// 3 - at list container value
-			$_3: to-string( map-get( $value, "_3" ) );
+			// $_3: to-string( map-get( $value, "_3" ) );
+			$_3: map-get( $value, "_3" );
 			// 4 - at block value ( for modifiers )
 			$_4: mvs-mod-to-string( map-get( $value, "_4" ), "mod", "data" );
 			// 5 - media type for @media
@@ -159,12 +162,12 @@
 				@debug "Due limitation of interpolation in SASS @media only first value of `#{$_5}` will be added";
 				$_5: nth( $_5, 1 );
 			}
-
+			
 			@each $breakpoint in $screenBreakpointsKeys {
 				#{$_1} &#{$_2}{
-					@include respond-to( $breakpoint, $_3 != "", $_5 ) {
+					@include respond-to( $breakpoint, $_3 != null, $_5 ) {
 						@include mvs-parent-inject( "#{$parentBlockSelector}#{$_4}", false, if( $_4 != "", $parentBlockDepth, -1 ) ) {
-							@include mvs-parent-inject( "#{$parentListSelector}#{$_3}", true, if( $_3 != "", $parentListDepth, -1 ) ) {
+							@include mvs-parent-inject( "#{$parentListSelector}#{$_3}", true, if( $_3 != null, $parentListDepth, -1 ) ) {
 								@include _mvs-respond-mixins( $property, map-get( $value, $breakpoint ) );
 							}
 						}
@@ -186,7 +189,6 @@
 // 	respond-to( xs, $is-specific: true ) { color: #FFF; } => @media only screen and ( min-width: 480px ) and ( max-width: 767px ) { color: #FFF; }
 //TODO Update description
 @mixin respond-to( $breakpoint: "initial", $is-specific: false, $mediaType: "" ) {
-
 	@if length( $mediaType ) > 1 {
 		@debug "Due limitation of interpolation in SASS at @media only single value are supported for $mediaType but was `#{$mediaType}`";
 	}
@@ -251,12 +253,12 @@
 	@if $depth > 0 {
 		@at-root {
 			$path: mvs-parent();
-
+			
 			@if $inject {
 				#{insert-nth( $path, length( $path ) - $depth + 1, unquote( $selector ) )} { @content; }
 			}
 			@else {
-				#{replace-nth( $path, length( $path ) - $depth, nth( $path, length( $path ) - $depth ) + unquote( $selector ) )} { @content; }
+				#{set-nth( $path, length( $path ) - $depth, nth( $path, length( $path ) - $depth ) + unquote( $selector ) )} { @content; }
 			}
 		}
 	}

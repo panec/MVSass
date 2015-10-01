@@ -145,7 +145,7 @@
 		@warn "$mod is not a proper type, string & map are supported" $mod;
 	}
 
-	@return $result;
+	@return unquote( $result );
 }
 
 // TODO Add example calls and description

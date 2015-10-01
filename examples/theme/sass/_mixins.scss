@@ -1,6 +1,6 @@
 @mixin test( $test ) {
 
-	@debug AAAA $test;
+	// @debug AAAA $test;
 
 	.test {
 		color: red;
