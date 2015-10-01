@@ -81,7 +81,7 @@
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );
-//TODO Params to be extended
+//TODO Params description to be extended
 @mixin mvs-respond-map( $elementSelector, $mvsMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
 	$propertiesMap: map_get( $mvsMap, $elementSelector );
 
@@ -91,7 +91,6 @@
 		}
 	}
 
-	//TODO Add support for multiple pseudo selectors at once
 	//TODO Add suport for lang(...) & not(...)
 	@each $cssPseudoClass in $mvs-cssPseudoClasses {
 		@if map_has_key( $mvsMap, quote( $elementSelector + $cssPseudoClass ) ) == true {
@@ -131,7 +130,7 @@
 		@debug "TODO Add support for custom mixins";
 	}
 	@else if is( $property, "font-family" "font" ) {
-		//TODO Can support if values are quoted on each breakpoint
+		//TODO Can support if values are quoted on each breakpoint or quoutes are escaped
 		@warn "MVS syntax does not support \"#{$property}\" property";
 		@include _mvs-respond-mixins( $property, $values );
 	}

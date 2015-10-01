@@ -2,6 +2,13 @@
 @import "box.model_ver0";
 
 $component-box-model_ver5: map-unique( $component-box-model_ver0, (
+	_: (
+		content: (
+			( ":before", "xxs before text", "no xxs before text" ),
+			( ":after", "xxs after text", "no xxs before text" ),
+		),
+	),
+	
 	_img-container: (
 		content  : ( ":before", "xxs", "xs", "sm", "md", "lg" ),
 		position : ( ":before", absolute ),
@@ -16,6 +23,23 @@ $component-box-model_ver5: map-unique( $component-box-model_ver0, (
 ) );
 
 $component-box-model_ver5_m: map-unique( $component-box-model_ver0, (
+	_: (
+		content: (
+			( 
+				":before", (
+					xxs: "xxs before text",
+					xs: "no xxs before text",
+				),
+			),
+			( 
+				":after", ( 
+					xxs: "xxs after text", 
+					xs: "no xxs before text",
+				),
+			),
+		),
+	),
+	
 	_img-container: (
 		content : (
 			":before", (

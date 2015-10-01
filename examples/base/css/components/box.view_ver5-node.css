@@ -1,3 +1,17 @@
+.c-box-ver5:before {
+  content: "xxs before text"; }
+
+@media (min-width: 420px) {
+  .c-box-ver5:before {
+    content: "no xxs before text"; } }
+
+.c-box-ver5:after {
+  content: "xxs after text"; }
+
+@media (min-width: 420px) {
+  .c-box-ver5:after {
+    content: "no xxs before text"; } }
+
 .c-box-ver5 .c-box__img-container:before {
   content: "xxs"; }
 
@@ -47,6 +61,20 @@
 
 .c-box-ver5 .c-box__img-container::before {
   margin: 5px; }
+
+.c-box-ver5_m:before {
+  content: "xxs before text"; }
+
+@media (min-width: 420px) {
+  .c-box-ver5_m:before {
+    content: "no xxs before text"; } }
+
+.c-box-ver5_m:after {
+  content: "xxs after text"; }
+
+@media (min-width: 420px) {
+  .c-box-ver5_m:after {
+    content: "no xxs before text"; } }
 
 .c-box-ver5_m .c-box__img-container:before {
   content: "xxs"; }
