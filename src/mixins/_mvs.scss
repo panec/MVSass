@@ -122,7 +122,7 @@
 			@warn "Property \"#{$property}\" is a custom mixin but does not exits";
 		}
 		@else {
-			@warn "Property \"#{$property}\" is a custom mixin but does! exits";
+			@warn "Property \"#{$property}\" is a custom mixin and does exits";
 			@include mvs-respond-custom( $property, $values );
 		}
 	}

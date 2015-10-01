@@ -29,7 +29,7 @@
 }
 
 //**
-// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs keys from $map2 that are not existing or diffrent in value to keys in $map1
 // Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
 // Params
 // 	$map1 (Sass::Script::Value::Base)
@@ -38,18 +38,15 @@
 // Returns
 // 	(Sass::Script::Value::Base)
 // Example
-// 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
-@function map-unique( $map1, $map2, $showWarnings: true ) {
+// 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => ( background: #FFF, margin: 2px ) [ @warning: background does not exist in first map ]
+@function map-unique( $map1, $map2, $showWarnings: false ) {
 	$result: ();
 
 	@each $key, $value in $map2 {
-		@if ( map-has-key($map1, $key) ) {
-			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
+		@if ( $showWarnings ){
+			@warn $key "does not exist in first map";
 		}
-		@else if ( $showWarnings ){
-			// @warn $key "does not exist in first map";
-			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
-		}
+		$result: if( map-get( $map1, $key ) != $value , map-merge( $result, ( $key: $value ) ), $result );
 	}
 
 	@return $result;

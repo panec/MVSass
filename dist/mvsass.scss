@@ -352,7 +352,7 @@ $mvs-screenBreakpoints   : (
 }
 
 //**
-// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs keys from $map2 that are not existing or diffrent in value to keys in $map1
 // Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
 // Params
 // 	$map1 (Sass::Script::Value::Base)
@@ -361,18 +361,15 @@ $mvs-screenBreakpoints   : (
 // Returns
 // 	(Sass::Script::Value::Base)
 // Example
-// 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => margin: 2px [ @warning: background does not exist in first map ]
-@function map-unique( $map1, $map2, $showWarnings: true ) {
+// 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => ( background: #FFF, margin: 2px ) [ @warning: background does not exist in first map ]
+@function map-unique( $map1, $map2, $showWarnings: false ) {
 	$result: ();
 
 	@each $key, $value in $map2 {
-		@if ( map-has-key($map1, $key) ) {
-			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
+		@if ( $showWarnings ){
+			@warn $key "does not exist in first map";
 		}
-		@else if ( $showWarnings ){
-			// @warn $key "does not exist in first map";
-			$result: if( map-get($map1, $key) != $value , map-merge($result, ($key: $value)), $result);
-		}
+		$result: if( map-has-key( $map1, $key ) == true and map-get( $map1, $key ) != $value , map-merge( $result, ( $key: $value ) ), $result );
 	}
 
 	@return $result;
@@ -659,6 +656,7 @@ $mvs-screenBreakpoints   : (
 	@return $resultList;
 }
 
+// TODO Add example calls and description
 @function mvs-optimize-value( $value ) {
 	$resultList                 : ();
 	$screenBreakpointsKeys      : map-keys( $mvs-screenBreakpoints );
@@ -710,6 +708,39 @@ $mvs-screenBreakpoints   : (
 
 	@return $resultList;
 }
+
+//**
+// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// TODO THIS VERSION SHOULD WORK ON VALUE BASE - needs to analyse the values globally not on level of css property value
+// @function mvs-map-unique( $map1, $map2, $showWarnings: false ) {
+// 	$result: ();
+	
+// 	@debug MAP1 $map1;
+// 	@debug MAP2 $map2;
+	
+// 	@each $key, $value in $map2 {
+		
+// 		@debug KEY $key VALUE $value;
+		
+// 		@debug mvs-normalize-value( map-get( $map1, $key ) );
+// 		@debug mvs-normalize-value( $value );
+		
+// 		@if ( $showWarnings ){
+// 			@warn $key "does not exist in first map";
+// 		}
+		
+// 		@if ( map-has-key($map1, $key) ) {
+// 			$result: map-merge($result, map-unique( mvs-normalize-value( map-get( $map1, $key ) ), mvs-normalize-value( $value ) ) );
+// 		}
+// 		@else {
+// 			$result: map-merge($result, ( $key: mvs-normalize-value( $value ) ) );
+// 		}
+		
+// 	}
+
+// 	@return $result;
+// }
 
 
 //done
@@ -885,7 +916,7 @@ $mvs-screenBreakpoints   : (
 			@warn "Property \"#{$property}\" is a custom mixin but does not exits";
 		}
 		@else {
-			@warn "Property \"#{$property}\" is a custom mixin but does! exits";
+			@warn "Property \"#{$property}\" is a custom mixin and does exits";
 			@include mvs-respond-custom( $property, $values );
 		}
 	}

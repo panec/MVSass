@@ -238,6 +238,7 @@
 	@return $resultList;
 }
 
+// TODO Add example calls and description
 @function mvs-optimize-value( $value ) {
 	$resultList                 : ();
 	$screenBreakpointsKeys      : map-keys( $mvs-screenBreakpoints );
@@ -289,6 +290,39 @@
 
 	@return $resultList;
 }
+
+//**
+// Overwrite keys from $map1 with keys from map $map2 only when value for that key is different
+// Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
+// TODO THIS VERSION SHOULD WORK ON VALUE BASE - needs to analyse the values globally not on level of css property value
+// @function mvs-map-unique( $map1, $map2, $showWarnings: false ) {
+// 	$result: ();
+	
+// 	@debug MAP1 $map1;
+// 	@debug MAP2 $map2;
+	
+// 	@each $key, $value in $map2 {
+		
+// 		@debug KEY $key VALUE $value;
+		
+// 		@debug mvs-normalize-value( map-get( $map1, $key ) );
+// 		@debug mvs-normalize-value( $value );
+		
+// 		@if ( $showWarnings ){
+// 			@warn $key "does not exist in first map";
+// 		}
+		
+// 		@if ( map-has-key($map1, $key) ) {
+// 			$result: map-merge($result, map-unique( mvs-normalize-value( map-get( $map1, $key ) ), mvs-normalize-value( $value ) ) );
+// 		}
+// 		@else {
+// 			$result: map-merge($result, ( $key: mvs-normalize-value( $value ) ) );
+// 		}
+		
+// 	}
+
+// 	@return $result;
+// }
 
 
 //done
