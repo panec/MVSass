@@ -91,6 +91,7 @@
 		}
 	}
 
+	//This code block supports css pseudo classes like :before, :checked 
 	//TODO Add suport for lang(...) & not(...)
 	@each $cssPseudoClass in $mvs-cssPseudoClasses {
 		@if map_has_key( $mvsMap, quote( $elementSelector + $cssPseudoClass ) ) == true {

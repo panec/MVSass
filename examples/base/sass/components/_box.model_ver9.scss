@@ -1,6 +1,8 @@
 @import "../variables";
 @import "box.model_ver0";
 
+@debug "BOX 9";
+
 $component-box-model_ver9: map-unique( $component-box-model_ver0, (
 	_body: (
 		color: #111,
@@ -24,6 +26,8 @@ $component-box-model_ver9: map-unique( $component-box-model_ver0, (
 	),
 ) );
 
+@debug component-box-model_ver9 mvs-normalize-map( $component-box-model_ver9 );
+
 $component-box-model_ver9_m: map-unique( $component-box-model_ver0, (
 	_body: (
 		color: (
@@ -38,3 +42,5 @@ $component-box-model_ver9_m: map-unique( $component-box-model_ver0, (
 		),
 	),
 ) );
+
+@debug component-box-model_ver9 mvs-normalize-map( $component-box-model_ver9_m );
