@@ -150,7 +150,7 @@
 
 // TODO Add example calls and description
 @function mvs-normalize-map( $map ) {
-	$resultMap : ();
+	$resultMap : ( );
 	
 	@each $selector, $propertiesMap in $map {
 		$tempMap : ();
@@ -165,7 +165,7 @@
 					@warn "Property \"#{$property}\" is a custom mixin but does not exits";
 				}
 				@else {
-					@warn "Property \"#{$property}\" is a custom mixin and does exits";
+					// @warn "Property \"#{$property}\" is a custom mixin and does exits";
 					$tempMap: map-merge( $tempMap, ( $property: mvs-normalize-map( $values ) ) );
 				}
 			}

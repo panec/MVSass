@@ -369,7 +369,7 @@ $mvs-screenBreakpoints   : (
 		@if ( $showWarnings ){
 			@warn $key "does not exist in first map";
 		}
-		$result: if( map-has-key( $map1, $key ) == true and map-get( $map1, $key ) != $value , map-merge( $result, ( $key: $value ) ), $result );
+		$result: if( map-get( $map1, $key ) != $value , map-merge( $result, ( $key: $value ) ), $result );
 	}
 
 	@return $result;
@@ -444,7 +444,7 @@ $mvs-screenBreakpoints   : (
 	}
 }
 
-//**
+//** NOT USED ATM !!!
 // Gets value on $n position from CSS shorthand syntax
 // If value on $n position not exists, corresponding value is returned
 // Params
@@ -564,6 +564,53 @@ $mvs-screenBreakpoints   : (
 	}
 
 	@return unquote( $result );
+}
+
+// TODO Add example calls and description
+@function mvs-normalize-map( $map ) {
+	$resultMap : ( );
+	
+	@each $selector, $propertiesMap in $map {
+		$tempMap : ();
+		
+		@each $property, $values in $propertiesMap {
+			@if $values == null {
+				//skip
+			}
+			//TODO Refactor this section to be more readible
+			@else if is( $property, $mvs-customMixins ) {
+				@if not mixin-exists( $property ) {
+					@warn "Property \"#{$property}\" is a custom mixin but does not exits";
+				}
+				@else {
+					// @warn "Property \"#{$property}\" is a custom mixin and does exits";
+					$tempMap: map-merge( $tempMap, ( $property: mvs-normalize-map( $values ) ) );
+				}
+			}
+			@else if not is( $property, $mvs-cssProperties ) and not mixin-exists( $property ){
+				@warn "Property \"#{$property}\" is not a valid CSS property & there is no mixin for it";
+				@debug "TODO Add support for custom mixins";
+			}
+			@else if is( $property, "font-family" "font" ) {
+				//TODO Can support if values are quoted on each breakpoint or quoutes are escaped
+				@warn "MVS syntax does not support \"#{$property}\" property";
+				$tempMap: map-merge( $tempMap, ( $property: $values ) );
+			}
+			@else {
+				@debug "!!! VALUES " $values;
+				$values : mvs-normalize-value( $values );
+				@debug "!!! VALUES NORMALIZED" $values;
+				$values : mvs-optimize-value( $values );
+				@debug "!!! VALUES OPTIMIZED" $values;
+				
+				$tempMap: map-merge( $tempMap, ( $property: $values ) );
+			}
+		}
+		
+		$resultMap: map-merge( $resultMap, ( $selector: $tempMap ) );
+	}
+	
+	@return $resultMap;
 }
 
 // TODO Add example calls and description
@@ -875,7 +922,7 @@ $mvs-screenBreakpoints   : (
 // 	$depth (Sass::Script::Value::Number)
 // Example
 // 	mvs-respond-map( "list-item", $map );
-//TODO Params to be extended
+//TODO Params description to be extended
 @mixin mvs-respond-map( $elementSelector, $mvsMap, $parentBlockSelector: null, $parentBlockDepth: -1, $parentListSelector: null, $parentListDepth: -1 ) {
 	$propertiesMap: map_get( $mvsMap, $elementSelector );
 
@@ -885,7 +932,7 @@ $mvs-screenBreakpoints   : (
 		}
 	}
 
-	//TODO Add support for multiple pseudo selectors at once
+	//This code block supports css pseudo classes like :before, :checked 
 	//TODO Add suport for lang(...) & not(...)
 	@each $cssPseudoClass in $mvs-cssPseudoClasses {
 		@if map_has_key( $mvsMap, quote( $elementSelector + $cssPseudoClass ) ) == true {
@@ -925,7 +972,7 @@ $mvs-screenBreakpoints   : (
 		@debug "TODO Add support for custom mixins";
 	}
 	@else if is( $property, "font-family" "font" ) {
-		//TODO Can support if values are quoted on each breakpoint
+		//TODO Can support if values are quoted on each breakpoint or quoutes are escaped
 		@warn "MVS syntax does not support \"#{$property}\" property";
 		@include _mvs-respond-mixins( $property, $values );
 	}
