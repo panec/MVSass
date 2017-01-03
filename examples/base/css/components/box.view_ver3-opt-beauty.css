@@ -1,10 +1,18 @@
-.c-box-ver3 .c-box__body,
+.c-box-ver3 .c-box__body {
+	background: #f5f2f0
+}
+
+@media (min-width:620px) {
+	.c-box-ver3 .c-box__body {
+		background: #ccbdb3
+	}
+}
+
 .c-box-ver3_m .c-box__body {
 	background: #f5f2f0
 }
 
 @media (min-width:620px) {
-	.c-box-ver3 .c-box__body,
 	.c-box-ver3_m .c-box__body {
 		background: #ccbdb3
 	}

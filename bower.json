@@ -1,21 +1,18 @@
 {
-    "name": "MVSass",
-    "version": "0.4.7",
-    "main": [
-        "dist/mvsass.scss",
-        "dist/parentsSelector.rb"
-    ],
-    "ignore": [
-        "examples",
-        "src",
-        ".gitignore",
-        "bower.json",
-        "gulpfile.js",
-        "package.json",
-        "README.md"
-    ],
-    "dependencies": {
-    },
-    "devDependencies": {
-    }
+	"name": "MVSass",
+	"version": "0.4.7",
+	"main": [
+		"dist/mvsass.scss"
+	],
+	"ignore": [
+		"examples",
+		"src",
+		".gitignore",
+		"bower.json",
+		"gulpfile.js",
+		"package.json",
+		"README.md"
+	],
+	"dependencies": {},
+	"devDependencies": {}
 }
