@@ -1,0 +1,92 @@
+@import 'true';
+@import '../../dist/mvsass';
+@include test-module('[function] insert-nth') {
+	@include test('it should inset value in list on specified index') {
+		$list: a b d;
+		$test: insert-nth($list, 3, c);
+		$expect: a b c d;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] slice') {
+	@include test('it should slice list into new one on specified start index') {
+		$list: a b c d e f;
+		$test: slice($list, 3);
+		$expect: c d e f;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should slice list into new one on specified start & end index') {
+		$list: a b c d e f;
+		$test: slice($list, 3, 5);
+		$expect: c d e;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] replace-nth') {
+	@include test('it should replace passed value on specified positive index') {
+		$list: a b z d e f;
+		$test: set-nth($list, 3, c);
+		$expect: a b c d e f;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should replace passed value on specified negative index') {
+		$list: a b c d z f;
+		$test: set-nth($list, -2, e);
+		$expect: a b c d e f;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] is') {
+	@include test('it should return `true` if value was found') {
+		$list: a b c d;
+		$test: is(c, $list);
+		@include assert-true($test);
+	}
+	@include test('it should return `false` if value was not found') {
+		$list: a b c d;
+		$test: is(z, $list);
+		@include assert-false($test);
+	}
+}
+
+@include test-module('[function] to-string') {
+	@include test('it should stringify list into single string') {
+		$list: a b c d e f g h;
+		$test: to-string($list);
+		$expect: abcdefgh;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should stringify list into single string seperated with defined spacer') {
+		$list: a b c d e f g h;
+		$test: to-string($list, '-');
+		$expect: a-b-c-d-e-f-g-h;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] list-contain-numbers') {
+	@include test('it should return `true` when all values on list are type of `number`') {
+		$list: 1 10px 1rem 20px;
+		$test: list-contain-numbers($list);
+		@include assert-true($test);
+	}
+	@include test('it should return `false` when all values on list are not type of `number`') {
+		$list: 1 #FFF 1rem 20px;
+		$test: list-contain-numbers($list);
+		@include assert-false($test);
+	}
+}
+
+@include test-module('[function] list-convert-rem') {
+	@include test('it should use function `unit-convert-rem` on all values on the list') {
+		$list: 1 10px 1rem 20px, 10px;
+		$test: list-convert-rem($list...);
+		$expect: 1rem 1rem 1rem 2rem;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include report;

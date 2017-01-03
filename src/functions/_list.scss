@@ -2,7 +2,6 @@
 // Additional functions to handle List object in SASS.
 // Some of the function are borrowed from Hugo Giraudel and his technical blog
 // http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
-
 //**
 // by Hugo Giraudel
 // Inserts value within List object on specific position
@@ -14,108 +13,86 @@
 // 	(Sass::Script::Value::List)
 // Example
 // insert-nth(10px 20px 40px, 3, 30px) => 10px 20px 30px 40px
-@function insert-nth( $list, $index, $value ) {
+@function insert-nth( $list, $index, $value) {
 	$result: null;
-
-	@if type-of($index) != number {
+	@if type-of($index) !=number {
 		@warn "$index: #{quote($index)} is not a number for `insert-nth`.";
 	}
-
 	@else if $index < 1 {
 		@warn "List index 0 must be a non-zero integer for `insert-nth`";
 	}
-
-	@else if $index > length($list) {
+	@else if $index>length($list) {
 		@warn "List index is #{$index} but list is only #{length($list)} item long for `insert-nth'.";
 	}
-
 	@else {
 		$result: ();
-
 		@for $i from 1 through length($list) {
-			@if $i == $index {
+			@if $i==$index {
 				$result: append($result, $value);
 			}
-
 			$result: append($result, nth($list, $i));
 		}
 	}
-
 	@return $result;
 }
 
 //**
 // by Hugo Giraudel
-@function slice( $list, $start: 1, $end: length($list) ) {
+@function slice( $list, $start: 1, $end: length($list)) {
 	$result: null;
-
-	@if type-of($start) != number or type-of($end) != number {
+	@if type-of($start) !=number or type-of($end) !=number {
 		@warn "Either $start or $end are not a number for `slice`.";
 	}
-
-	@else if $start > $end {
+	@else if $start>$end {
 		@warn "The start index has to be lesser than or equals to the end index for `slice`.";
 	}
-
 	@else if $start < 1 or $end < 1 {
 		@warn "List indexes must be non-zero integers for `slice`.";
 	}
-
-	@else if $start > length($list) {
+	@else if $start>length($list) {
 		@warn "List index is #{$start} but list is only #{length($list)} item long for `slice`.";
 	}
-
-	@else if $end > length($list) {
+	@else if $end>length($list) {
 		@warn "List index is #{$end} but list is only #{length($list)} item long for `slice`.";
 	}
-
 	@else {
 		$result: ();
-
 		@for $i from $start through $end {
 			$result: append($result, nth($list, $i));
 		}
 	}
-
 	@return $result;
 }
 
+//** DEPRECATED USE set-nth build in function
 //**
 // by Hugo Giraudel
 // @function replace-nth($list, $index, $value) {
 // 	$result: null;
 // 	$listSeparator: list-separator( $list );
-
 // 	@if type-of($index) != number {
 // 		@warn "$index: #{quote($index)} is not a number for `replace-nth`.";
 // 	}
-
 // 	@else if $index == 0 {
 // 		@warn "List index 0 must be a non-zero integer for `replace-nth`.";
 // 	}
-
 // 	@else if abs($index) > length($list) {
 // 		@warn "List index is #{$index} but list is only #{length($list)} item long for `replace-nth`.";
 // 	}
-
 // 	@else {
 // 		$result: ();
 // 		$index: if($index < 0, length($list) + $index + 1, $index);
-
 // 		@for $i from 1 through length($list) {
 // 			@if $i == $index {
 // 				$result: append($result, $value, $listSeparator);
 // 			}
-
 // 			@else {
 // 				$result: append($result, nth($list, $i), $listSeparator);
 // 			}
 // 		}
 // 	}
-
 // 	@return $result;
 // }
-
 //**
 // by Hugo Giraudel
 @function is($value, $values) {
@@ -126,17 +103,15 @@
 // by Hugo Giraudel
 @function to-string($list, $glue: '', $is-nested: false) {
 	$result: null;
-
-	@if $list != null { //Fix for LibSass
+	@if $list !=null {
+		//Fix for LibSass
 		@for $i from 1 through length($list) {
 			$e: nth($list, $i);
-			
-			@if type-of($e) == list {
+			@if type-of($e)==list {
 				$result: $result#{to-string($e, $glue, true)};
 			}
-	
 			@else {
-				$result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+				$result: if($i !=length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
 			}
 		}
 	}
@@ -152,15 +127,13 @@
 // Example
 // 	list-contain-numbers(1 10px 1rem 20px) => true
 // 	list-contain-numbers(1 #FFF 1rem 20px) => false
-@function list-contain-numbers( $list ) {
+@function list-contain-numbers( $list) {
 	$isNumeric: true;
-	$length: length( $list );
-
+	$length: length( $list);
 	@for $i from 1 through $length {
-		$value: nth( $list, $i );
-		$isNumeric: $isNumeric and type-of( $value ) == "number";
+		$value: nth( $list, $i);
+		$isNumeric: $isNumeric and type-of( $value)=="number";
 	}
-
 	@return $isNumeric;
 }
 
@@ -174,28 +147,24 @@
 // 	(Sass::Script::Value::Base)
 // Example
 // 	list-convert-rem(1 10px 1rem 20px, 10px) => 1rem 1rem 1rem 2rem, 1rem
-@function list-convert-rem( $list, $font-size-base: 16px ) {
-	$length: length( $list );
+@function list-convert-rem( $list, $font-size-base: 16px) {
+	@debug "ASSA" $list;
+	$length: length($list);
 	$remValues: ();
-
-	@if unit( $font-size-base ) != "px" {
+	@if unit( $font-size-base) !="px" {
 		@warn "$font-size-base:" $font-size-base "has to be px value";
 		@return $list;
 	}
-
-	@if list-contain-numbers( $list ) {
+	@if not list-contain-numbers( $list) {
 		@warn "$list:" $list "contains non numeric values";
 		@return $list;
 	}
-
 	@for $i from 1 through $length {
-		$remValues: append( $remValues, unit-convert-rem( nth( $list, $i ), $font-size-base ) );
+		$remValues: append( $remValues, unit-convert-rem( nth($list, $i), $font-size-base));
 	}
-
-	@if $length == 1 {
-		@return nth( $remValues, 1 );
+	@if $length==1 {
+		@return nth( $remValues, 1);
 	}
-
 	@return $remValues;
 }
 
@@ -209,11 +178,10 @@
 // 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => true
 // 	.aaa .bbb .ccc { list-contain-parent-selector( ".aaa", ".bbb" ) } => false
 // 	.aaa .bbb.ccc { list-contain-parent-selector( ".aaa", ".bbb", ".ccc" ) } => false
-// @function list-contain-parent-selector( $list ) {
-// 	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1 ), -1 ), "" );
-
+// @function list-contain-parent-selector( $list) {
+// 	$parent: if( parentsSelector(), nth( nth( parentsSelector(), 1), -1), "");
 // 	@each $selector in $list {
-// 		@if $parent == $selector {
+// 		@if $parent==$selector {
 // 			@return true;
 // 		}
 // 	}

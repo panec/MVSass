@@ -1,6 +1,5 @@
 //**
 // Additional functions to handle Number object in SASS.
-
 //**
 // Returns value without unit
 // Params
@@ -10,7 +9,7 @@
 // Example
 // 	unit-remove(100px) => 100
 @function unit-remove($number) {
-	@return $number / ( $number/ 0 + 1 );
+	@return $number / ( $number * 0 + 1);
 }
 
 //**
@@ -26,30 +25,27 @@
 // 	unit-convert-rem(10px, 10px) => 1rem
 // 	unit-convert-rem(1rem, 10px) => 1rem
 @function unit-convert-rem($number, $font-size-base: 16px) {
-	@if unit( $font-size-base ) != "px" {
+	@if unit($font-size-base) !="px" {
 		@warn "$font-size-base:" $font-size-base "has to be px value";
 		@return $number;
 	}
-
-	@if type-of( $number ) == "number" {
+	@if type-of($number)!='number' {
 		@warn "$number:" $number "is not a number";
 		@return $number;
 	}
-
-	$numberUnitless: strip-unit($number);
+	$numberUnitless: unit-remove($number);
 	$numberUnit: unit($number);
-
-	@if $numberUnitless == 0 {
+	@if $numberUnitless==0 {
 		@return 0;
 	}
-	@else if $numberUnit == "" or $numberUnit == "rem"{
-		@return $numberUnitless + 0rem;
+	@else if $numberUnit=="" or $numberUnit=="rem" {
+		@return $numberUnitless+0rem;
 	}
-	@else if $numberUnit == "px" {
-		@return $numberUnitless / strip-unit( $font-size-base ) + 0rem;
+	@else if $numberUnit=="px" {
+		@return ($numberUnitless / unit-remove( $font-size-base)+0rem);
 	}
 	@else {
-		@warn "$number:" $number "cannot be converted to px";
+		@warn "$number:" $number "cannot be converted to rem";
 		@return $number;
 	}
 }
