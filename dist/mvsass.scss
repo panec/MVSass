@@ -288,7 +288,6 @@ $mvs-screenBreakpoints   : (
 
 //**
 // Additional functions to handle Map object in SASS.
-
 //**
 // Overwrite keys from $map1 with keys from map $map2
 // Outputs warning if $showWarnings is true and key from $map2 do not exist in $map1
@@ -300,20 +299,19 @@ $mvs-screenBreakpoints   : (
 // 	(Sass::Script::Value::Base)
 // Example
 // 	map-overwrite( ( color: #FFF, margin: 1px ), ( background: #FFF, margin: 2px ) ) => color: #FFF, margin: 2px [ @warning: background does not exist in first map ]
-@function map-overwrite( $map1, $map2, $showWarnings: true ) {
+@function map-overwrite( $map1, $map2, $showWarnings: true) {
 	$result: ();
-
-	@each $key, $value in $map2 {
-		@if ( map-has-key( $map1, $key ) ) {
-			$result: map-merge( $result, ( $key: $value ) );
+	@each $key,
+	$value in $map2 {
+		@if ( map-has-key( $map1, $key)) {
+			$result: map-merge( $result, ( $key: $value));
 		}
-		@else if ( $showWarnings ) {
-			// @warn $key "does not exist in first map";
-			$result: map-merge( $result, ( $key: $value ) );
+		@else if ( $showWarnings) {
+			@warn $key "does not exist in first map";
+			// $result: map-merge( $result, ( $key: $value ) );
 		}
 	}
-
-	@return map-merge( $map1, $result );
+	@return map-merge( $map1, $result);
 }
 
 //**
@@ -327,16 +325,15 @@ $mvs-screenBreakpoints   : (
 // 	(Sass::Script::Value::Base)
 // Example
 // 	map-unique( ( color: #FFF, margin: 1px ), ( background: #FFF, color: #FFF, margin: 2px ) ) => ( background: #FFF, margin: 2px ) [ @warning: background does not exist in first map ]
-@function map-unique( $map1, $map2, $showWarnings: false ) {
+@function map-unique( $map1, $map2, $showWarnings: false) {
 	$result: ();
-
-	@each $key, $value in $map2 {
-		@if ( $showWarnings ){
+	@each $key,
+	$value in $map2 {
+		@if ( $showWarnings) {
 			@warn $key "does not exist in first map";
 		}
-		$result: if( map-get( $map1, $key ) != $value , map-merge( $result, ( $key: $value ) ), $result );
+		$result: if( map-get( $map1, $key) !=$value, map-merge( $result, ( $key: $value)), $result);
 	}
-
 	@return $result;
 }
 
@@ -349,20 +346,18 @@ $mvs-screenBreakpoints   : (
 // 	(Sass::Script::Value::Base)
 // Example
 // 	map-nth( ( color: #FFF, margin: 1px ), 2 ) => 1px
-@function map-nth( $map, $n ) {
+@function map-nth( $map, $n) {
 	$index: 1;
-
-	@if $n > length( $map ) {
+	@if $n>length( $map) {
 		@return null;
 	}
-
-	@each $key, $value in $map {
-		@if $n == $index {
+	@each $key,
+	$value in $map {
+		@if $n==$index {
 			@return $value;
 		}
-		$index: $index + 1;
+		$index: $index+1;
 	}
-
 	@return null;
 }
 
@@ -375,10 +370,9 @@ $mvs-screenBreakpoints   : (
 // 	(Sass::Script::Value::Number)
 // Example
 // 	map-index( ( color: #FFF, margin: 1px ), margin ) => 2
-@function map-index( $map, $key ) {
-	$keys: map-keys( $map );
-
-	@return index( $keys, $key );
+@function map-index( $map, $key) {
+	$keys: map-keys( $map);
+	@return index( $keys, $key);
 }
 
 //**

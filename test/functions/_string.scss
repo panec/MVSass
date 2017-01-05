@@ -1,0 +1,18 @@
+@import 'true';
+@import '../../dist/mvsass';
+@include test-module('[function] str-index-last') {
+	@include test('it should return last index of specified substring if found') {
+		$string: 'abcdefghijk';
+		$test: str-index-last($string, 'gh');
+		$expect: 7;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return -1 of specified substring if not found') {
+		$string: 'abcdefghijk';
+		$test: str-index-last($string, 'gh');
+		$expect: 7;
+		@include assert-equal($test, $expect);
+	}
+}
+
+// @include report;

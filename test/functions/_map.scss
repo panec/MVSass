@@ -1,0 +1,44 @@
+@import 'true';
+@import '../../dist/mvsass';
+@include test-module('[function] map-overwrite') {
+	@include test('it should return map with values overwrote with values from second map for keys that exist only in first map') {
+		$map: ( color: #FFF, margin: 1px);
+		$test: map-overwrite($map, (margin: 1px));
+		$expect: (color: #FFF, margin: 1px);
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return map with values overwrote with values from second map for keys that exist only in first map, skipping non existing keys') {
+		$map: ( color: #FFF, margin: 1px);
+		$test: map-overwrite($map, (background: #FFF, margin: 2px));
+		$expect: (color: #FFF, margin: 2px);
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] map-unique') {
+	// Outputs keys from $map2 that are not existing or diffrent in value to keys in $map1
+	@include test('it should return map with values overwrote with values from second map for keys that not existing or diffrent in value') {
+		$map: ( color: #FFF, margin: 1px);
+		$test: map-unique($map, ( background: #FFF, color: #FFF, margin: 2px));
+		$expect: ( background: #FFF, margin: 2px);
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] map-nth') {
+	@include test('it should return value on index position from map') {
+		$map: ( color: #FFF, margin: 1px);
+		$test: map-nth($map, 2);
+		$expect: 1px;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] map-index') {
+	@include test('it should return index of the key in map') {
+		$map: ( color: #FFF, margin: 1px);
+		$test: map-index($map, 'margin');
+		$expect: 2;
+		@include assert-equal($test, $expect);
+	}
+}

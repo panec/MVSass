@@ -1,0 +1,43 @@
+@import 'true';
+@import '../../dist/mvsass';
+@include test-module('[function] unit-remove') {
+	@include test('it should return value without any unit') {
+		$number: 1px;
+		$test: unit-remove($number);
+		$expect: 1;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return -1 of specified substring if not found') {
+		$number: 1rem;
+		$test: unit-remove($number);
+		$expect: 1;
+		@include assert-equal($test, $expect);
+	}
+}
+
+@include test-module('[function] unit-convert-rem') {
+	@include test('it should return converted unitless value to rem value') {
+		$number: 1;
+		$test: unit-convert-rem($number);
+		$expect: 1rem;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return converted px value to rem value') {
+		$number: 16px;
+		$test: unit-convert-rem($number);
+		$expect: 1rem;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return converted px value to rem value with specified base font size') {
+		$number: 10px;
+		$test: unit-convert-rem($number, 10px);
+		$expect: 1rem;
+		@include assert-equal($test, $expect);
+	}
+	@include test('it should return not conver rem value to rem value regardless of specified base font size') {
+		$number: 1rem;
+		$test: unit-convert-rem($number, 10px);
+		$expect: 1rem;
+		@include assert-equal($test, $expect);
+	}
+}
